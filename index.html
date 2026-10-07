@@ -464,6 +464,11 @@ textarea.ed-in{resize:vertical;line-height:1.45}
 .privacy p{margin:0;flex:1 1 420px}
 @media (max-width:900px){ .privacy{margin-bottom:90px} }
 
+/* Repetition efter tentan */
+.review-banner{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:var(--r);padding:8px 14px;margin:0 0 10px;font-size:.92rem}
+.review-banner[hidden]{display:none}
+.wronglist{margin:4px 0 8px;padding-left:20px}
+
 </style>
 </head>
 <body>
@@ -488,6 +493,7 @@ textarea.ed-in{resize:vertical;line-height:1.45}
 
   <!-- ===================== VY 1: LEKTIONEN ===================== -->
   <section id="view-lesson">
+    <div class="review-banner" id="review-banner" hidden></div>
     <nav class="chapters" id="chapters" aria-label="Lektioner"></nav>
     <div class="notice" id="lesson-notice" hidden></div>
     <div class="stage">
@@ -26879,21 +26885,22 @@ const EXTRA=[
 const EXAM_TEXTS = {
   intro: 'Välkommen till övningstentan! Den är byggd som sluttentan: del 1 på G-nivå och del 2 på VG-nivå, 30 poäng totalt. Starta klockan, räkna på papper med miniräknare och formelblad, och redovisa precis som på riktigt. Skriv sedan in dina slutsvar i rutorna. När du trycker på Rätta tentan ser du poängen, vilka svar som stämmer och hela lösningen till varje uppgift. Längst ner finns extrauppgifter om linjära modeller, vektorer och tyngdpunkt. Lycka till!',
   fullScore: max => `Fantastiskt, full pott! Alla ${max} poäng. Nu gäller det bara att redovisa lika snyggt på tentan: formel, insättning, mellanled och svar med enhet. Du är redo!`,
-  result: ({ total, max, part1, part2, empty, repeat }) =>
+  result: ({ total, max, part1, part2, empty, repeat, wrongNos, wrongCount }) =>
     `Du fick ${total} av ${max} poäng: ${part1} på del 1 och ${part2} på del 2. ` +
     (empty ? `Du lämnade ${empty} svarsrutor tomma. ` : '') +
-    (repeat ? `Titta på lösningarna till de uppgifter som är markerade, och repetera ${repeat} i lektionen. ` : '') +
-    'Varje fel nu är en poäng du inte tappar på tentan. Gör om uppgifterna utan facit om en stund!',
+    (wrongCount ? `${wrongCount === 1 ? 'Uppgift' : 'Uppgift'} ${wrongNos} blev fel. ${wrongCount === 1 ? 'Den hör' : 'De hör'} till ${repeat}. ` +
+      'Jag har satt ihop en repetitionslista med bara de avsnitten. Tryck på Repetera bara de här avsnitten, så går vi igenom dem, och sedan gör du tentan igen. ' : '') +
+    'Varje fel nu är en poäng du inte tappar på tentan!',
 };
 
 // Engelska versioner av replikerna, används om datorn saknar svensk röst.
 const EXAM_TEXTS_EN = {
   intro: 'Welcome to the practice exam! It is built like the final exam: part 1 at pass level and part 2 at distinction level, 30 points in total. Start the clock, work on paper with your calculator and formula sheet, and show your working just like on the real exam. Then type your final answers into the boxes. When you press the button to mark the exam, you will see your points, which answers are correct and the full solution to every task. At the bottom there are extra tasks on linear models, vectors and centre of gravity. Good luck!',
   fullScore: max => `Fantastic, full marks! All ${max} points. Now you just need to show your working just as neatly on the exam: formula, substitution, intermediate steps and an answer with a unit. You are ready!`,
-  result: ({ total, max, part1, part2, empty, repeat }) =>
+  result: ({ total, max, part1, part2, empty, repeat, wrongNos, wrongCount }) =>
     `You got ${total} out of ${max} points: ${part1} on part 1 and ${part2} on part 2. ` +
     (empty ? `You left ${empty} answer boxes empty. ` : '') +
-    (repeat ? `Look at the solutions to the marked tasks, and review ${repeat} in the lesson. ` : '') +
+    (wrongCount ? `Task ${wrongNos} ${wrongCount === 1 ? 'was' : 'were'} wrong, which belongs to ${repeat}. I have put together a review list with just those sections. Press the review button, go through them, and then take the exam again. ` : '') +
     'Every mistake now is a point you will not lose on the exam. Try the tasks again without the solutions in a while!',
 };
 
@@ -28726,18 +28733,26 @@ const showMinis = () => storage.get('mini', true);
 
 function buildSlideList() {
   slides = [];
-  lessonStore.all.forEach((lesson, lessonNo) => {
+  // I repetitionsläget (efter tentan) visas bara de avsnitt som blev fel
+  const lessons = activeLessons();
+  lessons.forEach(lesson => {
+    const lessonNo = lessonStore.all.indexOf(lesson);
     lesson.slides.forEach((slide, i) => slides.push({ lesson, slide, lessonNo, slideNoInLesson: i }));
     if (showMinis() && hasTemplatesFor(lesson.id)) {
       slides.push({ lesson, slide: miniSlideInfo(lesson), lessonNo, slideNoInLesson: lesson.slides.length, mini: true });
     }
   });
+  const review = reviewState();
+  if (review && lessons.length) {   // sista bilden: gör tentan igen
+    const last = lessons[lessons.length - 1];
+    slides.push({ lesson: last, slide: reviewEndInfo(review), lessonNo: lessonStore.all.indexOf(last), slideNoInLesson: 9999, reviewEnd: true });
+  }
 }
 
 function renderChapterButtons() {
   let html = '';
   let lastArea = null;
-  for (const lesson of lessonStore.all) {
+  for (const lesson of activeLessons()) {
     if (lesson.omrade !== lastArea) {
       html += `<span class="area">${escapeHtml(lesson.omrade)}</span>`;
       lastArea = lesson.omrade;
@@ -28752,15 +28767,15 @@ function renderSlide() {
     $('#board').innerHTML = '<h2>Inga lektioner hittades</h2><p>Kontrollera lessons/index.xml.</p>';
     return;
   }
-  const { lesson, slide, lessonNo, slideNoInLesson, mini } = slides[slideIndex];
+  const { lesson, slide, lessonNo, slideNoInLesson, mini, reviewEnd } = slides[slideIndex];
   fieldCounter = 0;
   Object.keys(quizRegistry).forEach(k => delete quizRegistry[k]);
 
-  $('#board').innerHTML = (mini ? renderMini(lesson) : renderSlideContent(slide.element)) + `
+  $('#board').innerHTML = (reviewEnd ? renderReviewEnd() : mini ? renderMini(lesson) : renderSlideContent(slide.element)) + `
     <div class="titleblock">
       <span>${escapeHtml(KURS.namn)} · ${escapeHtml(lesson.omrade)}</span>
       <span>Lektion <b>${lessonNo + 1}</b> ${escapeHtml(lesson.titel)}</span>
-      <span>${mini ? '<b>Minitenta</b>' : `Blad <b>${slideNoInLesson + 1}</b>/${lesson.slides.length}`}</span>
+      <span>${reviewEnd ? '<b>Repetition klar</b>' : mini ? '<b>Minitenta</b>' : `Blad <b>${slideNoInLesson + 1}</b>/${lesson.slides.length}`}</span>
     </div>`;
   typeset($('#board'));
   setupWidgets($('#board'));
@@ -28800,9 +28815,9 @@ function goToLesson(lessonId, slideNo = 0) {
 // Läser upp aktuell bild. Med "Spela upp allt" bläddrar den vidare själv,
 // men stannar på bilder med "Testa dig" så att man hinner räkna.
 function readCurrentSlide() {
-  const { slide, mini } = slides[slideIndex];
+  const { slide, mini, reviewEnd } = slides[slideIndex];
   const from = slideIndex;
-  const hasQuiz = mini || slide.element.getElementsByTagName('testa').length > 0;
+  const hasQuiz = mini || reviewEnd || slide.element.getElementsByTagName('testa').length > 0;
   speak(narration(slide.say, slide.sayEn), $('#teacher-lesson'), () => {
     if ($('#autoplay').checked && slideIndex < slides.length - 1 && !hasQuiz) {
       setTimeout(() => { if ($('#autoplay').checked && !isSpeaking() && slideIndex === from) goToSlide(from + 1); }, 900);
@@ -28827,6 +28842,7 @@ function setupLessonControls() {
   };
   $('#board').addEventListener('click', handleSlideClick);
   $('#board').addEventListener('click', handleMiniClick);
+  document.addEventListener('click', handleReviewClick);
   $('#board').addEventListener('focusin', trackMiniFocus);
   $('#mini-toggle').checked = showMinis();
   $('#mini-toggle').onchange = e => {
@@ -29105,8 +29121,8 @@ function answerEntered(field) {
   }
 }
 
-/* ----- "Spela upp allt": gå vidare 4 sekunder efter att alla uppgifter besvarats rätt ----- */
-const AUTO_ADVANCE_MS = 4000;
+/* ----- "Spela upp allt": gå vidare 2 sekunder efter att alla uppgifter besvarats rätt ----- */
+const AUTO_ADVANCE_MS = 2000;
 let autoAdvanceTimer = null;
 
 function cancelAutoAdvance() {
@@ -29115,7 +29131,7 @@ function cancelAutoAdvance() {
 }
 
 // Anropas när en uppgift rättats. Är alla rutor på bilden rätt besvarade och "Spela upp allt"
-// ikryssad bläddrar Kapten vidare efter 4 sekunder (efter att han pratat klart).
+// ikryssad bläddrar Kapten vidare efter 2 sekunder (efter att han pratat klart).
 // Är något svar fel stannar han kvar.
 function maybeAutoAdvance() {
   if (currentView() !== 'lesson' || !$('#autoplay').checked) return;
@@ -29144,7 +29160,7 @@ function maybeAutoAdvance() {
   autoAdvanceTimer = setTimeout(tick, AUTO_ADVANCE_MS);
   const note = document.createElement('p');
   note.className = 'note auto-next';
-  note.textContent = 'Vi går vidare till nästa bild om 4 sekunder … (bocka ur "Spela upp allt" för att stanna)';
+  note.textContent = 'Vi går vidare till nästa bild om 2 sekunder … (bocka ur "Spela upp allt" för att stanna)';
   $('#bubble-lesson').append(note);
 }
 
@@ -29193,6 +29209,113 @@ function setupKeyboard() {
       target.dispatchEvent(new Event('input', { bubbles: true }));   // sparar svaret i tentan
     }
   });
+}
+
+
+/* ---------- Repetition efter tentan ----------
+   När tentan är rättad sätter Kapten Kalkyl ihop en lista med bara de avsnitt där
+   något blev fel. I repetitionsläget visar lektionsvyn bara de avsnitten (med sina
+   minitentor), och sist kommer en bild där man kan göra tentan igen.
+   Läget sparas i webbläsaren tills man avslutar det eller gör om tentan. */
+
+const reviewState = () => storage.get('review', null);   // { lessons: [id], wrong: [{ n, ch }], mode, seed }
+
+// Lektionerna som visas: alla, eller bara repetitionslistans
+function activeLessons() {
+  const review = reviewState();
+  if (!review) return lessonStore.all;
+  const list = lessonStore.all.filter(l => review.lessons.includes(l.id));
+  return list.length ? list : lessonStore.all;
+}
+
+const lessonTitle = id => { const l = lessonStore.all.find(x => x.id === id); return l ? l.titel : id; };
+const joinWords = list => (list.length > 1 ? list.slice(0, -1).join(', ') + ' och ' + list[list.length - 1] : list.join(''));
+
+function reviewEndInfo(review) {
+  return {
+    element: null,
+    say: `Bra jobbat! Nu har du repeterat ${review.lessons.length === 1 ? 'avsnittet' : 'alla ' + review.lessons.length + ' avsnitten'} där det blev fel på tentan. Gör samma tenta igen och se om det sitter, eller ta en ny slumpad tenta.`,
+    sayEn: 'Well done! You have now reviewed the sections where you made mistakes on the exam. Take the same exam again to see if it has sunk in, or try a new random exam.',
+  };
+}
+
+function renderReviewEnd() {
+  const review = reviewState();
+  return `<div class="eyebrow">Repetition efter tentan</div>
+    <h2>Dags att testa igen!</h2>
+    <p>Du har gått igenom ${review.lessons.length === 1 ? 'avsnittet' : `de ${review.lessons.length} avsnitten`} där det blev fel:
+      <b>${escapeHtml(joinWords(review.lessons.map(lessonTitle)))}</b>.</p>
+    <div class="btnrow cta">
+      <button class="btn primary" data-review="same">Gör samma tenta igen ▶</button>
+      <button class="btn" data-review="new">Ny slumpad tenta</button>
+      <button class="btn ghost" data-review="end">Avsluta repetitionen</button>
+    </div>`;
+}
+
+// Banderollen ovanför lektionerna i repetitionsläget
+function renderReviewBanner() {
+  const review = reviewState();
+  const box = $('#review-banner');
+  if (!box) return;
+  box.hidden = !review;
+  if (!review) { box.innerHTML = ''; return; }
+  box.innerHTML = `<span><b>Repetition efter tentan:</b> ${review.lessons.length} ${review.lessons.length === 1 ? 'avsnitt' : 'avsnitt'}
+      (${escapeHtml(joinWords(review.lessons.map(lessonTitle)))}).</span>
+    <span class="btnrow" style="margin:0">
+      <button class="btn small" data-review="same">Gör tentan igen</button>
+      <button class="btn ghost small" data-review="end">Visa alla lektioner</button>
+    </span>`;
+}
+
+function refreshLessonList() {
+  buildSlideList();
+  renderChapterButtons();
+  renderReviewBanner();
+}
+
+function startReview(wrongQuestions) {
+  const order = id => { const l = lessonStore.all.find(x => x.id === id); return l ? l.ordning : 999; };
+  const lessons = [...new Set(wrongQuestions.map(q => q.ch))].filter(id => lessonStore.all.some(l => l.id === id)).sort((a, b) => order(a) - order(b));
+  if (!lessons.length) return;
+  storage.set('review', { lessons, wrong: wrongQuestions.map(q => ({ n: q.n, ch: q.ch })), mode: exam.mode, seed: exam.seed });
+  refreshLessonList();
+  showView('lesson');
+  goToSlide(0);
+}
+
+function endReview() {
+  const current = slides[slideIndex];
+  storage.set('review', null);
+  refreshLessonList();
+  const same = current ? slides.findIndex(s => s.lesson.id === current.lesson.id && s.slideNoInLesson === current.slideNoInLesson) : -1;
+  slideIndex = Math.max(0, same);
+  renderSlide();
+}
+
+// Samma tenta igen: svaren töms och tentan öppnas. Repetitionsläget avslutas.
+function redoExam(fresh) {
+  const review = reviewState();
+  storage.set('review', null);
+  refreshLessonList();
+  slideIndex = Math.min(slideIndex, slides.length - 1);
+  if (fresh || !review) { openExam('slump', newSeed()); }
+  else {
+    const key = review.mode === 'fast' ? 'fast' : 'nr' + review.seed;
+    storage.set('answers-' + key, {});
+    openExam(review.mode, review.seed);
+  }
+  showView('exam');
+  window.scrollTo({ top: 0 });
+}
+
+function handleReviewClick(event) {
+  const button = event.target.closest('button[data-review]');
+  if (!button) return;
+  const action = button.dataset.review;
+  if (action === 'start') startReview(lastWrongQuestions);
+  if (action === 'end') endReview();
+  if (action === 'same') redoExam(false);
+  if (action === 'new') redoExam(true);
 }
 
 
@@ -29391,11 +29514,15 @@ function setupExamControls() {
   $('#pause-exam').onclick = togglePause;
 }
 
+// Uppgifterna som blev fel vid senaste rättningen (används av repetitionen)
+let lastWrongQuestions = [];
+
 function gradeExam() {
   const scores = { 1: 0, 2: 0 };
   const weakChapters = new Set();
   let emptyFields = 0;
   let workingChecked = 0, workingComplete = 0;
+  const wrong = [];
 
   for (const question of exam.questions) {
     let correctFields = 0;
@@ -29409,7 +29536,7 @@ function gradeExam() {
     // Poängen delas lika mellan svarsrutorna, avrundat till halva poäng
     const points = Math.round(question.p * correctFields / question.f.length * 2) / 2;
     scores[question.part] += points;
-    if (points < question.p) weakChapters.add(question.ch);
+    if (points < question.p) { weakChapters.add(question.ch); wrong.push(question); }
 
     const box = $('#q-' + question.n);
     box.classList.remove('graded-full', 'graded-part', 'graded-zero');
@@ -29436,8 +29563,12 @@ function gradeExam() {
       <div class="big">${swedishNumber(total)} / ${max1 + max2} p</div>
       <div class="bar"><span>Del 1 · G</span><span class="tr"><i style="width:${scores[1] / max1 * 100}%"></i></span><span>${swedishNumber(scores[1])} / ${max1}</span></div>
       <div class="bar"><span>Del 2 · VG</span><span class="tr"><i style="width:${scores[2] / max2 * 100}%"></i></span><span>${swedishNumber(scores[2])} / ${max2}</span></div>
-      ${repeat.length
-        ? `<p><b>Repetera:</b></p><div class="btnrow">${repeat.map(c => `<button class="btn ghost" data-repeat="${c.id}">${c.t}</button>`).join('')}</div>`
+      ${wrong.length
+        ? `<p><b>Det här blev fel:</b></p>
+           <ul class="wronglist">${wrong.map(q => `<li>Uppgift ${q.n} – ${escapeHtml(lessonTitle(q.ch))}</li>`).join('')}</ul>
+           <div class="btnrow"><button class="btn primary" data-review="start">▶ Repetera bara de här avsnitten (${repeat.length})</button></div>
+           <p class="note">Lektionsvyn visar då bara ${repeat.length === 1 ? 'det avsnittet' : 'de avsnitten'}, med minitentor. Sist kan du göra tentan igen.
+             Enskilda avsnitt: ${repeat.map(c => `<button class="linkbtn" data-repeat="${c.id}">${escapeHtml(c.t)}</button>`).join(', ')}</p>`
         : '<p>Alla slutsvar stämmer. Kontrollera nu att din redovisning har formel, mellanled och enhet.</p>'}
       <p>${workingChecked
         ? `<b>Redovisning:</b> ${workingComplete} av ${workingChecked} skrivna redovisningar har formel, insättning, mellanled och svar med enhet.`
@@ -29445,6 +29576,7 @@ function gradeExam() {
       <p class="note">Betygsgränserna sätts av läraren. Sikta på i stort sett full pott på Del 1 och så många poäng som möjligt på Del 2.</p>
     </div>`;
 
+  lastWrongQuestions = wrong;
   const fullScore = total === max1 + max2;
   examMessage = fullScore
     ? EXAM_TEXTS.fullScore(max1 + max2)
@@ -29452,7 +29584,8 @@ function gradeExam() {
         total: swedishNumber(total), max: max1 + max2,
         part1: swedishNumber(scores[1]), part2: swedishNumber(scores[2]),
         empty: emptyFields,
-        repeat: repeat.map(c => c.t.toLowerCase()).join(', '),
+        repeat: joinWords(repeat.map(c => c.t.toLowerCase().replace(/ & /g, ' och '))),
+        wrongNos: joinWords(wrong.map(q => String(q.n))), wrongCount: wrong.length,
       });
   examMessageEn = fullScore
     ? EXAM_TEXTS_EN.fullScore(max1 + max2)
@@ -29460,6 +29593,7 @@ function gradeExam() {
         total, max: max1 + max2, part1: scores[1], part2: scores[2],
         empty: emptyFields,
         repeat: repeat.map(c => (c.en || c.t).toLowerCase()).join(', '),
+        wrongNos: wrong.map(q => q.n).join(', '), wrongCount: wrong.length,
       });
   $('#bubble-exam').innerHTML = toParagraphs(examMessage);
   $('#score').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -29550,6 +29684,7 @@ async function init() {
   combineLessons();
   buildSlideList();
   renderChapterButtons();
+  renderReviewBanner();
   renderLessonNotice();
 
   const saved = storage.get('position', null);
