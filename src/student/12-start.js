@@ -14,6 +14,7 @@ async function init() {
   setupLessonControls();
   setupExamControls();
   setupFormelblad();
+  setupSwipe();
 
   // Lektioner och tentamallar läses in (från mapparna eller de inbyggda kopiorna)
   await Promise.all([loadBuiltInLessons(), loadTemplates()]);

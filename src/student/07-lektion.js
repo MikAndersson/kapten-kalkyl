@@ -146,16 +146,7 @@ function setupLessonControls() {
     if (!e.target.checked) stopSpeaking();
   };
 
-  // Svep åt vänster/höger på mobilen för att bläddra
-  let touchStartX = null;
-  $('#board').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  $('#board').addEventListener('touchend', e => {
-    if (touchStartX == null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    touchStartX = null;
-    if (Math.abs(dx) > 70 && !e.target.closest('.tbl, .calc, input, select, textarea, .widget')) goToSlide(slideIndex + (dx < 0 ? 1 : -1));
-  }, { passive: true });
-
+  // Svep på pekskärm: se 07f-svep.js
   setupKeyboard();   // se 07c-tangentbord.js
 }
 

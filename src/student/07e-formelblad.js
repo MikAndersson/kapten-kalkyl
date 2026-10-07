@@ -125,21 +125,26 @@ async function openSheet() {
   updateSheetButtons();
   await flip(view, true);
   sheet.busy = false;
+  // Stängdes bladet medan det vändes fram (t.ex. byte till en annan flik)? Vänd tillbaka direkt.
+  if (sheet.open !== view) {
+    sheetFace(view).classList.add('flip-hidden');
+    sheetFront(view).classList.remove('flip-hidden');
+  }
 }
 
 async function closeSheet(instant) {
   const view = sheet.open;
-  if (!view || sheet.busy) return;
+  if (!view || (sheet.busy && !instant)) return;
   sheet.busy = true;
   sheet.open = null;
   updateSheetButtons();
   if (instant) {
-    sheet.busy = false;
     sheetFace(view).classList.add('flip-hidden');
     sheetFront(view).classList.remove('flip-hidden');
-  } else {
-    await flip(view, false);
+    sheet.busy = false;
+    return;
   }
+  await flip(view, false);
   sheet.busy = false;
   // Tillbaka till svarsrutan man var i
   const field = sheet.lastField[view];
@@ -165,7 +170,7 @@ function setupFormelblad() {
     const view = ['lesson', 'exam'].find(v => sheetFrame(v).contentWindow === e.source);
     if (!view) return;
     if (e.data.formelblad === 'redo') { sheet.ready[view] = true; sendSheetCards(view); }
-    if (e.data.formelblad === 'stang') closeSheet();
+    if (e.data.formelblad === 'stang' || e.data.formelblad === 'svep') closeSheet();
   });
   updateSheetButtons();
 }
