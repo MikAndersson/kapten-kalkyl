@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="tentastrategi" ordning="900" omrade="Avslutning" titel="Tentastrategi" titel-en="Exam strategy">
+
+  <bild titel="Tentastrategi" etikett="Inför tentan">
+    <rubrik>Plan för de tre timmarna</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Upplägg</underrubrik>
+        <steg>
+          <punkt>Läs igenom hela tentan (5 min).</punkt>
+          <punkt>Gör Del 1 först. Säkra G-poängen (ca 40 min).</punkt>
+          <punkt>Gör Del 2. Hoppa över det som låser sig.</punkt>
+          <punkt>Gå tillbaka till överhoppade uppgifter.</punkt>
+          <punkt>Kontrollera enheter och avrundning (20 min).</punkt>
+        </steg>
+      </kolumn>
+      <kolumn>
+        <underrubrik>De vanligaste poängtapparna</underrubrik>
+        <lista>
+          <punkt>mm/cm inte omgjort till meter</punkt>
+          <punkt>Glömt spillet eller svarat på bara halva frågan</punkt>
+          <punkt>Delat med fel värde i procentuell förändring</punkt>
+          <punkt>Vanligt medelvärde i stället för viktat</punkt>
+          <punkt>Avrundat körningar nedåt</punkt>
+          <punkt>Miniräknaren i RAD i stället för DEG</punkt>
+          <punkt>Svar utan enhet eller utan mellanled</punkt>
+        </lista>
+        <underrubrik>Packa</underrubrik>
+        <text>Miniräknare (kolla DEG), formelblad, pennor, sudd, vatten.</text>
+      </kolumn>
+    </kolumner>
+    <knapp typ="tenta">Starta övningstentan</knapp>
+    <berattare>Sista bilden innan övningstentan. Läs igenom hela tentan först. Gör sedan del 1 och säkra G-poängen. Gå vidare till del 2, och om något låser sig, hoppa och kom tillbaka. Spara tjugo minuter i slutet till att kontrollera enheter och avrundning. Här ser du de vanligaste poängtapparna. Ta en titt på listan en gång till på tentamorgonen. Packa miniräknaren och kontrollera att den står i grader. Nu kör vi övningstentan!</berattare>
+    <berattare sprak="en">Last slide before the practice exam. Read through the whole exam first. Then do part 1 and secure the pass points. Move on to part 2, and if something gets stuck, skip it and come back. Save twenty minutes at the end to check units and rounding. Here you can see the most common ways to lose points. Take one more look at the list on the morning of the exam. Pack your calculator and check that it's set to degrees. Now let's do the practice exam!</berattare>
+  </bild>
+
+</lektion>

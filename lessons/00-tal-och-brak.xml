@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lektion 1 i kursen (bok kap 1.1–1.3): räkneregler, negativa tal, bråk, decimaltal, avrundning -->
+<lektion id="tal-och-brak" ordning="5" omrade="Tal och enheter" titel="Tal, bråk &amp; räkneregler" titel-en="Numbers, fractions and rules">
+
+  <bild titel="Räkneordning och negativa tal" etikett="Räknegrunder · 1">
+    <rubrik>Parenteser först, plus och minus sist</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Prioriteringsregler</underrubrik>
+        <steg>
+          <punkt><b>Parenteser</b></punkt>
+          <punkt><b>Potenser och rötter</b></punkt>
+          <punkt><b>Multiplikation och division</b> (från vänster)</punkt>
+          <punkt><b>Addition och subtraktion</b> (från vänster)</punkt>
+        </steg>
+        <berakning>
+          <rad>8 + 4 \cdot 3 = 8 + 12 = 20</rad>
+          <rad>(8 + 4) \cdot 3 = 12 \cdot 3 = 36</rad>
+          <svar>20 - 2 \cdot 3^2 = 20 - 2 \cdot 9 = 2</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Negativa tal</underrubrik>
+        <text>På tallinjen är talet längre åt höger alltid större: <m>-8 \lt -2</m>.</text>
+        <berakning>
+          <rad text="ja">Elpris −0,12 kr/kWh, sedan +1,30 kr/kWh</rad>
+          <svar>1,30 - (-0,12) = 1,30 + 0,12 = 1,42\enh{kr/kWh}</svar>
+        </berakning>
+        <berakning>
+          <rad text="ja">Kiruna: −5 °C, +12 °C, sedan −8 °C</rad>
+          <svar>-5 + 12 - 8 = -1\,^\circ\text{C}</svar>
+        </berakning>
+        <tips>Minus minus blir plus: <m>a - (-b) = a + b</m>. Minus gånger minus blir plus.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Beräkna <m>30 - 4 \cdot (2 + 3)</m>.</fraga>
+      <ruta etikett="Svar" svar="10" tolerans="0"/>
+      <losning><berakning><rad>30 - 4 \cdot 5</rad><svar>= 30 - 20 = 10</svar></berakning></losning>
+    </testa>
+    <berattare>Vi börjar från grunden, för det är här många poäng försvinner i onödan. Räkneordningen är: parenteser först, sedan potenser och rötter, sedan gånger och delat, och sist plus och minus. Åtta plus fyra gånger tre blir alltså tjugo, inte trettiosex. Negativa tal blir lätta med en tallinje: längre åt höger betyder större. Och kom ihåg att minus minus blir plus. Skillnaden mellan ett elpris på minus tolv öre och plus en krona och trettio är alltså en krona och fyrtiotvå.</berattare>
+    <berattare sprak="en">We start from the basics, because this is where many points are lost for no reason. The order of operations is: brackets first, then powers and roots, then multiplication and division, and last addition and subtraction. Eight plus four times three is twenty, not thirty-six. Negative numbers are easy with a number line: further to the right means larger. And remember that minus minus becomes plus. The difference between an electricity price of minus 12 öre and plus 1.30 kronor is 1.42 kronor.</berattare>
+  </bild>
+
+  <bild titel="Bråk: begrepp, förkorta och förlänga" etikett="Räknegrunder · 2">
+    <rubrik>Täljare över nämnare</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel stor="ja">\frac{\text{täljare}}{\text{nämnare}} = \text{täljare} \div \text{nämnare}</formel>
+        <lista>
+          <punkt><b>Nämnaren</b> visar hur många lika delar det hela är delat i.</punkt>
+          <punkt><b>Täljaren</b> visar hur många delar vi har.</punkt>
+          <punkt>Bråk till decimal: dela. <m>\frac{3}{4} = 0,75</m>,  <m>\frac{3}{5} = 0,6</m></punkt>
+        </lista>
+        <underrubrik>Blandad form</underrubrik>
+        <text><m>\frac{7}{4} = 1\frac{3}{4}</m> eftersom 7 ÷ 4 = 1, rest 3.</text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Förkorta och förlänga</underrubrik>
+        <text>Gör samma sak med täljare och nämnare. Värdet ändras inte.</text>
+        <berakning>
+          <rad>\frac{12}{16} = \frac{12 / 4}{16 / 4} = \frac{3}{4} \quad \text{(förkorta)}</rad>
+          <svar>\frac{2}{3} = \frac{2 \cdot 4}{3 \cdot 4} = \frac{8}{12} \quad \text{(förlänga)}</svar>
+        </berakning>
+        <underrubrik>Hur stor är delen?</underrubrik>
+        <text>Delen = antal av sorten ÷ totalt antal. 6 vinster av 20 matcher: <m>\frac{6}{20} = \frac{3}{10} = 30 %</m></text>
+      </kolumn>
+    </kolumner>
+    <berattare>Ett bråk är egentligen en division. Nämnaren, den undre siffran, säger hur många lika delar det hela är delat i. Täljaren, den övre, säger hur många delar du har. Tre fjärdedelar är alltså tre delat med fyra, noll komma sjuttiofem. Att förkorta betyder att dela både täljare och nämnare med samma tal, och att förlänga betyder att gångra båda med samma tal. Värdet ändras inte, bara utseendet. Det behöver du när du ska lägga ihop bråk med olika nämnare.</berattare>
+    <berattare sprak="en">A fraction is really a division. The denominator, the bottom number, says how many equal parts the whole is divided into. The numerator, the top number, says how many parts you have. Three quarters is three divided by four, which is 0.75. Simplifying means dividing both numerator and denominator by the same number, and expanding means multiplying both by the same number. The value does not change, only how it looks. You need this when adding fractions with different denominators.</berattare>
+  </bild>
+
+  <bild titel="De fyra räknesätten med bråk" etikett="Räknegrunder · 3">
+    <rubrik>Plus, minus, gånger och delat</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel>\frac{a}{b} + \frac{c}{b} = \frac{a + c}{b}</formel>
+        <text>Olika nämnare? Gör först <b>gemensam nämnare</b>.</text>
+        <berakning>
+          <rad text="ja">Receptet kräver 3/4 l mjölk, du har hällt i 2/3 l</rad>
+          <rad>\frac{3}{4} - \frac{2}{3} = \frac{9}{12} - \frac{8}{12} = \frac{1}{12}\enh{l}</rad>
+          <svar>\frac{1}{12}\enh{l} \approx 0,083\enh{l} \approx 0,8\enh{dl}</svar>
+        </berakning>
+        <berakning>
+          <rad>\frac{3}{8} + \frac{1}{4} = \frac{3}{8} + \frac{2}{8} = \frac{5}{8}</rad>
+          <svar text="ja">5/8 av pizzan är uppäten, 3/8 är kvar.</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <formel>\frac{a}{b} \cdot \frac{c}{d} = \frac{a c}{b d}</formel>
+        <berakning>
+          <rad text="ja">Rabatt 2/5 på en jacka för 3 000 kr</rad>
+          <svar>\frac{2}{5} \cdot 3000 = 1200\enh{kr} \;\Rightarrow\; 1800\enh{kr}</svar>
+        </berakning>
+        <formel>\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}</formel>
+        <berakning>
+          <rad text="ja">2/3 l saft, varje glas rymmer 1/6 l</rad>
+          <svar>\frac{2}{3} \div \frac{1}{6} = \frac{2}{3} \cdot \frac{6}{1} = \frac{12}{3} = 4 \text{ glas}</svar>
+        </berakning>
+        <tips>Division: behåll det första bråket, vänd det andra och multiplicera.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Beräkna <m>\frac{1}{2} + \frac{1}{3}</m>. Svara i decimalform med två decimaler.</fraga>
+      <ruta etikett="Svar" svar="0,83" tolerans="0.006"/>
+      <losning><berakning><rad>\frac{3}{6} + \frac{2}{6} = \frac{5}{6}</rad><svar>\frac{5}{6} \approx 0,83</svar></berakning></losning>
+    </testa>
+    <berattare>Här är de fyra räknesätten med bråk. Plus och minus kräver samma nämnare. Har du tre fjärdedelar minus två tredjedelar gör du om båda till tolftedelar: nio tolftedelar minus åtta tolftedelar blir en tolftedel. Gånger är enklast: täljare gånger täljare och nämnare gånger nämnare. Två femtedelar av tretusen kronor är tolvhundra kronor. Och delat med ett bråk betyder att du vänder på det andra bråket och multiplicerar. Två tredjedelar delat med en sjättedel blir fyra glas saft.</berattare>
+    <berattare sprak="en">Here are the four operations with fractions. Addition and subtraction need the same denominator. For three quarters minus two thirds you turn both into twelfths: nine twelfths minus eight twelfths is one twelfth. Multiplication is easiest: numerator times numerator and denominator times denominator. Two fifths of three thousand kronor is twelve hundred kronor. And dividing by a fraction means you flip the second fraction and multiply. Two thirds divided by one sixth gives four glasses of juice.</berattare>
+  </bild>
+
+  <bild titel="Decimaltal och avrundning" etikett="Räknegrunder · 4">
+    <rubrik>Avrunda rätt – och avrunda sist</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Decimaltal</underrubrik>
+        <text>Siffrans plats avgör värdet: 3,<b>4</b>56 → 4 tiondelar, 3,4<b>5</b>6 → 5 hundradelar.</text>
+        <berakning>
+          <rad text="ja">Elbil 1,7 kWh/mil, 12,5 mil, 2,40 kr/kWh</rad>
+          <rad>1,7 \cdot 12,5 = 21,25\enh{kWh}</rad>
+          <svar>21,25 \cdot 2,40 = 51\enh{kr}</svar>
+        </berakning>
+        <underrubrik>Avrundningsregeln</underrubrik>
+        <text>Titta på siffran efter den plats du avrundar till: 0–4 nedåt, 5–9 uppåt.</text>
+      </kolumn>
+      <kolumn>
+        <tabell>
+          <rad rubrik="ja"><cell>10 521 556 avrundat till</cell><cell>Svar</cell></rad>
+          <rad><cell>närmaste tusental</cell><cell>10 522 000</cell></rad>
+          <rad><cell>närmaste hundratusental</cell><cell>10 500 000</cell></rad>
+          <rad><cell>närmaste miljon</cell><cell>11 000 000</cell></rad>
+        </tabell>
+        <varning>Praktisk uppåtrundning: hela hinkar, säckar, plattor och lastbilar avrundas alltid uppåt, även 7,1 → 8.</varning>
+        <tips>Räkna med alla decimaler och avrunda bara slutsvaret. Annars växer felet för varje steg.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Avrunda 0,04275 kN till hela newton (1 kN = 1000 N).</fraga>
+      <ruta etikett="Svar" enhet="N" svar="43" tolerans="0"/>
+      <losning><berakning><rad>0,04275 \cdot 1000 = 42,75\enh{N}</rad><svar>\approx 43\enh{N}</svar></berakning></losning>
+    </testa>
+    <berattare>Decimaltal och avrundning. Siffrans plats efter kommat avgör värdet: tiondelar, hundradelar, tusendelar. När du avrundar tittar du på siffran direkt efter den plats du avrundar till. Noll till fyra avrundas nedåt, fem till nio uppåt. Men i byggvärlden finns ett viktigt undantag: hela hinkar, säckar och lastbilslass avrundas alltid uppåt, annars räcker det inte. Och spara avrundningen till slutsvaret, så att felet inte växer under vägen.</berattare>
+    <berattare sprak="en">Decimals and rounding. The position of a digit after the decimal point decides its value: tenths, hundredths, thousandths. When you round, look at the digit right after the place you are rounding to. Zero to four rounds down, five to nine rounds up. But in construction there is an important exception: whole buckets, bags and truck loads are always rounded up, otherwise there is not enough. And save the rounding for the final answer, so the error does not grow along the way.</berattare>
+  </bild>
+
+</lektion>

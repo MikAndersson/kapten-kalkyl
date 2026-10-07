@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="algebra" ordning="30" omrade="Algebra" titel="Algebra: uttryck, potenser &amp; ekvationer" titel-en="Algebra: expressions, powers and equations">
+
+  <bild titel="Uttryck, parenteser och polynom" etikett="Algebra · 1">
+    <rubrik>Samla lika termer</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Förenkla uttryck</underrubrik>
+        <text>Ett uttryck saknar likhetstecken. Lika termer läggs ihop: <m>4x + 6x = 10x</m></text>
+        <formel>a(b + c) = ab + ac</formel>
+        <berakning>
+          <rad>3(x + 4) - 2x</rad>
+          <rad>= 3x + 12 - 2x</rad>
+          <svar>= x + 12</svar>
+        </berakning>
+        <text>Värdet av uttrycket när <m>x = 5</m>: <m>5 + 12 = 17</m></text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Polynom i fallande ordning</underrubrik>
+        <text>Högsta exponenten först, konstanten sist:</text>
+        <berakning><svar>3 + y + 2y^2 \;\rightarrow\; 2y^2 + y + 3</svar></berakning>
+        <underrubrik>Algebraisk area</underrubrik>
+        <text>En rektangel har sidorna <m>2x</m> och <m>x + 3</m>.</text>
+        <berakning>
+          <rad>A = 2x(x + 3)</rad>
+          <svar>A = 2x^2 + 6x</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Förenkla <m>5(x - 2) + 3x</m> och beräkna värdet när <m>x = 4</m>.</fraga>
+      <ruta etikett="Värde" svar="22" tolerans="0"/>
+      <losning><berakning><rad>5x - 10 + 3x = 8x - 10</rad><svar>8 \cdot 4 - 10 = 22</svar></berakning></losning>
+    </testa>
+    <berattare>Algebra börjar med uttryck. Ett uttryck har inget likhetstecken, och du förenklar det genom att lägga ihop lika termer: fyra x plus sex x blir tio x. Parenteser multiplicerar du in i varje term: tre gånger x plus fyra blir tre x plus tolv. Polynom skrivs i fallande ordning, med den högsta exponenten först och konstanten sist, precis som det står på lärarens formelblad. Och en area kan också vara ett uttryck: en rektangel med sidorna två x och x plus tre har arean två x i kvadrat plus sex x.</berattare>
+    <berattare sprak="en">Algebra starts with expressions. An expression has no equals sign, and you simplify it by adding like terms: four x plus six x is ten x. Brackets are multiplied into each term: three times x plus four becomes three x plus twelve. Polynomials are written in descending order, with the highest exponent first and the constant last, just like on the teacher's formula sheet. And an area can also be an expression: a rectangle with sides two x and x plus three has area two x squared plus six x.</berattare>
+  </bild>
+
+  <bild titel="Potenser och potenslagar" etikett="Algebra · 2">
+    <rubrik>Exponenten räknar faktorerna</rubrik>
+    <kolumner>
+      <kolumn>
+        <text><m>a^n</m> betyder <m>a</m> gånger sig själv <m>n</m> gånger: <m>2^3 = 2 \cdot 2 \cdot 2 = 8</m></text>
+        <tabell>
+          <rad rubrik="ja"><cell>Lag</cell><cell>Exempel</cell></rad>
+          <rad><cell><m>a^m \cdot a^n = a^{m+n}</m></cell><cell><m>2^3 \cdot 2^4 = 2^7 = 128</m></cell></rad>
+          <rad><cell><m>\frac{a^m}{a^n} = a^{m-n}</m></cell><cell><m>\frac{10^5}{10^2} = 10^3</m></cell></rad>
+          <rad><cell><m>(a^m)^n = a^{m n}</m></cell><cell><m>(10^3)^2 = 10^6</m></cell></rad>
+          <rad><cell><m>(ab)^n = a^n b^n</m></cell><cell><m>(2x)^3 = 8x^3</m></cell></rad>
+          <rad><cell><m>a^0 = 1</m></cell><cell><m>5^0 = 1</m></cell></rad>
+        </tabell>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Potenser i byggsammanhang</underrubrik>
+        <lista>
+          <punkt>Kvadratisk platta med sidan 4 m: <m>A = 4^2 = 16\enh{m^2}</m></punkt>
+          <punkt>Kub med sidan 3 m: <m>V = 3^3 = 27\enh{m^3}</m></punkt>
+          <punkt>Rötter är potenser: <m>\sqrt{a} = a^{1/2}</m>, <m>\sqrt[3]{a} = a^{1/3}</m></punkt>
+          <punkt>Tiopotenser: <m>1\enh{kN} = 10^3\enh{N}</m>, <m>1\enh{mm} = 10^{-3}\enh{m}</m></punkt>
+        </lista>
+        <varning><m>2^3</m> är inte <m>2 \cdot 3</m>. Det är 8, inte 6.</varning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Förenkla <m>\frac{x^5 \cdot x^3}{x^2}</m>. Vilken exponent får <m>x</m>?</fraga>
+      <ruta etikett="Exponent" svar="6" tolerans="0"/>
+      <losning><berakning><rad>x^{5+3} = x^8</rad><svar>\frac{x^8}{x^2} = x^{8-2} = x^6</svar></berakning></losning>
+    </testa>
+    <berattare>Potenser. Två upphöjt till tre betyder två gånger två gånger två, alltså åtta, inte sex. Potenslagarna står på formelbladet: när du multiplicerar potenser med samma bas adderar du exponenterna, och när du dividerar subtraherar du dem. En potens upphöjd till en potens multiplicerar exponenterna. Och allt upphöjt till noll är ett. I byggsammanhang dyker potenser upp i areor och volymer, och rötter är bara potenser med bråk som exponent. Kvadratroten ur a är a upphöjt till en halv.</berattare>
+    <berattare sprak="en">Powers. Two to the power of three means two times two times two, which is eight, not six. The power laws are on the formula sheet: when you multiply powers with the same base you add the exponents, and when you divide you subtract them. A power raised to a power multiplies the exponents. And anything to the power of zero is one. In construction, powers show up in areas and volumes, and roots are just powers with a fraction as exponent. The square root of a is a to the power of one half.</berattare>
+  </bild>
+
+  <bild titel="Ekvationer och formelomvandling" etikett="Algebra · 3">
+    <rubrik>Gör samma sak på båda sidor</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Lös ekvationen</underrubrik>
+        <berakning>
+          <rad>3x + 12 = 45</rad>
+          <rad>3x = 33 \qquad (-12)</rad>
+          <svar>x = 11 \qquad (\div 3)</svar>
+        </berakning>
+        <underrubrik>Lös ut h ur V = π · r² · h</underrubrik>
+        <berakning>
+          <rad>V = \pi r^2 h</rad>
+          <svar>h = \frac{V}{\pi r^2} \qquad (\div\, \pi r^2)</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Fler omvandlingar</underrubrik>
+        <lista>
+          <punkt><m>G = \gamma V \;\Rightarrow\; V = G/\gamma</m></punkt>
+          <punkt><m>A = b h / 2 \;\Rightarrow\; h = 2A / b</m></punkt>
+          <punkt><m>y = kx + m \;\Rightarrow\; x = (y - m)/k</m></punkt>
+          <punkt><m>V = \pi r^2 h \;\Rightarrow\; r = \sqrt{V/(\pi h)}</m></punkt>
+        </lista>
+        <underrubrik>Potensekvation</underrubrik>
+        <berakning>
+          <rad>x^2 = 3,24 \;\Rightarrow\; x = \sqrt{3,24} = 1,8</rad>
+          <svar>x^3 = 64 \;\Rightarrow\; x = 64^{1/3} = 4</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Lös ekvationen <m>5x - 8 = 27</m>.</fraga>
+      <ruta etikett="x =" svar="7" tolerans="0.001"/>
+      <losning>
+        <berakning>
+          <rad>5x = 35</rad>
+          <svar>x = 7</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Ekvationer handlar om balans. Det du gör på ena sidan gör du på den andra. Tre x plus tolv är 45: dra bort tolv och dela med tre, så x är elva. Samma sak gäller formler. Vill du lösa ut h ur cylinderns volym delar du båda sidor med pi r i kvadrat. Och en potensekvation som x i kvadrat lika med 3,24 löser du med roten ur. Är x upphöjt till tre tar du tredje roten, alltså upphöjt till en tredjedel.</berattare>
+    <berattare sprak="en">Equations are about balance. Whatever you do on one side, you do on the other. Three x plus twelve equals 45: subtract twelve and divide by three, so x is eleven. The same goes for formulas. To solve for h in the volume of a cylinder, you divide both sides by pi r squared. And a power equation such as x squared equals 3.24 is solved with the square root. If x is raised to the power of three, you take the cube root, that is, to the power of one third.</berattare>
+  </bild>
+
+  <bild titel="Text till ekvation och olikheter" etikett="Algebra · 4">
+    <rubrik>Översätt texten till matematik</rubrik>
+    <kolumner>
+      <kolumn>
+        <steg>
+          <punkt>Bestäm vad <m>x</m> är.</punkt>
+          <punkt>Översätt texten till en ekvation.</punkt>
+          <punkt>Lös och kontrollera.</punkt>
+          <punkt>Svara med en hel mening och enhet.</punkt>
+        </steg>
+        <underrubrik>Fast och rörlig kostnad</underrubrik>
+        <formel>\text{total} = \text{fast} + \text{pris per enhet} \cdot x</formel>
+        <berakning>
+          <rad text="ja">Abonnemang 99 kr/mån + 1,50 kr/sms, totalt 144 kr</rad>
+          <rad>99 + 1,50x = 144</rad>
+          <rad>1,50x = 45</rad>
+          <svar text="ja">x = 30, alltså 30 sms</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Olikhet (VG)</underrubrik>
+        <text>Som en ekvation, men med <m>\le</m> eller <m>\ge</m>. Svaret blir ett intervall.</text>
+        <berakning>
+          <rad text="ja">Kranhyra 2 800 kr + 3 600 kr/dag, budget 30 000 kr</rad>
+          <rad>2800 + 3600x \le 30 000</rad>
+          <rad>3600x \le 27 200</rad>
+          <rad>x \le 7,56</rad>
+          <svar text="ja">Högst 7 hela dagar</svar>
+        </berakning>
+        <varning>Vid en olikhet om antal: avrunda åt det håll som håller villkoret. Här nedåt, annars spräcks budgeten.</varning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Du tar 200 kr i fast materialkostnad plus <m>5x</m> kr i arbete. Totalt blir det 800 kr. Lös ut <m>x</m>.</fraga>
+      <ruta etikett="x =" enhet="kr" svar="120" tolerans="0"/>
+      <losning><berakning><rad>200 + 5x = 800</rad><rad>5x = 600</rad><svar>x = 120</svar></berakning></losning>
+    </testa>
+    <berattare>Textuppgifter är där algebra blir användbart. Bestäm först vad x betyder. Översätt sedan texten till en ekvation, lös den och kontrollera. Svara alltid med en hel mening. Fast och rörlig kostnad följer samma mönster: totalen är den fasta avgiften plus priset per enhet gånger antalet. På VG-nivå kommer olikheter. De löses som ekvationer, men svaret blir ett intervall. Med en budget på trettiotusen kronor kan du hyra kranen i högst sju hela dagar. Avrunda neråt, annars spräcks budgeten.</berattare>
+    <berattare sprak="en">Word problems are where algebra becomes useful. First decide what x means. Then translate the text into an equation, solve it and check. Always answer with a full sentence. Fixed and variable cost follow the same pattern: the total is the fixed fee plus the price per unit times the number of units. At distinction level you get inequalities. They are solved like equations, but the answer is an interval. With a budget of thirty thousand kronor you can hire the crane for at most seven whole days. Round down, otherwise you break the budget.</berattare>
+  </bild>
+
+  <bild titel="Mönster och generella samband" etikett="Algebra · 5">
+    <rubrik>Hitta regeln – och testa den</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Aritmetisk talföljd (lika stort steg)</underrubrik>
+        <formel stor="ja">a_n = a_1 + (n - 1) \cdot d</formel>
+        <text><m>a_1</m> = första talet, <m>d</m> = ökningen per steg, <m>n</m> = vilket nummer.</text>
+        <berakning>
+          <rad text="ja">Byggställning: 5, 9, 13 … rör. Dag 7?</rad>
+          <rad>d = 4,\ a_7 = 5 + 6 \cdot 4</rad>
+          <svar>a_7 = 29 \text{ rör}</svar>
+        </berakning>
+        <berakning>
+          <rad text="ja">Stolpar var 4:e meter, första vid 0 m. Stolpe 25?</rad>
+          <svar>(25 - 1) \cdot 4 = 96\enh{m}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Andra mönster</underrubrik>
+        <lista>
+          <punkt>Kvadrattal 1, 4, 9, 16 … ⇒ <m>a_n = n^2</m></punkt>
+          <punkt>Triangeltal 1, 3, 6, 10 … ⇒ <m>a_n = \frac{n(n+1)}{2}</m></punkt>
+          <punkt>Proportionellt samband: <m>y = kx</m> (går genom origo)</punkt>
+          <punkt>Linjärt samband med startvärde: <m>y = kx + m</m></punkt>
+        </lista>
+        <varning>En formel som bara stämmer för ett värde kan vara fel. Testa den på minst två tal i följden.</varning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Fönster sitter vid 1,2 m, 2,4 m, 3,6 m … Var sitter det tionde fönstret?</fraga>
+      <ruta etikett="Höjd" enhet="m" svar="12"/>
+      <losning><berakning><rad>a_{10} = 1,2 + 9 \cdot 1,2</rad><svar>a_{10} = 12\enh{m}</svar></berakning></losning>
+    </testa>
+    <berattare>Mönster och generella samband, kapitel två punkt fem i boken. Den vanligaste typen är en aritmetisk talföljd, där talen ökar lika mycket varje gång. Formeln är a n lika med a ett plus n minus ett gånger d. Byggställningen med fem, nio och tretton rör ökar med fyra per dag, så dag sju behövs tjugonio rör. Lägg märke till n minus ett: den första stolpen står vid noll, så stolpe tjugofem står vid tjugofyra gånger fyra, nittiosex meter. Testa alltid din formel på flera tal i följden.</berattare>
+    <berattare sprak="en">Patterns and general relationships, chapter two point five in the book. The most common type is an arithmetic sequence, where the numbers increase by the same amount every time. The formula is a n equals a one plus n minus one times d. The scaffold with five, nine and thirteen tubes increases by four per day, so day seven needs twenty-nine tubes. Notice the n minus one: the first post stands at zero, so post twenty-five stands at twenty-four times four, ninety-six metres. Always test your formula on several numbers in the sequence.</berattare>
+  </bild>
+
+</lektion>

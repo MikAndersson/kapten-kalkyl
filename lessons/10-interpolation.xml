@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="interpolation" ordning="90" omrade="Funktioner" titel="Interpolation" titel-en="Interpolation">
+
+  <bild titel="Linjär interpolation" etikett="Interpolation · 1">
+    <rubrik>En rak linje mellan två kända punkter</rubrik>
+    <kolumner>
+      <kolumn><figur namn="interpolation"/></kolumn>
+      <kolumn>
+        <formel stor="ja">y = y_1 + (x - x_1) \cdot \frac{y_2 - y_1}{x_2 - x_1}</formel>
+        <text>Villkor: <m>x_1 \lt x \lt x_2</m></text>
+        <lista numrerad="ja">
+          <punkt>Skriv upp punkterna <m>(x_1, y_1)</m> och <m>(x_2, y_2)</m>.</punkt>
+          <punkt>Räkna lutningen <m>\frac{y_2 - y_1}{x_2 - x_1}</m>.</punkt>
+          <punkt>Gånger hur långt du går från <m>x_1</m>.</punkt>
+          <punkt>Lägg till <m>y_1</m>.</punkt>
+        </lista>
+      </kolumn>
+    </kolumner>
+    <berattare>Interpolation finns på varje tenta. Du har två kända värden i en tabell och vill veta värdet mellan dem. Då drar du en rak linje mellan punkterna. Formeln är: y är lika med y ett plus x minus x ett, gånger y två minus y ett, delat med x två minus x ett. Tänk så här: ta lutningen, gånger hur långt du går från första punkten, och lägg till startvärdet.</berattare>
+    <berattare sprak="en">Interpolation is on every exam. You have two known values in a table and want the value between them. Then you draw a straight line between the points. The formula is: y equals y one plus x minus x one, times y two minus y one, divided by x two minus x one. Think of it like this: take the slope, multiply by how far you go from the first point, and add the starting value.</berattare>
+  </bild>
+
+  <bild titel="Prova själv: interpolation" etikett="Interpolation · prova själv">
+    <rubrik>Rak linje mellan två tabellvärden</rubrik>
+    <text>Flytta x mellan de två kända punkterna. Värdet räknas ut med andelen av vägen mellan punkterna.</text>
+    <interaktiv typ="interpolation" x1="10" y1="0,69" x2="20" y2="0,86"/>
+    <berattare>Prova själv! De två blå punkterna är kända värden från en tabell, här hastighetstrycket vid tio och tjugo meters höjd. Dra i reglaget så flyttas den orange punkten längs den raka linjen mellan dem. Under grafen ser du hur andelen av vägen räknas ut: hur långt x har kommit, delat med hela steget. Sedan tar man startvärdet plus andelen gånger hela ökningen. Står x mitt emellan blir andelen en halv, och värdet hamnar mitt emellan.</berattare>
+    <berattare sprak="en">Try it yourself! The two blue points are known values from a table, here the velocity pressure at ten and twenty metres height. Drag the slider and the orange point moves along the straight line between them. Below the graph you can see how the share of the way is calculated: how far x has come, divided by the whole step. Then you take the starting value plus the share times the whole increase. If x is halfway, the share is one half, and the value lands halfway between.</berattare>
+  </bild>
+  <bild titel="Interpolation i praktiken" etikett="Interpolation · 2">
+    <rubrik>Tre typuppgifter</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>50 kg vid 20 mm, 90 kg vid 40 mm. Vikt vid 30 mm?</underrubrik>
+        <berakning>
+          <rad>y = 50 + (30 - 20) \cdot \frac{90 - 50}{40 - 20}</rad>
+          <rad>y = 50 + 10 \cdot 2</rad>
+          <svar>y = 70\enh{kg}</svar>
+        </berakning>
+        <underrubrik>Temperatur 10 °C kl 08, 22 °C kl 12. Kl 11?</underrubrik>
+        <berakning>
+          <rad>y = 10 + (11 - 8) \cdot \frac{22 - 10}{12 - 8}</rad>
+          <svar>y = 10 + 3 \cdot 3 = 19\,^\circ\text{C}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Vindtryck 1,34 vid 30 m, 1,65 vid 40 m. Vid 35 m?</underrubrik>
+        <berakning>
+          <rad>y = 1,34 + 5 \cdot \frac{0,31}{10}</rad>
+          <svar>y = 1,34 + 0,155 = 1,495</svar>
+        </berakning>
+        <tips>Ligger x exakt mitt emellan? Då är svaret medelvärdet av y₁ och y₂. Bra kontroll!</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Ett isoleringsmaterial har värmemotståndet 0,55 vid 20 mm och 1,10 vid 40 mm. Bestäm värmemotståndet vid 25 mm.</fraga>
+      <ruta etikett="Värmemotstånd" svar="0,6875" tolerans="0.006"/>
+      <losning>
+        <berakning>
+          <rad>y = 0,55 + (25 - 20) \cdot \frac{1,10 - 0,55}{40 - 20}</rad>
+          <rad>y = 0,55 + 5 \cdot 0,0275</rad>
+          <svar>y = 0,6875 \approx 0,69</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Här är tre typuppgifter. Materialet som väger 50 kilo vid 20 millimeter och 90 kilo vid 40 millimeter: lutningen är 40 delat med 20, alltså 2 kilo per millimeter. Vid 30 millimeter har vi gått 10 millimeter, så vi lägger till 20 kilo och får 70. Ligger x precis mitt emellan blir svaret medelvärdet, och det är en perfekt kontroll. Prova uppgiften nedan, där x inte ligger i mitten.</berattare>
+    <berattare sprak="en">Here are three typical tasks. The material that weighs 50 kilos at 20 millimetres and 90 kilos at 40 millimetres: the slope is 40 divided by 20, which is 2 kilos per millimetre. At 30 millimetres we have moved 10 millimetres, so we add 20 kilos and get 70. If x is exactly halfway, the answer is the average, and that is a perfect check. Try the task below, where x is not in the middle.</berattare>
+  </bild>
+
+  <bild titel="Andelsmetoden, vindlast och extrapolation" etikett="Interpolation · 3">
+    <rubrik>Startvärde + andel · differens</rubrik>
+    <kolumner>
+      <kolumn>
+        <text>Lärarens metod, samma sak som formeln men i ord:</text>
+        <formel stor="ja">\text{värde} = \text{startvärde} + \text{andel} \cdot \text{differens}</formel>
+        <berakning>
+          <rad text="ja">Vindlast i Jönköping, terrängtyp III: qₚ = 0,41 vid 4 m och 0,51 vid 8 m. Byggnaden är 7 m.</rad>
+          <rad>\text{andel} = \frac{7 - 4}{8 - 4} = 0,75</rad>
+          <rad>q_p = 0,41 + 0,75 \cdot (0,51 - 0,41)</rad>
+          <svar>q_p = 0,485 \approx 0,49\enh{kN/m^2}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Interpolation eller extrapolation?</underrubrik>
+        <lista>
+          <punkt><b>Interpolation</b>: x ligger mellan två kända värden. Säkert om sambandet är ungefär linjärt.</punkt>
+          <punkt><b>Extrapolation</b>: x ligger utanför tabellen. Osäkert – undvik vid dimensionering.</punkt>
+          <punkt>Värden kan också minska: hållfasthet 15 kN vid 10 % fukt och 9 kN vid 20 % ger 12 kN vid 15 %.</punkt>
+        </lista>
+        <varning>Svaret måste ligga mellan y₁ och y₂. Gör det inte det har du räknat fel.</varning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En isolering har U-värdet 0,25 vid 100 mm och 0,18 vid 150 mm. Vad blir U-värdet vid 125 mm?</fraga>
+      <ruta etikett="U-värde" svar="0,215" tolerans="0.002"/>
+      <losning><berakning><rad>\text{andel} = \frac{125 - 100}{150 - 100} = 0,5</rad><svar>0,25 + 0,5 \cdot (0,18 - 0,25) = 0,215</svar></berakning></losning>
+    </testa>
+    <berattare>Läraren beskriver interpolation med orden: värdet är startvärdet plus andelen gånger differensen. Andelen är hur stor del av intervallet du har gått. För en sju meter hög byggnad i Jönköping ligger sju mellan fyra och åtta meter i vindlasttabellen. Andelen är tre fjärdedelar, och hastighetstrycket blir 0,41 plus 0,75 gånger 0,10, ungefär 0,49 kilonewton per kvadratmeter. Värden kan också minska, då blir differensen negativ. Och om x ligger utanför tabellen kallas det extrapolation, vilket är osäkert.</berattare>
+    <berattare sprak="en">The teacher describes interpolation with the words: the value is the starting value plus the proportion times the difference. The proportion is how much of the interval you have covered. For a seven metre tall building in Jönköping, seven lies between four and eight metres in the wind load table. The proportion is three quarters, and the velocity pressure becomes 0.41 plus 0.75 times 0.10, about 0.49 kilonewtons per square metre. Values can also decrease, then the difference is negative. And if x lies outside the table it is called extrapolation, which is uncertain.</berattare>
+  </bild>
+
+</lektion>

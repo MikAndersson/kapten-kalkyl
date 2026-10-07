@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="procent" ordning="20" omrade="Tal och enheter" titel="Procent" titel-en="Percentages">
+
+  <bild titel="Förändringsfaktor" etikett="Procent · 1">
+    <rubrik>Ett tal gör hela jobbet</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel stor="ja">\text{nytt värde} = \text{gammalt} \cdot \text{förändringsfaktor}</formel>
+        <tabell>
+          <rad rubrik="ja"><cell>Förändring</cell><cell>Faktor</cell></rad>
+          <rad><cell>+12 %</cell><cell>1,12</cell></rad>
+          <rad><cell>+5 %</cell><cell>1,05</cell></rad>
+          <rad><cell>−15 %</cell><cell>0,85</cell></rad>
+          <rad><cell>−8 %</cell><cell>0,92</cell></rad>
+        </tabell>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Maskin 24 000 kr, +12 %</underrubrik>
+        <berakning><svar>24 000 \cdot 1,12 = 26 880\enh{kr}</svar></berakning>
+        <underrubrik>Entreprenör, 15 % vinst på 860 000 kr</underrubrik>
+        <berakning><svar>860 000 \cdot 1,15 = 989 000\enh{kr}</svar></berakning>
+        <underrubrik>Lön 240 kr/h i 38 h</underrubrik>
+        <berakning><svar>240 \cdot 38 = 9120\enh{kr}</svar></berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Ett parti isolering kostar 6 400 kr. Priset höjs med 15 %. Beräkna det nya priset.</fraga>
+      <ruta etikett="Nytt pris" enhet="kr" svar="7360" tolerans="1"/>
+      <losning><berakning><svar>6400 \cdot 1,15 = 7360\enh{kr}</svar></berakning></losning>
+    </testa>
+    <berattare>Procent blir enkelt med förändringsfaktorn. En ökning med 12 procent är faktorn 1,12. En minskning med 15 procent är faktorn 0,85, alltså ett minus 0,15. Sedan multiplicerar du bara: nytt värde är gammalt värde gånger faktorn. En maskin för 24 000 kronor som höjs 12 procent kostar 26 880 kronor. Du slipper räkna ut procentbeloppet separat och lägga till det.</berattare>
+    <berattare sprak="en">Percentages become easy with the change factor. An increase of 12 percent is the factor 1.12. A decrease of 15 percent is the factor 0.85, that is one minus 0.15. Then you simply multiply: the new value is the old value times the factor. A machine for 24,000 kronor that goes up 12 percent costs 26,880 kronor. You don't need to work out the percentage amount separately and add it.</berattare>
+  </bild>
+
+  <bild titel="Procentuell förändring" etikett="Procent · 2">
+    <rubrik>Hur många procent?</rubrik>
+    <formel stor="ja">\text{förändring} = \frac{\text{nytt} - \text{gammalt}}{\text{gammalt}} \cdot 100 %</formel>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Ställning 30 000 → 22 500 kr</underrubrik>
+        <berakning>
+          <rad>\frac{22 500 - 30 000}{30 000} = \frac{-7500}{30 000} = -0,25</rad>
+          <svar text="ja">Värdeminskning: 25 %</svar>
+        </berakning>
+        <underrubrik>Timpris 480 → 552 kr</underrubrik>
+        <berakning>
+          <rad>\frac{552 - 480}{480} = 0,15</rad>
+          <svar text="ja">Ökning: 15 %</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Budget 3,6 → 4,2 miljoner</underrubrik>
+        <berakning>
+          <rad>\frac{4,2 - 3,6}{3,6} = 0,1667</rad>
+          <svar text="ja">≈ 16,7 % över budget</svar>
+        </berakning>
+        <varning>Dela alltid med det ursprungliga värdet, alltså det gamla. Att dela med 4,2 ger 14,3 %, vilket är fel.</varning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En byggställning kostade 25 000 kr men säljs för 18 000 kr. Hur stor är värdeminskningen i procent?</fraga>
+      <ruta etikett="Värdeminskning" enhet="%" svar="28"/>
+      <losning>
+        <berakning>
+          <rad>\frac{18 000 - 25 000}{25 000} = -0,28</rad>
+          <svar text="ja">Värdeminskning 28 %</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>När frågan är hur många procent något har ändrats tar du skillnaden delat med det gamla värdet. En ställning som går från 30 000 till 22 500 kronor har minskat med 7 500. Delat med 30 000 blir det 0,25, alltså 25 procent. Den vanligaste fällan är att dela med det nya värdet. Dela alltid med det du utgick ifrån.</berattare>
+    <berattare sprak="en">When the question is by how many percent something has changed, you take the difference divided by the old value. A scaffold that goes from 30,000 to 22,500 kronor has dropped by 7,500. Divided by 30,000, that is 0.25, which is 25 percent. The most common trap is dividing by the new value. Always divide by the value you started from.</berattare>
+  </bild>
+
+  <bild titel="Flera förändringar efter varandra" etikett="Procent · 3 · VG">
+    <rubrik>Multiplicera faktorerna, addera aldrig procenten</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Projekt 2,4 milj, +8 % och sedan +5 %</underrubrik>
+        <berakning>
+          <rad>2,4 \cdot 1,08 \cdot 1,05 = 2,7216</rad>
+          <svar text="ja">≈ 2,72 miljoner kr</svar>
+        </berakning>
+        <underrubrik>Virke 40 000 kr, +15 % och sedan −5 %</underrubrik>
+        <berakning>
+          <rad>\text{Faktor: } 1,15 \cdot 0,95 = 1,0925</rad>
+          <rad text="ja">Total ökning: +9,25 %</rad>
+          <svar>40 000 \cdot 1,0925 = 43 700\enh{kr}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <varning>+15 % och −5 % blir inte +10 %. Den andra procentsatsen räknas på det nya, högre priset.</varning>
+        <underrubrik>Bil 500 000 kr: +3 %, −5 %, +7 %</underrubrik>
+        <berakning>
+          <rad>500 000 \cdot 1,03 \cdot 0,95 \cdot 1,07</rad>
+          <svar>= 523 497,50\enh{kr}</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <berattare>På VG-delen kommer ofta flera förändringar i rad. Då multiplicerar du faktorerna. Ett projekt på 2,4 miljoner som ökar 8 procent och sedan 5 procent blir 2,4 gånger 1,08 gånger 1,05, ungefär 2,72 miljoner. Lägg märke till att en höjning med 15 procent följd av en sänkning med 5 procent inte blir plus 10 procent. Faktorn blir 1,15 gånger 0,95, alltså 1,0925. Det är en ökning med 9,25 procent.</berattare>
+    <berattare sprak="en">Part 2 often has several changes in a row. Then you multiply the factors. A project of 2.4 million that increases by 8 percent and then by 5 percent becomes 2.4 times 1.08 times 1.05, about 2.72 million. Notice that an increase of 15 percent followed by a decrease of 5 percent is not plus 10 percent. The factor is 1.15 times 0.95, which is 1.0925. That's an increase of 9.25 percent.</berattare>
+  </bild>
+
+  <bild titel="Prova själv: flera förändringar" etikett="Procent · prova själv">
+    <rubrik>Dra i reglagen</rubrik>
+    <text>Ändra de två förändringarna och se varför man <b>multiplicerar</b> förändringsfaktorerna. Den grå stapeln visar vad man får om man felaktigt lägger ihop procenten.</text>
+    <interaktiv typ="procent" start="1000" p1="20" p2="-20"/>
+    <tips>Plus 20 % och sedan minus 20 % blir inte noll: 1,20 · 0,80 = 0,96, alltså 4 % lägre än från början.</tips>
+    <berattare>Nu får du prova själv. Dra i reglagen för de två förändringarna. Börja med plus tjugo och minus tjugo procent. Många tror att man hamnar på samma värde igen, men titta på staplarna: man hamnar fyra procent lägre. Det beror på att den andra förändringen räknas på ett nytt, större värde. Därför multiplicerar man förändringsfaktorerna: ett komma två gånger noll komma åtta blir noll komma nittiosex. Den grå stapeln visar felet man gör om man bara lägger ihop procenten.</berattare>
+    <berattare sprak="en">Now it is your turn. Drag the sliders for the two changes. Start with plus twenty and minus twenty percent. Many people think you end up at the same value again, but look at the bars: you end up four percent lower. That is because the second change is calculated on a new, larger value. That is why you multiply the change factors: one point two times zero point eight is zero point nine six. The grey bar shows the mistake you make if you simply add the percentages.</berattare>
+  </bild>
+  <bild titel="Genomsnittlig förändring per år" etikett="Procent · 4 · VG">
+    <rubrik>Roten ur ger snittet per år</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel stor="ja">\text{start} \cdot x^n = \text{slut} \;\Rightarrow\; x = \left(\frac{\text{slut}}{\text{start}}\right)^{1/n}</formel>
+        <underrubrik>Ställning 18 000 → 13 500 kr på 3 år</underrubrik>
+        <berakning>
+          <rad>x^3 = \frac{13 500}{18 000} = 0,75</rad>
+          <rad>x = 0,75^{1/3} = 0,9086</rad>
+          <rad>0,9086 - 1 = -0,0914</rad>
+          <svar text="ja">≈ 9,1 % minskning per år</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <varning>Dela inte 25 % med 3. Det ger 8,3 %, men procent växer som ränta-på-ränta.</varning>
+        <tips>På miniräknaren: 0.75 ^ ( 1 ÷ 3 ). Glöm inte parentesen runt 1/3.</tips>
+        <text>Samma teknik löser potensekvationer: <m>x^3 = 27 \Rightarrow x = 27^{1/3} = 3</m></text>
+      </kolumn>
+    </kolumner>
+    <berattare>Det här är en riktig VG-klassiker: genomsnittlig procentuell förändring per år. En ställning går från 18 000 till 13 500 kronor på tre år. Kvoten är 0,75. Förändringsfaktorn per år är tredje roten ur 0,75, alltså 0,75 upphöjt till en tredjedel. Det blir 0,9086, alltså en minskning med ungefär 9,1 procent per år. Dela inte bara 25 procent med tre. Det blir fel eftersom procent räknas på det nya värdet varje år.</berattare>
+    <berattare sprak="en">This is a real distinction-level classic: the average percentage change per year. A scaffold goes from 18,000 to 13,500 kronor in three years. The ratio is 0.75. The change factor per year is the cube root of 0.75, that is 0.75 to the power of one third. That gives 0.9086, which is a decrease of about 9.1 percent per year. Don't just divide 25 percent by three. That is wrong, because the percentage is calculated on the new value each year.</berattare>
+  </bild>
+
+  <bild titel="Procentkedja" etikett="Procent · 5">
+    <rubrik>Räkna från det du vet</rubrik>
+    <text>A tjänar 60 % av B. B tjänar 110 % av C. C tjänar 83 % av D. D tjänar 30 000 kr.</text>
+    <berakning>
+      <rad>C = 0,83 \cdot 30 000 = 24 900\enh{kr}</rad>
+      <rad>B = 1,10 \cdot 24 900 = 27 390\enh{kr}</rad>
+      <svar>A = 0,60 \cdot 27 390 = 16 434\enh{kr}</svar>
+    </berakning>
+    <underrubrik>Del av helhet</underrubrik>
+    <text><m>\text{delen} = \text{andelen} \cdot \text{det hela}</m>   och   <m>\text{andelen} = \frac{\text{delen}}{\text{det hela}}</m></text>
+    <tips>"Av" betyder gånger. 60 % av B = 0,60 · B.</tips>
+    <berattare>En procentkedja ser rörig ut men är lätt om du börjar där du har ett tal. D tjänar 30 000. C tjänar 83 procent av det, alltså 0,83 gånger 30 000, vilket är 24 900. B tjänar 110 procent av C, alltså 1,10 gånger 24 900. Och A tjänar 60 procent av B. Ordet "av" betyder alltid gånger.</berattare>
+    <berattare sprak="en">A percentage chain looks messy but is easy if you start where you have a number. D earns 30,000. C earns 83 percent of that, so 0.83 times 30,000, which is 24,900. B earns 110 percent of C, so 1.10 times 24,900. And A earns 60 percent of B. The word "of" always means times.</berattare>
+  </bild>
+
+</lektion>

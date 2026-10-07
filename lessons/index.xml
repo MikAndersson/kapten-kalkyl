@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  INNEHÅLLSFÖRTECKNING över lektionsfilerna.
+  - Lägg till en lektion: lägg XML-filen i den här mappen och skriv en rad <fil> nedan.
+  - Ta bort en lektion: ta bort raden (eller sätt visa="nej").
+  Ordningen här spelar ingen roll. Lektionerna sorteras efter attributet
+  ordning="…" i respektive fil (matematikens naturliga ordning, se LÄSMIG.txt).
+-->
+<lektioner>
+  <fil>00-tal-och-brak.xml</fil>
+  <fil>01-introduktion.xml</fil>
+  <fil>02-enheter.xml</fil>
+  <fil>03-procent.xml</fil>
+  <fil>03b-ekonomi.xml</fil>
+  <fil>04-algebra.xml</fil>
+  <fil>05-linjara-funktioner.xml</fil>
+  <fil>06-geometri.xml</fil>
+  <fil>07-trigonometri.xml</fil>
+  <fil>08-vektorer.xml</fil>
+  <fil>09-statistik.xml</fil>
+  <fil>10-interpolation.xml</fil>
+  <fil>11-mekanik.xml</fil>
+  <fil>11b-tyngdpunkt.xml</fil>
+  <fil>99-tentastrategi.xml</fil>
+</lektioner>

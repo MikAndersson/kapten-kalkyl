@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="statistik" ordning="80" omrade="Statistik" titel="Medelvärde &amp; statistik" titel-en="Averages and statistics">
+
+  <bild titel="Viktat medelvärde" etikett="Statistik · 1">
+    <rubrik>Energiförbrukning per m²</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel stor="ja">E_{\text{medel}} = \frac{A_1 e_1 + A_2 e_2 + \dots}{A_1 + A_2 + \dots}</formel>
+        <underrubrik>Skola: 700 m² à 24 kWh/m², 300 m² à 44 kWh/m²</underrubrik>
+        <berakning>
+          <rad>E_{\text{tot}} = 700 \cdot 24 + 300 \cdot 44</rad>
+          <rad>E_{\text{tot}} = 16 800 + 13 200 = 30 000\enh{kWh}</rad>
+          <rad>A_{\text{tot}} = 700 + 300 = 1000\enh{m^2}</rad>
+          <svar>E_{\text{medel}} = 30 000 / 1000 = 30\enh{kWh/m^2}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <varning>(24 + 44) / 2 = 34 är fel. Den stora delen drar mer, så svaret ska hamna närmare 24.</varning>
+        <underrubrik>Kontrollera påstående</underrubrik>
+        <text>Hälften av ytan 20, andra hälften 40 kWh/m². Är medel 30?</text>
+        <berakning>
+          <rad text="ja">Lika stora ytor ⇒ (20 + 40) / 2 = 30</rad>
+          <svar text="ja">Ja, det stämmer.</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En skola består av 900 m² med 25 kWh/m² och 600 m² med 40 kWh/m². Beräkna medelförbrukningen.</fraga>
+      <ruta etikett="Medel" enhet="kWh/m²" svar="31"/>
+      <losning>
+        <berakning>
+          <rad>E_{\text{tot}} = 900 \cdot 25 + 600 \cdot 40 = 22 500 + 24 000 = 46 500\enh{kWh}</rad>
+          <svar>E_{\text{medel}} = 46 500 / 1500 = 31\enh{kWh/m^2}</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Viktat medelvärde kommer garanterat. Om en byggnad har delar med olika storlek kan du inte bara ta medelvärdet av förbrukningarna. Du räknar först ut den totala energin: varje area gånger sin förbrukning, och summera. Sedan delar du med den totala arean. Skolan får 30 000 kilowattimmar på 1 000 kvadratmeter, alltså 30 kilowattimmar per kvadratmeter. Kontroll: svaret ska ligga närmare den största delens värde.</berattare>
+    <berattare sprak="en">The weighted average is guaranteed to come up. If a building has parts of different sizes, you cannot just average the consumption figures. First you calculate the total energy: each area times its consumption, and add them up. Then you divide by the total area. The school gets 30,000 kilowatt hours on 1,000 square metres, which is 30 kilowatt hours per square metre. Check: the answer should be closer to the value of the largest part.</berattare>
+  </bild>
+
+  <bild titel="Många delar" etikett="Statistik · 2 · VG">
+    <rubrik>Ställ upp en tabell</rubrik>
+    <tabell>
+      <rad rubrik="ja"><cell>Del</cell><cell>A (m²)</cell><cell>e (kWh/m²)</cell><cell>A · e (kWh)</cell></rad>
+      <rad><cell>1</cell><cell>80</cell><cell>18</cell><cell>1 440</cell></rad>
+      <rad><cell>2</cell><cell>60</cell><cell>25</cell><cell>1 500</cell></rad>
+      <rad><cell>3</cell><cell>40</cell><cell>35</cell><cell>1 400</cell></rad>
+      <rad><cell>4</cell><cell>20</cell><cell>45</cell><cell>900</cell></rad>
+      <rad rubrik="ja"><cell>Summa</cell><cell>200</cell><cell></cell><cell>5 240</cell></rad>
+    </tabell>
+    <berakning><svar>E_{\text{medel}} = 5240 / 200 = 26,2\enh{kWh/m^2}</svar></berakning>
+    <underrubrik>Tillbyggnad</underrubrik>
+    <text>Kontor 1 200 m² à 25 + tillbyggnad 400 m² à 60</text>
+    <berakning><svar>\frac{1200 \cdot 25 + 400 \cdot 60}{1600} = \frac{54 000}{1600} = 33,75\enh{kWh/m^2}</svar></berakning>
+    <berattare>När det är fyra delar eller fler: gör en tabell. En kolumn för arean, en för förbrukningen och en för produkten. Summera arean och summera produkterna. Taket med fyra sektioner får 5 240 delat med 200, alltså 26,2 kilowattimmar per kvadratmeter. Tabellen gör att du inte tappar bort någon del, och den visar läraren att du har en metod.</berattare>
+    <berattare sprak="en">With four parts or more, make a table. One column for the area, one for the consumption, and one for the product. Add up the areas and add up the products. The roof with four sections gets 5,240 divided by 200, which is 26.2 kilowatt hours per square metre. The table makes sure you don't lose any part, and it shows the teacher that you have a method.</berattare>
+  </bild>
+
+  <bild titel="Lägesmått och spridning" etikett="Statistik · 3 · VG">
+    <rubrik>Vilket lag är mest stabilt?</rubrik>
+    <kolumner>
+      <kolumn>
+        <lista>
+          <punkt><b>Medelvärde</b> = summan / antalet</punkt>
+          <punkt><b>Median</b> = mittersta värdet i storleksordning</punkt>
+          <punkt><b>Typvärde</b> = vanligaste värdet</punkt>
+          <punkt><b>Variationsbredd</b> = största − minsta</punkt>
+          <punkt><b>Standardavvikelse</b> = genomsnittligt avstånd till medel (miniräknare/Excel STDAV)</punkt>
+        </lista>
+      </kolumn>
+      <kolumn>
+        <text>Lag A: 10, 11, 10, 9, 10, 10<br/>Lag B: 7, 15, 12, 8, 16, 10</text>
+        <berakning>
+          <rad>\text{Medel A} = 60 / 6 = 10,0 \text{ dagar}</rad>
+          <rad>\text{Medel B} = 68 / 6 \approx 11,3 \text{ dagar}</rad>
+          <rad>\text{Bredd A} = 11 - 9 = 2 \text{ dagar}</rad>
+          <rad>\text{Bredd B} = 16 - 7 = 9 \text{ dagar}</rad>
+          <svar text="ja">Lag A är stabilast: minst spridning</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <tips>Motivera med spridningen. "A har mindre variationsbredd (2 mot 9 dagar), alltså jämnare tider" ger full poäng.</tips>
+    <berattare>Statistikuppgiften på VG-delen handlar oftast om två arbetslag. Räkna medelvärdet för båda, summan delat med antalet. Bedöm sedan stabiliteten med spridningen. Det enklaste måttet är variationsbredden: största minus minsta värdet. Lag A har bredden 2 dagar och lag B 9 dagar, så lag A är mest stabilt. Det viktiga är att du motiverar med spridningen och inte bara med medelvärdet.</berattare>
+    <berattare sprak="en">The statistics task in part 2 is usually about two work teams. Calculate the mean for both: the sum divided by the number of values. Then judge the stability using the spread. The simplest measure is the range: the largest value minus the smallest. Team A has a range of 2 days and team B 9 days, so team A is the most stable. The important thing is that you justify it with the spread, not just with the mean.</berattare>
+  </bild>
+
+  <bild titel="Median, typvärde och standardavvikelse" etikett="Statistik · 4">
+    <rubrik>Läge och spridning</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Median och typvärde</underrubrik>
+        <text>Sortera först! Medianen är mittvärdet. Vid jämnt antal: medelvärdet av de två mittersta.</text>
+        <berakning>
+          <rad text="ja">4, 6, 8, 20</rad>
+          <rad>\text{median} = \frac{6 + 8}{2} = 7 \qquad \text{medel} = \frac{38}{4} = 9,5</rad>
+          <svar text="ja">Värdet 20 drar upp medelvärdet men inte medianen.</svar>
+        </berakning>
+        <text><b>Typvärde</b> = vanligaste värdet. 3, 6, 6, 7, 8, 8, 8, 10 → typvärde 8.</text>
+        <tips>Finns extremvärden (t.ex. ett projekt på 90 tkr bland 40–55 tkr) säger medianen mer än medelvärdet.</tips>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Standardavvikelse (stickprov)</underrubrik>
+        <formel stor="ja">s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n - 1}}</formel>
+        <tabell>
+          <rad rubrik="ja"><cell>Lag A</cell><cell>x − x̄</cell><cell>(x − x̄)²</cell></rad>
+          <rad><cell>10, 10, 10, 10</cell><cell>0</cell><cell>0</cell></rad>
+          <rad><cell>11</cell><cell>1</cell><cell>1</cell></rad>
+          <rad><cell>9</cell><cell>−1</cell><cell>1</cell></rad>
+          <rad rubrik="ja"><cell>Summa</cell><cell></cell><cell>2</cell></rad>
+        </tabell>
+        <berakning><svar>\bar{x} = 10,\quad s = \sqrt{\frac{2}{6 - 1}} \approx 0,63 \text{ dagar}</svar></berakning>
+        <text>Litet <m>s</m> = jämna värden = stabilt. I Excel: =STDAV.S(…)</text>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Tider i dagar: 12, 15, 14, 13, 16, 14, 18, 17, 15, 13. Bestäm medianen.</fraga>
+      <ruta etikett="Median" enhet="dagar" svar="14,5" tolerans="0.01"/>
+      <losning><berakning><rad text="ja">Sorterat: 12, 13, 13, 14, 14, 15, 15, 16, 17, 18</rad><svar>\text{median} = \frac{14 + 15}{2} = 14,5</svar></berakning></losning>
+    </testa>
+    <berattare>Mer statistik från lektion fem och sju. Medianen är mittvärdet, men du måste sortera först. Är det ett jämnt antal tar du medelvärdet av de två mittersta. Typvärdet är det vanligaste värdet. Medianen är bra när det finns extremvärden: i talen fyra, sex, åtta och tjugo är medianen sju, men medelvärdet nio och en halv eftersom tjugo drar upp det. Standardavvikelsen mäter hur långt värdena ligger från medelvärdet i genomsnitt. Formeln står på formelbladet, och i Excel använder du STDAV punkt S. Ett litet värde betyder ett stabilt arbetslag.</berattare>
+    <berattare sprak="en">More statistics from lessons five and seven. The median is the middle value, but you must sort first. With an even number of values you take the mean of the two middle ones. The mode is the most common value. The median is useful when there are extreme values: in four, six, eight and twenty the median is seven, but the mean is nine and a half because twenty pulls it up. The standard deviation measures how far the values lie from the mean on average. The formula is on the formula sheet, and in Excel you use STDEV dot S. A small value means a stable work team.</berattare>
+  </bild>
+
+  <bild titel="Prova själv: lägesmått" etikett="Statistik · prova själv">
+    <rubrik>Hur påverkar ett extremvärde?</rubrik>
+    <text>Skriv en egen talserie eller tryck <b>Lägg till ett extremvärde</b>. Se hur medelvärde, median och standardavvikelse ändras.</text>
+    <interaktiv typ="statistik" varden="12; 15; 15; 17; 18; 20; 22"/>
+    <tips>Finns ett extremvärde beskriver medianen ett typiskt värde bättre än medelvärdet.</tips>
+    <berattare>Nu får du leka med statistik. Prickarna är talserien. Den orange linjen är medelvärdet och den streckade är medianen. Tryck på knappen Lägg till ett extremvärde. Se hur medelvärdet rusar iväg mot det stora talet, medan medianen nästan står still. Standardavvikelsen växer också, eftersom spridningen blir större. Det är därför man ofta använder medianen för till exempel löner eller huspriser. Du kan också skriva in egna tal, skilj dem med semikolon.</berattare>
+    <berattare sprak="en">Now you get to play with statistics. The dots are the data set. The orange line is the mean and the dashed line is the median. Press the button Add an extreme value. Watch the mean rush off towards the large number, while the median hardly moves. The standard deviation also grows, because the spread gets bigger. That is why the median is often used for things like salaries or house prices. You can also type in your own numbers, separated by semicolons.</berattare>
+  </bild>
+  <bild titel="Läsa diagram" etikett="Statistik · diagram">
+    <rubrik>Läs av, räkna, dra slutsats</rubrik>
+    <kolumner>
+      <kolumn>
+        <diagram typ="stapel" titel="Antal levererade fönster per månad" x="Månad" y="Antal" etiketter="Jan;Feb;Mar;Apr;Maj;Jun" varden="40;55;35;60;80;50"/>
+      </kolumn>
+      <kolumn>
+        <steg>
+          <punkt>Läs titeln och axlarna: vad visas och i vilken enhet?</punkt>
+          <punkt>Läs av värdena noga (peka på en stapel så visas värdet).</punkt>
+          <punkt>Räkna: totalt, medelvärde eller procentuell förändring.</punkt>
+        </steg>
+        <berakning>
+          <rad text="ja">Medel per månad:</rad>
+          <rad>\frac{40 + 55 + 35 + 60 + 80 + 50}{6} = \frac{320}{6}</rad>
+          <rad>\approx 53{,}3 \text{ fönster}</rad>
+          <rad text="ja">Ökning april → maj:</rad>
+          <svar>\frac{80 - 60}{60} \approx 33\,\%</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <varning>Kontrollera var y-axeln börjar. Börjar den inte på noll ser skillnaderna större ut än de är.</varning>
+    <testa>
+      <fraga>Hur många fönster levererades totalt under första kvartalet (jan–mar)?</fraga>
+      <ruta etikett="Totalt" enhet="st" svar="130" tolerans="0"><fel varde="40">Det är bara januari. Lägg ihop januari, februari och mars.</fel><fel varde="320">Det är hela halvåret. Första kvartalet är januari till mars.</fel></ruta>
+      <losning><berakning><rad>40 + 55 + 35</rad><svar>= 130 \text{ st}</svar></berakning></losning>
+    </testa>
+    <berattare>På tentan kan det komma diagram som du ska läsa av. Gör alltid samma tre steg. Läs först titeln och axlarna, så du vet vad som visas och i vilken enhet. Läs sedan av värdena noga. Här kan du peka på en stapel så syns värdet. Räkna till sist det som efterfrågas, till exempel medelvärde eller procentuell förändring. Medel per månad blir trehundratjugo delat med sex, ungefär femtiotre fönster. Från april till maj ökar det från sextio till åttio, alltså trettiotre procent. Och se upp med y-axeln: börjar den inte på noll ser skillnaderna större ut än de är.</berattare>
+    <berattare sprak="en">In the exam there may be charts that you need to read. Always do the same three steps. First read the title and the axes, so you know what is shown and in which unit. Then read the values carefully. Here you can point at a bar to see its value. Finally calculate what is asked for, for example the mean or the percentage change. The mean per month is three hundred and twenty divided by six, about fifty-three windows. From April to May it increases from sixty to eighty, which is thirty-three percent. And watch the y axis: if it does not start at zero, the differences look bigger than they are.</berattare>
+  </bild>
+  <bild titel="Medelfel, konfidensintervall, Excel och diagram" etikett="Statistik · 5 · VG">
+    <rubrik>Hur säkert är medelvärdet?</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel>SE = \frac{s}{\sqrt{n}} \qquad \text{95 \% KI} = \bar{x} \pm 1,96 \cdot SE \approx \bar{x} \pm 2 \cdot SE</formel>
+        <berakning>
+          <rad text="ja">Fem höjdmätningar: x̄ = 9,67 m, s = 0,81 m, n = 5</rad>
+          <rad>SE = 0,81 / \sqrt{5} \approx 0,36\enh{m}</rad>
+          <svar>KI \approx 9,67 \pm 0,72 = [8,95;\ 10,39]\enh{m}</svar>
+        </berakning>
+        <text>Smalare intervall = säkrare mätserie. Fler mätningar ger mindre medelfel. (Vid mycket få mätningar är intervallet egentligen något bredare, men 2·SE räcker i kursen.)</text>
+        <underrubrik>Bonus: sannolikhet "minst en"</underrubrik>
+        <text><m>P(\text{minst ett fel}) = 1 - P(\text{inget fel})</m>. 3 % fel, tre kort: <m>1 - 0,97^3 \approx 8,7 %</m></text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Excel / Google Sheets</underrubrik>
+        <tabell>
+          <rad rubrik="ja"><cell>Mått</cell><cell>Funktion</cell></rad>
+          <rad><cell>Medelvärde</cell><cell>=MEDEL(B3:B12)</cell></rad>
+          <rad><cell>Median</cell><cell>=MEDIAN(B3:B12)</cell></rad>
+          <rad><cell>Typvärde</cell><cell>=TYPVÄRDE(…) / =MODE.SNGL(…)</cell></rad>
+          <rad><cell>Största / minsta</cell><cell>=MAX(…) / =MIN(…)</cell></rad>
+          <rad><cell>Standardavvikelse</cell><cell>=STDAV.S(…)</cell></rad>
+        </tabell>
+        <underrubrik>Välj rätt diagram</underrubrik>
+        <lista>
+          <punkt><b>Stapeldiagram</b>: jämföra kategorier (lag, projekt).</punkt>
+          <punkt><b>Linjediagram</b>: förändring över tid.</punkt>
+          <punkt><b>Histogram</b>: hur värdena fördelar sig.</punkt>
+        </lista>
+        <tips>Diagram behöver rubrik, axlar med enheter och 2–4 meningar tolkning.</tips>
+      </kolumn>
+    </kolumner>
+    <berattare>På VG-nivå och i Excel-uppgiften kommer medelfel och konfidensintervall, som också står på formelbladet. Medelfelet är standardavvikelsen delat med roten ur antalet mätningar. Ett ungefärligt nittiofemprocentigt konfidensintervall är medelvärdet plus minus två medelfel. Ju smalare intervall, desto säkrare mätserie. I Excel heter funktionerna MEDEL, MEDIAN, TYPVÄRDE, MAX, MIN och STDAV punkt S. Välj stapeldiagram för att jämföra, linjediagram för tid och histogram för fördelning. Och skriv alltid några meningar om vad resultatet betyder.</berattare>
+    <berattare sprak="en">At distinction level and in the Excel assignment you will meet the standard error and the confidence interval, which are also on the formula sheet. The standard error is the standard deviation divided by the square root of the number of measurements. An approximate ninety-five percent confidence interval is the mean plus or minus two standard errors. The narrower the interval, the more reliable the series. In Excel the functions are AVERAGE, MEDIAN, MODE, MAX, MIN and STDEV dot S. Choose a bar chart to compare, a line chart for time and a histogram for distribution. And always write a few sentences about what the result means.</berattare>
+  </bild>
+
+</lektion>

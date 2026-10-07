@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="enheter" ordning="10" omrade="Tal och enheter" titel="Enheter" titel-en="Units">
+
+  <bild titel="Längd, area och volym" etikett="Enheter · 1">
+    <rubrik>Gör om till meter först</rubrik>
+    <kolumner>
+      <kolumn>
+        <tabell>
+          <rad rubrik="ja"><cell>Från</cell><cell>Till meter</cell><cell>Exempel</cell></rad>
+          <rad><cell>mm</cell><cell>÷ 1000</cell><cell>95 mm = 0,095 m</cell></rad>
+          <rad><cell>cm</cell><cell>÷ 100</cell><cell>20 cm = 0,20 m</cell></rad>
+          <rad><cell>dm</cell><cell>÷ 10</cell><cell>5 dm = 0,5 m</cell></rad>
+        </tabell>
+        <underrubrik>Area och volym växer snabbare</underrubrik>
+        <lista>
+          <punkt><m>1\enh{m^2} = 100\enh{dm^2} = 10 000\enh{cm^2}</m></punkt>
+          <punkt><m>1\enh{m^3} = 1000\enh{dm^3} = 1000</m> liter</punkt>
+          <punkt><m>1\enh{dm^3} = 1</m> liter</punkt>
+        </lista>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Exempel: regel 45 × 95 mm, 3,6 m lång</underrubrik>
+        <berakning>
+          <rad>V = b \cdot h \cdot l</rad>
+          <rad>V = 0,045\enh{m} \cdot 0,095\enh{m} \cdot 3,6\enh{m}</rad>
+          <svar>V = 0,015 39\enh{m^3} \approx 0,0154\enh{m^3}</svar>
+        </berakning>
+        <varning>45 · 95 · 3,6 ger 15 390 – ett tal i blandade enheter som betyder ingenting. Gör om allt till meter innan du multiplicerar.</varning>
+      </kolumn>
+    </kolumner>
+    <berattare>Första regeln i byggmatte: gör om allt till meter innan du räknar. Millimeter delar du med tusen, centimeter med hundra. Så en regel som är 45 gånger 95 millimeter blir 0,045 gånger 0,095 meter. Gånger längden 3,6 meter ger det ungefär 0,0154 kubikmeter. Om du glömmer att göra om får du 15 390, och det är fel enhet och helt orimligt. Kom också ihåg att en kubikmeter är tusen liter.</berattare>
+    <berattare sprak="en">First rule of construction maths: convert everything to metres before you calculate. Millimetres are divided by a thousand, centimetres by a hundred. So a stud that is 45 by 95 millimetres becomes 0.045 by 0.095 metres. Times the length of 3.6 metres, that gives about 0.0154 cubic metres. If you forget to convert, you get 15,390, which is the wrong unit and completely unreasonable. Also remember that one cubic metre is a thousand litres.</berattare>
+  </bild>
+
+  <bild titel="Massa, tyngd och kraft" etikett="Enheter · 2">
+    <rubrik>Från kilogram till kilonewton</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel stor="ja">G = m \cdot g</formel>
+        <text><m>m</m> = massa i kg, <m>g = 9,82\enh{m/s^2}</m> i Sverige (avrundas ofta till 10 i byggberäkningar), <m>G</m> = tyngd i N</text>
+        <tabell>
+          <rad rubrik="ja"><cell>Massa</cell><cell>Tyngd (g ≈ 10)</cell></rad>
+          <rad><cell>1 kg</cell><cell>10 N</cell></rad>
+          <rad><cell>100 kg</cell><cell>1 kN</cell></rad>
+          <rad><cell>1 ton = 1000 kg</cell><cell>10 kN</cell></rad>
+        </tabell>
+        <text>1 kN = 1000 N</text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Exempel: 820 kg i kN</underrubrik>
+        <berakning>
+          <rad>G = m \cdot g</rad>
+          <rad>G = 820\enh{kg} \cdot 10\enh{m/s^2}</rad>
+          <rad>G = 8200\enh{N}</rad>
+          <svar>G = 8,2\enh{kN}</svar>
+        </berakning>
+        <underrubrik>Exempel: 3,6 ton i kN</underrubrik>
+        <berakning>
+          <rad>3,6\enh{ton} = 3600\enh{kg}</rad>
+          <svar>G = 3600 \cdot 10 = 36 000\enh{N} = 36\enh{kN}</svar>
+        </berakning>
+        <varning>7800 kg är 7,8 ton, men 78 kN. Ton är massa, kN är kraft.</varning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En stålkonstruktion väger 450 kg. Beräkna tyngden i kN (g ≈ 10).</fraga>
+      <ruta etikett="Tyngd" enhet="kN" svar="4,5"/>
+      <losning>
+        <berakning>
+          <rad>G = 450 \cdot 10 = 4500\enh{N}</rad>
+          <svar>G = 4,5\enh{kN}</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Nu skiljer vi på massa och tyngd. Massa mäts i kilogram eller ton. Tyngd är en kraft och mäts i newton. Formeln är G lika med m gånger g, och på tentan använder du g ungefär 10. Lätt minnesregel: 100 kilo blir en kilonewton, och ett ton blir tio kilonewton. Så 820 kilo blir 8200 newton, alltså 8,2 kilonewton. Testa själv på uppgiften under bilden innan du går vidare.</berattare>
+    <berattare sprak="en">Now we separate mass and weight. Mass is measured in kilograms or tonnes. Weight is a force and is measured in newtons. The formula is G equals m times g, and on the exam you use g approximately 10. Easy rule: 100 kilos becomes one kilonewton, and one tonne becomes ten kilonewtons. So 820 kilos becomes 8,200 newtons, which is 8.2 kilonewtons. Try the task below the slide yourself before you move on.</berattare>
+  </bild>
+
+  <bild titel="Avrunda uppåt och proportionalitet" etikett="Enheter · 3">
+    <rubrik>Hela körningar, tid och antal</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>13,7 ton material, 1,9 ton per lastbil</underrubrik>
+        <berakning>
+          <rad>13,7 / 1,9 = 7,21</rad>
+          <svar text="ja">Svar: 8 körningar</svar>
+        </berakning>
+        <varning>Avrunda alltid uppåt när det gäller hela körningar, plattor eller säckar. Sju körningar räcker inte.</varning>
+        <underrubrik>Antal av något</underrubrik>
+        <berakning>
+          <rad>3,15\enh{kN} = 3150\enh{N}</rad>
+          <svar>3150 / 45\enh{N} = 70 \text{ reglar}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Tid i decimalform</underrubrik>
+        <text>6¼ h = 6,25 h · 7,79 h = 7 h + 0,79 · 60 min ≈ 7 h 47 min</text>
+        <underrubrik>Medelarbetstid för 6 snickare</underrubrik>
+        <text>6¼, 9, 4,5, 6, 13, 8 h</text>
+        <berakning>
+          <rad>(6,25 + 9 + 4,5 + 6 + 13 + 8) / 6</rad>
+          <svar>= 46,75 / 6 \approx 7,8\enh{h}</svar>
+        </berakning>
+        <text>Tegel: 22 st/min i 30 min ⇒ 22 · 30 = 660 st</text>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Ett bygge behöver 9,5 ton material. En lastbil tar 1,8 ton. Hur många körningar krävs?</fraga>
+      <ruta etikett="Antal körningar" enhet="st" svar="6" tolerans="0"/>
+      <losning>
+        <berakning>
+          <rad>9,5 / 1,8 = 5,28</rad>
+          <svar text="ja">Avrunda uppåt: 6 körningar</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Några snabba poäng som är lätta att tappa. När du delar fram ett antal körningar, plattor eller säckar avrundar du alltid uppåt. 13,7 ton delat med 1,9 ton blir 7,2, och då behövs 8 körningar. Kom också ihåg att en kvarts timme är 0,25 timmar, och att decimaler av en timme blir minuter om du multiplicerar med 60.</berattare>
+    <berattare sprak="en">A few quick points that are easy to lose. When you work out a number of truck loads, slabs or bags, always round up. 13.7 tonnes divided by 1.9 tonnes is 7.2, and then you need 8 loads. Also remember that a quarter of an hour is 0.25 hours, and that decimals of an hour become minutes when you multiply by 60.</berattare>
+  </bild>
+
+</lektion>

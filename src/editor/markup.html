@@ -1,0 +1,100 @@
+<!-- ==========================================================================
+     EDITORNS STOMME (egen fil, nås inte från lektions-/tentasidan)
+     ========================================================================== -->
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Kapten Kalkyl · editor</h1>
+      <span class="sub" id="app-subtitle"></span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-lektioner" aria-selected="true">Lektioner</button>
+      <button role="tab" id="tab-mallar" aria-selected="false">Tentafrågor</button>
+    </div>
+  </header>
+  <p class="note" id="intro-lektioner">Skapa eller ändra en lektion här. Klicka på <b>Ladda ner</b> och lägg XML-filen i mappen
+    <code>lessons/</code> och skriv in filnamnet i <code>lessons/index.xml</code> (se LÄSMIG.txt).</p>
+  <p class="note hidden" id="intro-mallar">Skapa egna tentafrågor (mallar) med slumpade siffror. Spara dem i din samling,
+    ladda ner filen och lägg den i mappen <code>mallar/</code> och i <code>mallar/index.xml</code> (se LÄSMIG.txt).</p>
+</div>
+<!-- ===================== EDITORN =====================
+     Formuläret och förhandsvisningen fylls i av JavaScript (se "Editorn"). -->
+<section id="view-editor" class="wrap" data-mode="form" style="padding-top:0">
+  <div class="ed-top">
+    <select id="ed-open" aria-label="Öppna lektion"></select>
+    <label class="btn ghost small file-btn">Importera XML-filer
+      <input type="file" id="ed-import" accept=".xml,text/xml,application/xml" multiple>
+    </label>
+    <span class="ed-top-actions">
+      <button class="btn" id="ed-new">Ny lektion</button>
+      <button class="btn primary" id="ed-download">Ladda ner</button>
+      <button class="btn" id="ed-copy">Kopiera XML</button>
+    </span>
+  </div>
+  <p class="note" id="ed-status" role="status"></p>
+
+  <div class="ed-switch" role="group" aria-label="Visa">
+    <button type="button" class="btn small" data-edmode="form" aria-pressed="true">Redigera</button>
+    <button type="button" class="btn small" data-edmode="preview" aria-pressed="false">Förhandsvisa</button>
+  </div>
+
+  <div class="editor">
+    <div class="ed-pane ed-form-pane" id="ed-form"></div>
+    <div class="ed-pane ed-preview-pane">
+      <div class="count" id="ed-count">Förhandsvisning</div>
+      <article class="board board-preview" id="ed-preview"></article>
+      <div class="ed-errors" id="ed-errors" hidden></div>
+      <div class="bubble ed-narr" id="ed-narration"></div>
+    </div>
+  </div>
+
+  <details class="ed-help" id="ed-advanced">
+    <summary>Avancerat: visa och ändra XML:en direkt</summary>
+    <textarea id="ed-xml" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Lektionens XML"></textarea>
+    <div class="btnrow"><button class="btn" id="ed-apply-xml">Läs in XML:en i formuläret</button></div>
+    <p class="note">Alla taggar beskrivs i LÄSMIG.txt.</p>
+  </details>
+</section>
+
+
+<!-- ===================== TENTAFRÅGOR (MALLAR) ===================== -->
+<section id="view-mallar" class="wrap hidden" data-mode="form" style="padding-top:0">
+  <div class="ed-top">
+    <select id="me-open" aria-label="Öppna mall"></select>
+    <label class="btn ghost small file-btn">Importera mallfil
+      <input type="file" id="me-import" accept=".xml,text/xml,application/xml" multiple>
+    </label>
+    <span class="ed-top-actions">
+      <button class="btn primary" id="me-save">Spara i min samling</button>
+      <button class="btn" id="me-download">Ladda ner samlingen</button>
+      <button class="btn" id="me-copy">Kopiera mallens XML</button>
+    </span>
+  </div>
+  <p class="note" id="me-status" role="status"></p>
+
+  <div class="ed-switch" role="group" aria-label="Visa">
+    <button type="button" class="btn small" data-memode="form" aria-pressed="true">Redigera</button>
+    <button type="button" class="btn small" data-memode="preview" aria-pressed="false">Förhandsvisa</button>
+  </div>
+
+  <div class="editor">
+    <div class="ed-pane ed-form-pane" id="me-form"></div>
+    <div class="ed-pane ed-preview-pane">
+      <div class="count">Förhandsvisning · <span id="me-seed"></span></div>
+      <div class="btnrow" style="margin:0">
+        <button class="btn small" id="me-reroll">🎲 Nya siffror</button>
+        <button class="btn small ghost" id="me-test">Testa 300 slumpningar</button>
+      </div>
+      <article class="board board-preview" id="me-preview"></article>
+      <div class="ed-errors" id="me-errors" hidden></div>
+      <div id="me-testres"></div>
+      <div class="ed-section"><h3>Min samling</h3><div id="me-collection"></div></div>
+    </div>
+  </div>
+
+  <details class="ed-help" id="me-advanced">
+    <summary>Avancerat: visa och ändra mallens XML</summary>
+    <textarea id="me-xml" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Mallens XML"></textarea>
+    <div class="btnrow"><button class="btn" id="me-apply-xml">Läs in XML:en i formuläret</button></div>
+  </details>
+</section>

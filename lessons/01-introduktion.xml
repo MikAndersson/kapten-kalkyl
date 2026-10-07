@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lektion: Introduktion. Se LÄSMIG.txt för alla taggar. -->
+<lektion id="introduktion" ordning="0" omrade="Introduktion" titel="Start" titel-en="Start">
+
+  <bild titel="Välkommen" etikett="Sluttentamen">
+    <rubrik>Allt du behöver kunna, på ett ställe</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Så ser tentan ut</underrubrik>
+        <tabell forstakolumn="rubrik">
+          <rad><cell>Skrivtid</cell><cell>180 min (räknetid ca 75–90 min)</cell></rad>
+          <rad><cell>Poäng</cell><cell>30 p</cell></rad>
+          <rad><cell>Del 1 · G</cell><cell>10 uppgifter, 16 p</cell></rad>
+          <rad><cell>Del 2 · VG</cell><cell>5 uppgifter, 14 p</cell></rad>
+          <rad><cell>Hjälpmedel</cell><cell>Miniräknare + godkänt formelblad</cell></rad>
+        </tabell>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Lektionens ordning (matematikens naturliga ordning)</underrubrik>
+        <lista numrerad="ja">
+          <punkt>Tal, bråk och räkneregler</punkt>
+          <punkt>Enheter</punkt>
+          <punkt>Procent och förändringsfaktor</punkt>
+          <punkt>Ränta, lån och index</punkt>
+          <punkt>Algebra: uttryck, potenser, ekvationer, mönster</punkt>
+          <punkt>Funktioner, räta linjen och ekvationssystem</punkt>
+          <punkt>Area, volym och skala</punkt>
+          <punkt>Pythagoras och trigonometri</punkt>
+          <punkt>Vektorer</punkt>
+          <punkt>Medelvärde och statistik</punkt>
+          <punkt>Interpolation</punkt>
+          <punkt>Massa, tyngd och laster</punkt>
+          <punkt>Tyngdpunkt</punkt>
+          <punkt>Tentastrategi, sedan övningstenta</punkt>
+        </lista>
+      </kolumn>
+    </kolumner>
+    <berattare>Hej och välkommen! Jag är Kapten Kalkyl, din superlärare i byggmatte. Den här lektionen förbereder dig för sluttentan i Tillämpad matematik. Tentan är på 30 poäng: del 1 är G-nivå med 16 poäng och del 2 är VG-nivå med 14 poäng. Du har tre timmar, men tentan är byggd för ungefär en och en halv timmes räknande, så du har gott om tid. Jag har gått igenom kursens övningstentor, exempeltestet och de utvalda tentafrågorna, och här kommer allt som brukar dyka upp. Efter varje avsnitt finns en kort minitenta som du kan hoppa över om avsnittet kändes lätt, och i slutet väntar en hel övningstenta med rättning. Nu kör vi!</berattare>
+    <berattare sprak="en">Hi and welcome! I'm Kapten Kalkyl, your super teacher in construction maths. This lesson prepares you for the final exam in Applied Mathematics. The exam is worth 30 points: part 1 is pass level with 16 points, and part 2 is distinction level with 14 points. You have three hours, but the exam is designed for about an hour and a half of calculating, so you have plenty of time. I have gone through the course's practice exams, the sample test and the selected exam questions, and here is everything that usually comes up. After each section there is a short mini exam that you can skip if the section felt easy, and at the end a full practice exam with marking is waiting for you. Let's go!</berattare>
+  </bild>
+
+  <bild titel="Redovisning" etikett="Redovisning">
+    <rubrik>Ett ensamt svar ger inga poäng</rubrik>
+    <steg>
+      <punkt><b>Formel</b> – skriv vilken formel du använder. <m>A = l \cdot b</m></punkt>
+      <punkt><b>Insättning</b> – sätt in värdena med enheter. <m>A = 8,2\enh{m} \cdot 5,4\enh{m}</m></punkt>
+      <punkt><b>Mellanled</b> – visa uträkningen. <m>A = 44,28\enh{m^2}</m></punkt>
+      <punkt><b>Svar med enhet</b> och rimlig avrundning. <m>A \approx 44,3\enh{m^2}</m></punkt>
+      <punkt><b>Rimlighet</b> – snabb koll: 8 · 5 = 40, alltså ligger 44 rätt.</punkt>
+    </steg>
+    <tips>Avrunda först i slutsvaret. Räkna vidare med alla decimaler i miniräknaren.</tips>
+    <berattare>Innan vi räknar något: så här får du poäng. Läraren vill se fem saker. Först formeln. Sedan insättningen, alltså siffrorna på rätt plats. Sedan mellanleden. Sedan svaret med enhet och en rimlig avrundning. Och sist en rimlighetskontroll i huvudet. Om du bara skriver 44,3 utan uträkning kan du tappa poängen, även om svaret är rätt. Ett proffstips: avrunda inte på vägen. Låt miniräknaren hålla alla decimaler och avrunda bara slutsvaret.</berattare>
+    <berattare sprak="en">Before we calculate anything: this is how you earn points. The teacher wants to see five things. First the formula. Then the substitution, meaning the numbers in the right places. Then the intermediate steps. Then the answer with a unit and sensible rounding. And finally a quick reasonableness check in your head. If you only write 44.3 without any working, you can lose the points, even if the answer is right. A pro tip: don't round along the way. Let the calculator keep all the decimals and only round the final answer.</berattare>
+  </bild>
+
+</lektion>

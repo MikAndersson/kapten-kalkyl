@@ -1,0 +1,408 @@
+
+/* Layout: ritningsblad (millimeterpapper) till vänster, Kapten Kalkyl med pratbubbla till höger; staplas på mobil */
+
+/* ==========================================================================
+   1. FÄRGER OCH TYPSNITT (design-tokens)
+   Ändra färger här. Mörkt läge definieras i de två blocken under.
+   ========================================================================== */
+:root{
+  --paper:#eef1ee; --surface:#fbfcfa; --ink:#18283a; --muted:#566475; --line:#cfd7de;
+  --grid:rgba(31,95,168,.075); --grid2:rgba(31,95,168,.14);
+  --accent:#e2700b; --accent-ink:#ffffff; --accent-soft:#fde8d4;
+  --blue:#1f5fa8; --blue-soft:#e3edf8;
+  --ok:#2c7d47; --ok-soft:#e1f2e6; --bad:#b93c27; --bad-soft:#f9e3de;
+  --skin:#f0c49c; --suit:#1f5fa8; --cape:#b84f00; --hair:#6b3f1d; --shades:#141414; --pocket:#184c87;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0f161d; --surface:#151f29; --ink:#e4ebf2; --muted:#9aa8b7; --line:#2a3846;
+  --grid:rgba(120,170,230,.06); --grid2:rgba(120,170,230,.12);
+  --accent:#ff9a3c; --accent-ink:#1a1006; --accent-soft:#3a2614;
+  --blue:#74aef5; --blue-soft:#17283b;
+  --ok:#5cc47f; --ok-soft:#14301f; --bad:#ff8a73; --bad-soft:#3a1c16;
+  --skin:#e7b88f; --suit:#3c78c4; --cape:#c8600f; --hair:#8a5a32; --shades:#0b0b0b; --pocket:#2c62a6; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0f161d; --surface:#151f29; --ink:#e4ebf2; --muted:#9aa8b7; --line:#2a3846;
+  --grid:rgba(120,170,230,.06); --grid2:rgba(120,170,230,.12);
+  --accent:#ff9a3c; --accent-ink:#1a1006; --accent-soft:#3a2614;
+  --blue:#74aef5; --blue-soft:#17283b;
+  --ok:#5cc47f; --ok-soft:#14301f; --bad:#ff8a73; --bad-soft:#3a1c16;
+  --skin:#e7b88f; --suit:#3c78c4; --cape:#c8600f; --hair:#8a5a32; --shades:#0b0b0b; --pocket:#2c62a6; color-scheme:dark }
+
+/* ==========================================================================
+   2. GRUNDLÄGGANDE
+   ========================================================================== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* ==========================================================================
+   3. SIDHUVUD, FLIKAR OCH KAPITELKNAPPAR
+   ========================================================================== */
+.wrap{max-width:1280px;margin:0 auto;padding-inline:16px;padding-block:14px 40px}
+header.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-content:space-between;padding-block:4px 12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand h1{font-family:var(--f-display);font-weight:800;font-size:clamp(1.35rem,2.6vw,1.8rem);margin:0;letter-spacing:-.01em}
+.brand .sub{color:var(--muted);font-size:.9rem}
+.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px}
+.tabs button{border:0;background:transparent;padding:7px 16px;border-radius:999px;cursor:pointer;font-weight:700}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.chapters{display:flex;gap:6px;overflow-x:auto;padding-block:2px 10px;scrollbar-width:thin}
+.chapters button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.85rem;cursor:pointer;white-space:nowrap}
+.chapters button.on{border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+@media (max-width:900px){.stage{grid-template-columns:minmax(0,1fr)}}
+
+/* ==========================================================================
+   4. RITNINGSBLADET (bildytan i lektionen)
+   ========================================================================== */
+
+.board{position:relative;background-color:var(--surface);
+  background-image:linear-gradient(var(--grid2) 1px,transparent 1px),linear-gradient(90deg,var(--grid2) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:50px 50px,50px 50px,10px 10px,10px 10px;border:1.5px solid var(--ink);border-radius:4px;min-height:520px;padding:28px clamp(16px,3vw,40px) 64px}
+.board::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none;border-radius:2px}
+.titleblock{position:absolute;right:6px;bottom:6px;display:grid;grid-template-columns:auto auto auto;border-top:1px solid var(--ink);border-left:1px solid var(--ink);font-family:var(--f-mono);font-size:.68rem;background:var(--surface);color:var(--muted)}
+.titleblock span{padding:3px 9px;border-right:1px solid var(--line)}
+.titleblock span:last-child{border-right:0}
+.titleblock b{color:var(--ink);font-weight:600}
+
+/* ==========================================================================
+   5. INNEHÅLL PÅ BILDERNA: rubriker, formler, uträkningar, tips, fällor
+   ========================================================================== */
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.board h2{font-family:var(--f-display);font-weight:800;font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.15;margin:.2em 0 .6em;text-wrap:balance;letter-spacing:-.01em}
+.board h3{font-family:var(--f-display);font-weight:600;font-size:1.1rem;margin:1.1em 0 .4em}
+.board p{margin:.4em 0;max-width:68ch}
+.board ul,.board ol{margin:.3em 0;padding-left:1.25em}
+.board li{margin:.2em 0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 22px;align-items:start}
+.cols>*{min-width:0}
+.formula{display:inline-block;font-family:var(--f-mono);font-weight:600;font-size:1.05rem;background:var(--blue-soft);color:var(--ink);border:1px solid var(--blue);border-radius:6px;padding:6px 12px;margin:4px 0}
+.formula.big{font-size:1.25rem;padding:10px 16px}
+.calc{background:var(--surface);border:1px dashed var(--line);border-radius:6px;padding:8px 14px;margin:8px 0;overflow-x:auto;display:grid;gap:2px}
+.calc-plain{display:block;white-space:pre;font-family:var(--f-mono);font-size:.95rem;line-height:1.7}
+.calc .ans{color:var(--ok);font-weight:600}
+.trap{background:var(--bad-soft);border:1px solid var(--bad);border-radius:8px;padding:8px 12px;margin:10px 0;font-size:.95rem}
+.trap b:first-child{color:var(--bad)}
+.tip{background:var(--ok-soft);border:1px solid var(--ok);border-radius:8px;padding:8px 12px;margin:10px 0;font-size:.95rem}
+.tip b:first-child{color:var(--ok)}
+table.t{border-collapse:collapse;font-size:.92rem;margin:8px 0;font-variant-numeric:tabular-nums}
+table.t th,table.t td{border:1px solid var(--line);padding:5px 10px;text-align:left;background:var(--surface)}
+table.t th{background:var(--blue-soft);font-weight:700}
+.tbl{overflow-x:auto}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);font-weight:700;font-family:var(--f-mono)}
+
+/* ==========================================================================
+   6. FIGURER (SVG)
+   ========================================================================== */
+svg.fig{max-width:100%;height:auto;display:block}
+.fig .ln{stroke:var(--ink);stroke-width:2;fill:none}
+.fig .fl{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2}
+.fig .ac{stroke:var(--accent);stroke-width:2.5;fill:none}
+.fig .dot{fill:var(--accent)}
+.fig .dotb{fill:var(--blue)}
+.fig .dash{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+.fig text{fill:var(--ink);font-family:var(--f-mono);font-size:13px}
+.fig text.m{fill:var(--muted)}
+.fig text.a{fill:var(--accent);font-weight:600}
+.fig text.b{fill:var(--blue);font-weight:600}
+
+/* ==========================================================================
+   7. ÖVNINGSUPPGIFTER OCH KNAPPAR
+   ========================================================================== */
+
+.quiz{margin-top:22px;border:1.5px solid var(--accent);border-radius:var(--r);background:var(--surface);padding:14px 16px}
+.quiz .qh{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.field{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:8px 0}
+.field label{min-width:0}
+.field input,.field select{width:9.5em;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);font-family:var(--f-mono)}
+.field select{width:auto}
+.field .unit{color:var(--muted);font-family:var(--f-mono);font-size:.9rem}
+.field.ok input,.field.ok select{border-color:var(--ok);background:var(--ok-soft)}
+.field.bad input,.field.bad select{border-color:var(--bad);background:var(--bad-soft)}
+.mark{font-weight:700;font-size:.9rem}
+.hint{flex-basis:100%;font-size:.88rem;color:var(--ink);background:var(--bad-soft);border-left:3px solid var(--bad);padding:4px 8px;border-radius:3px}
+.hint:empty{display:none}
+.field.ok .mark{color:var(--ok)} .field.bad .mark{color:var(--bad)}
+.btn{border:1.5px solid var(--ink);background:var(--surface);padding:7px 14px;border-radius:8px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--blue-soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.05);background:var(--accent)}
+.btn.ghost{border-color:var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.sol{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px}
+
+/* ==========================================================================
+   8. KAPTEN KALKYL (lärarpanelen)
+   ========================================================================== */
+
+.teacher{position:sticky;top:calc(env(safe-area-inset-top,0px) + 10px);display:grid;gap:12px}
+@media (max-width:900px){.teacher{position:static}.bubble{max-height:none}}
+.tcard{background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--r);padding:14px}
+.who{display:flex;align-items:center;gap:12px}
+.who svg{width:92px;height:auto;flex:0 0 auto}
+.who .nm{font-family:var(--f-display);font-weight:800;font-size:1.15rem;line-height:1.1}
+.who .rl{color:var(--muted);font-size:.82rem}
+.bubble{position:relative;margin-top:12px;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.98rem;max-height:46vh;overflow:auto}
+.bubble::before{content:"";position:absolute;top:-9px;left:36px;width:16px;height:16px;background:var(--paper);border-left:1.5px solid var(--line);border-top:1.5px solid var(--line);transform:rotate(45deg)}
+.bubble p{margin:.3em 0}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctrl label{display:flex;align-items:center;gap:6px;font-size:.88rem;color:var(--muted)}
+.ctrl select{padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+.navrow{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.navrow .count{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.note{font-size:.8rem;color:var(--muted)}
+.speaking .halo{opacity:1}
+.speaking.paused .halo{opacity:.4}
+.halo{opacity:0;transition:opacity .2s}
+@media (prefers-reduced-motion:reduce){.progress i{transition:none}.who svg{transition:none!important}}
+
+/* ==========================================================================
+   9. ÖVNINGSTENTAN
+   ========================================================================== */
+
+.exam{display:grid;gap:16px}
+.examhead{background:var(--surface);border:1.5px solid var(--ink);border-radius:4px;padding:18px clamp(16px,3vw,32px)}
+.examhead h2{font-family:var(--f-display);font-weight:800;font-size:clamp(1.4rem,3vw,2rem);margin:.1em 0 .4em}
+.examno{font-family:var(--f-mono);font-size:.55em;font-weight:600;color:var(--muted);white-space:nowrap;margin-left:.4em}
+.exam-choose{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:6px 0 4px}
+.exam-open{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.exam-open label{font-size:.8rem;color:var(--muted);font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.06em}
+.exam-open input{width:7.5em;font:inherit;font-family:var(--f-mono);padding:7px 9px;border:1.5px solid var(--ink);border-radius:4px;background:var(--bg);color:var(--ink)}
+.exam-open input:invalid{border-color:var(--bad, #c0392b)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 18px;margin:10px 0}
+.meta div{border-top:1px solid var(--line);padding-top:6px}
+.meta dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-family:var(--f-mono)}
+.meta dd{margin:0;font-weight:700}
+.timer{font-family:var(--f-mono);font-size:1.4rem;font-weight:600;font-variant-numeric:tabular-nums}
+.partttl{font-family:var(--f-display);font-weight:800;font-size:1.3rem;margin:14px 0 0;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+.partttl small{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);font-weight:400}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.q.graded-full{border-color:var(--ok)}
+.q.graded-part{border-color:var(--accent)}
+.q.graded-zero{border-color:var(--bad)}
+.qtop{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.qn{font-family:var(--f-display);font-weight:800}
+.pts{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);white-space:nowrap}
+.q .result{font-family:var(--f-mono);font-weight:600;font-size:.88rem}
+.scorebox{background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:16px}
+.scorebox .big{font-family:var(--f-display);font-weight:800;font-size:2rem}
+.bar{display:grid;grid-template-columns:110px 1fr 70px;gap:10px;align-items:center;margin:6px 0;font-size:.9rem}
+.bar .tr{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--ok)}
+.hidden{display:none}
+
+/* ==========================================================================
+   10. FORMLER (MathJax), FIGURER OCH KAPITELGRUPPER
+   ========================================================================== */
+.calc-row{min-height:1.9em;display:flex;align-items:center;padding-block:2px}
+.calc-row.ans{color:var(--ok);font-weight:600}
+.calc-row.ans mjx-container{color:var(--ok)}
+.calc-text{font-family:var(--f-body)}
+.formula-row{margin:4px 0}
+.formula{font-family:var(--f-body);max-width:100%;overflow-x:auto}
+.m{font-family:var(--f-mono);font-size:.95em}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden;color:var(--ink)}
+mjx-container[display="true"]{margin:0!important}
+.figure{margin:6px 0}
+.figure svg{max-width:100%;height:auto;display:block}
+.chapters .area{flex:0 0 auto;align-self:center;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding-left:10px;border-left:2px solid var(--line);margin-left:4px}
+.chapters .area:first-child{border-left:0;padding-left:0;margin-left:0}
+.badge{font-size:.7rem;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 6px;margin-left:4px}
+.notice{background:var(--blue-soft);border:1px solid var(--blue);border-radius:8px;padding:6px 12px;margin-bottom:10px;font-size:.88rem}
+.notice p{margin:.2em 0}
+.cta{margin-top:20px}
+.btn.small{padding:4px 10px;font-size:.85rem}
+
+/* ==========================================================================
+   11. EDITORN
+   ========================================================================== */
+.ed-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ed-top select{padding:7px 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);max-width:100%}
+.ed-top-actions{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+.file-btn{position:relative;overflow:hidden;cursor:pointer}
+.file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+#ed-status.err{color:var(--bad)}
+.ed-switch{display:none;gap:6px;margin-bottom:10px}
+.ed-switch [aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.editor{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;align-items:start}
+.ed-pane{display:grid;gap:12px;min-width:0}
+.ed-preview-pane{position:sticky;top:calc(env(safe-area-inset-top,0px) + 10px)}
+.ed-preview-pane .count{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.board-preview{min-height:320px}
+.ed-errors{background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:8px 12px;font-size:.88rem}
+.ed-narr{margin-top:0;max-height:none}
+.ed-narr::before{display:none}
+.ed-section{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;gap:10px}
+.ed-section h3{margin:0;font-family:var(--f-display);font-size:1.05rem}
+.ed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.ed-field{display:grid;gap:4px;min-width:0}
+.ed-field > span{font-size:.8rem;font-weight:700;color:var(--muted)}
+.ed-in{width:100%;padding:7px 10px;border:1.5px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font:inherit;min-width:0}
+.ed-in:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+textarea.ed-in{resize:vertical;line-height:1.45}
+.ed-in.mono{font-family:var(--f-mono);font-size:.88rem}
+.ed-in.ed-big{font-family:var(--f-display);font-weight:700;font-size:1.15rem}
+.ed-hint{font-size:.75rem;color:var(--muted)}
+.ed-hint code,.ed-help code{font-family:var(--f-mono);font-size:.75rem;background:var(--blue-soft);padding:0 4px;border-radius:3px}
+.ed-check{display:flex;align-items:center;gap:6px;font-size:.88rem}
+.ed-sub{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin-top:6px}
+.ed-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.ed-tab{flex:0 0 auto;border:1.5px solid var(--line);background:var(--paper);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.88rem;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis}
+.ed-tab.on{border-color:var(--ink);background:var(--ink);color:var(--paper);font-weight:700}
+.ed-tab-add{border-style:dashed;color:var(--accent);font-weight:700}
+.ed-slide-tools{display:flex;flex-wrap:wrap;gap:6px}
+.ed-blocks{display:grid;gap:10px}
+.ed-card{border:1.5px solid var(--line);border-radius:9px;background:var(--paper)}
+.ed-card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:5px 6px 5px 12px;border-bottom:1px solid var(--line)}
+.ed-card-title{font-weight:700;font-size:.9rem}
+.ed-card-tools{display:flex;gap:4px}
+.ed-card-tools .btn{padding:2px 9px}
+.ed-card-body{padding:10px 12px;display:grid;gap:8px}
+.ed-card .ed-card{background:var(--surface)}
+.ed-rows{display:grid;gap:6px}
+.ed-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px;align-items:center}
+.ed-kind{width:auto}
+.ed-ruta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:6px;align-items:end}
+.ed-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.ed-col{border:1px dashed var(--line);border-radius:8px;padding:8px;display:grid;gap:8px;align-content:start}
+.ed-col-title{font-size:.78rem;color:var(--muted);font-weight:700}
+.ed-add{position:relative}
+.ed-add-btn{border-style:dashed;width:100%;justify-content:center;color:var(--accent);border-color:var(--accent)}
+.ed-menu{position:absolute;z-index:30;left:0;right:0;top:calc(100% + 4px);background:var(--surface);border:1.5px solid var(--ink);border-radius:10px;padding:6px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px;box-shadow:0 10px 30px rgba(0,0,0,.18);max-height:60vh;overflow:auto}
+.ed-menu[hidden]{display:none}
+.ed-menu button{display:grid;text-align:left;gap:1px;border:0;background:transparent;border-radius:7px;padding:7px 10px;cursor:pointer;color:var(--ink)}
+.ed-menu button:hover,.ed-menu button:focus-visible{background:var(--blue-soft)}
+.ed-menu small{color:var(--muted);font-size:.75rem}
+#ed-xml{width:100%;min-height:300px;resize:vertical;font-family:var(--f-mono);font-size:.82rem;line-height:1.5;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);white-space:pre;overflow:auto;margin-top:8px}
+.ed-help{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.ed-help summary{cursor:pointer;font-weight:700}
+#me-xml{width:100%;min-height:260px;resize:vertical;font-family:var(--f-mono);font-size:.82rem;line-height:1.5;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);white-space:pre;overflow:auto;margin-top:8px}
+#me-status.err,.note.err{color:var(--bad)}
+.me-part-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.me-part-grid.me-calc{grid-template-columns:minmax(80px,.35fr) minmax(0,1fr)}
+.me-add{display:flex;flex-wrap:wrap;gap:6px}
+.me-list{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.me-list li{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.88rem}
+.linkbtn{background:none;border:0;padding:0;color:var(--blue);text-decoration:underline;cursor:pointer;font:inherit}
+@media (max-width:1000px){
+  #view-mallar[data-mode="form"] .ed-preview-pane{display:none}
+  #view-mallar[data-mode="preview"] .ed-form-pane{display:none}
+  .editor{grid-template-columns:minmax(0,1fr)}
+  .ed-switch{display:flex}
+  .ed-preview-pane{position:static}
+  #view-editor[data-mode="form"] .ed-preview-pane{display:none}
+  #view-editor[data-mode="preview"] .ed-form-pane{display:none}
+  .ed-top-actions{margin-left:0}
+}
+@media (max-width:600px){
+  .ed-ruta{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .ed-cols{grid-template-columns:minmax(0,1fr)}
+  .ed-row{grid-template-columns:minmax(0,1fr) auto}
+  .ed-row .ed-kind{grid-column:1 / -1}
+}
+
+/* ==========================================================================
+   12. MOBIL
+   ========================================================================== */
+@media (max-width:600px){
+  .board{padding:20px 14px 70px;min-height:0}
+  .board h2{font-size:1.4rem}
+  .titleblock{left:6px;right:6px;grid-template-columns:1fr auto;font-size:.62rem}
+  .titleblock span:first-child{display:none}
+  .tabs button{padding:6px 11px;font-size:.9rem}
+  .bar{grid-template-columns:80px 1fr 56px}
+  .field input{width:7.5em}
+}
+
+/* Fast kontrollrad på mobil (bara i lektionsvyn) */
+.mobilebar{display:none}
+.m.plain{font-family:var(--f-mono)}
+@media (max-width:900px){
+  .mobilebar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;gap:8px;align-items:center;justify-content:space-between;
+    padding:8px 12px calc(8px + env(safe-area-inset-bottom, 0px));background:var(--surface);border-top:1.5px solid var(--ink)}
+  .mobilebar .count{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+  #view-lesson{padding-bottom:70px}
+}
+
+/* Munnen: bara formen som anges i data-mouth-shape på figuren visas */
+[data-mouth]{display:none}
+.who svg:not([data-mouth-shape]) [data-mouth="rest"],
+.who svg[data-mouth-shape="rest"] [data-mouth="rest"],
+.who svg[data-mouth-shape="o"] [data-mouth="o"],
+.who svg[data-mouth-shape="grin"] [data-mouth="grin"],
+.who svg[data-mouth-shape="smirk"] [data-mouth="smirk"],
+.who svg[data-mouth-shape="bleh"] [data-mouth="bleh"]{display:inline}
+.who svg{transform-origin:60px 140px;transition:transform .11s ease-out;overflow:visible}
+/* Solglasögonen glider ner på näsan */
+.who .glasses{transition:transform .16s ease-out}
+.who svg[data-glasses="down"] .glasses{transform:translateY(7px)}
+.who .pupil{transition:transform .12s}
+.who svg[data-look="left"] .pupil{transform:translateX(-2px)}
+.who svg[data-look="right"] .pupil{transform:translateX(2px)}
+
+/* ==========================================================================
+   DIAGRAM OCH INTERAKTIVA MODELLER
+   Serie 1 = blå, serie 2 = orange, serie 3 = grå (text bär aldrig seriefärgen).
+   ========================================================================== */
+.chart{margin:14px 0;max-width:620px}
+.chart figcaption{font-weight:700;margin-bottom:4px}
+.chart svg,.w-svg{width:100%;height:auto;display:block;overflow:visible}
+.chart text,.w-svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
+.chart .ax-title{fill:var(--ink);font-family:var(--f-body);font-size:12.5px}
+.chart .grid,.w-svg .grid{stroke:var(--line);stroke-width:1;opacity:.7}
+.chart .axis,.w-svg .axis{stroke:var(--muted);stroke-width:1.5;fill:none}
+.bar.s1,.dot.s1{fill:var(--blue)} .bar.s2,.dot.s2{fill:var(--accent)} .bar.s3,.dot.s3{fill:var(--muted)}
+.dot{stroke:var(--surface);stroke-width:2}
+.line{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.line.s1{stroke:var(--blue)} .line.s2{stroke:var(--accent)} .line.s3{stroke:var(--muted)}
+.marker{stroke-width:2} .marker.s2{stroke:var(--accent)} .marker.s3{stroke:var(--muted)}
+.chart .hit{fill:transparent}
+.chart .val{fill:var(--ink);font-weight:600;opacity:0;transition:opacity .15s}
+.chart .mark:hover .val,.chart .mark:focus-within .val,.chart.show-values .val{opacity:1}
+.chart .mark:hover .bar{filter:brightness(1.1)}
+.chart-legend{display:flex;gap:14px;font-size:.85rem;color:var(--muted);margin-bottom:2px}
+.chart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.sw.s1{background:var(--blue)} .sw.s2{background:var(--accent)} .sw.s3{background:var(--muted)}
+.chart-table{font-size:.85rem;margin-top:4px} .chart-table summary{cursor:pointer;color:var(--muted)}
+
+.widget{border:1.5px solid var(--blue);border-radius:var(--r);background:var(--surface);padding:12px 14px;margin:14px 0}
+.w-head{font-family:var(--f-display);font-weight:800;color:var(--blue);margin-bottom:6px}
+.w-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 18px;margin:8px 0}
+.w-slider{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 10px;font-size:.9rem}
+.w-slider input{grid-column:1/-1;width:100%;accent-color:var(--accent);height:28px}
+.w-slider output{font-family:var(--f-mono);font-weight:700}
+.w-text{display:grid;gap:4px;font-size:.9rem;margin-bottom:6px}
+.w-text input{font-family:var(--f-mono);padding:7px 9px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);width:100%}
+.w-readout{margin:6px 0 0;font-size:.95rem}
+.w-svg .w-lbl{fill:var(--ink);font-family:var(--f-body);font-size:13px}
+.w-svg .kstep{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:5 3}
+.w-svg .tri{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2.5;stroke-linejoin:round}
+.w-svg .beam{fill:var(--muted)} .w-svg .load{fill:var(--accent)}
+.w-stats .t td{font-family:var(--f-mono)}
+.w-slider output{grid-column:2;grid-row:1}
+@media (max-width:640px){
+  .w-svg text{font-size:18px} .w-svg .w-lbl{font-size:19px}
+  .chart text{font-size:16px} .chart .ax-title{font-size:16px}
+}
+
+/* Redovisning, felsvar och minitentor */
+.redov{margin:8px 0 4px;border-top:1px dashed var(--line);padding-top:6px}
+.redov summary{cursor:pointer;font-weight:700;font-size:.92rem}
+.redov summary small{font-weight:400;color:var(--muted)}
+.redov textarea{width:100%;margin-top:6px;font-family:var(--f-mono);font-size:.92rem;padding:8px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);resize:vertical}
+.redov-list{list-style:none;padding:0;margin:6px 0;display:grid;gap:2px;font-size:.92rem}
+.redov-list li.ok{color:var(--ok)} .redov-list li.bad{color:var(--bad)} .redov-list li span{color:var(--ink)}
+.selfcheck{display:inline-flex;gap:5px;align-items:center;margin-right:14px;font-size:.9rem}
+.mini .q{margin:12px 0}
+.mini h2{margin-top:.2em}

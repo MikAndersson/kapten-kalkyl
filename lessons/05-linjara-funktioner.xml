@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="linjara-funktioner" ordning="40" omrade="Funktioner" titel="Funktioner, räta linjen &amp; ekvationssystem" titel-en="Functions, straight lines and systems of equations">
+
+  <bild titel="Funktioner, tabell och graf" etikett="Funktioner · 1">
+    <rubrik>Ett x ger exakt ett y</rubrik>
+    <kolumner>
+      <kolumn>
+        <text>En <b>funktion</b> är en regel som ger exakt ett <m>y</m>-värde för varje <m>x</m>-värde. Skrivs <m>y = f(x)</m>.</text>
+        <underrubrik>Funktionstabell för y = 2x + 1</underrubrik>
+        <tabell forstakolumn="rubrik">
+          <rad><cell>x</cell><cell>−2</cell><cell>−1</cell><cell>0</cell><cell>1</cell><cell>2</cell><cell>3</cell></rad>
+          <rad><cell>y</cell><cell>−3</cell><cell>−1</cell><cell>1</cell><cell>3</cell><cell>5</cell><cell>7</cell></rad>
+        </tabell>
+        <text>Punkten när <m>x = 2</m> skrivs <m>(2, 5)</m>. Först x (vågrätt), sedan y (lodrätt).</text>
+        <figur namn="koordinatsystem"/>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Begrepp</underrubrik>
+        <lista>
+          <punkt><b>Definitionsmängd</b>: de x-värden som är tillåtna (t.ex. antal dagar ≥ 0).</punkt>
+          <punkt><b>Värdemängd</b>: de y-värden funktionen kan ge.</punkt>
+          <punkt><b>Proportionell</b>: <m>y = kx</m>, linjen går genom origo.</punkt>
+          <punkt><b>Linjär med startvärde</b>: <m>y = kx + m</m>.</punkt>
+          <punkt>Andra typer: <m>y = x^2</m> (parabel), <m>y = \sqrt{x}</m>, <m>y = 2^x</m>.</punkt>
+        </lista>
+        <underrubrik>Läsa av och tolka</underrubrik>
+        <text>Cisternen fylls enligt <m>y = 250x</m> (liter, minuter). När är den 4 000 liter?</text>
+        <berakning><rad>250x = 4000</rad><svar>x = 16 \text{ minuter}</svar></berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Betong kostar <m>f(x) = 1200x + 5000</m> kr, där x är antal m³. Beräkna <m>f(10)</m>.</fraga>
+      <ruta etikett="f(10)" enhet="kr" svar="17000" tolerans="1"/>
+      <losning><berakning><svar>f(10) = 1200 \cdot 10 + 5000 = 17 000\enh{kr}</svar></berakning></losning>
+    </testa>
+    <berattare>Kapitel tre i boken handlar om funktioner. En funktion är en regel som ger exakt ett y-värde för varje x-värde, och man skriver y lika med f av x. Det enklaste sättet att förstå en funktion är en tabell: välj några x-värden, räkna ut y och pricka in punkterna. Koordinater skrivs alltid med x först och y sedan. Definitionsmängden är de x-värden som är tillåtna, till exempel kan antalet dagar inte vara negativt. Och skillnaden mellan proportionell och linjär: en proportionell funktion går genom origo, en linjär kan ha ett startvärde.</berattare>
+    <berattare sprak="en">Chapter three in the book is about functions. A function is a rule that gives exactly one y value for each x value, written y equals f of x. The easiest way to understand a function is a table: choose some x values, calculate y and plot the points. Coordinates are always written with x first and y second. The domain is the x values that are allowed, for example the number of days cannot be negative. And the difference between proportional and linear: a proportional function goes through the origin, a linear one can have a starting value.</berattare>
+  </bild>
+
+  <bild titel="Räta linjen y = kx + m" etikett="Funktioner · 2">
+    <rubrik>k är lutningen, m är startvärdet</rubrik>
+    <kolumner>
+      <kolumn>
+        <figur namn="rata-linjen"/>
+        <formel>k = \frac{y_2 - y_1}{x_2 - x_1}</formel>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Transport: 4 km kostar 1 180 kr, 11 km kostar 2 720 kr</underrubrik>
+        <berakning>
+          <rad>k = \frac{2720 - 1180}{11 - 4} = 220 \text{ kr/km}</rad>
+          <rad>m = 1180 - 220 \cdot 4 = 300\enh{kr}</rad>
+          <rad>y = 220x + 300</rad>
+          <svar>4500 = 220x + 300 \;\Rightarrow\; x \approx 19\enh{km}</svar>
+        </berakning>
+        <text><b>Tolka:</b> k = 220 kr per km, m = 300 kr fast avgift.</text>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Kostnaden för en målare är <m>y = 550x + 2500</m> (x = timmar). Vad kostar 10 timmar?</fraga>
+      <ruta etikett="Kostnad" enhet="kr" svar="8000" tolerans="1"/>
+      <losning><berakning><svar>y = 550 \cdot 10 + 2500 = 8000\enh{kr}</svar></berakning></losning>
+    </testa>
+    <berattare>Räta linjens ekvation är y lika med k x plus m. K är lutningen, alltså hur mycket y ökar när x ökar med ett. M är där linjen skär y-axeln, startvärdet. Har du två punkter räknar du k som skillnaden i y delat med skillnaden i x. Transportfirman får k lika med 220 kronor per kilometer. Sätt sedan in en punkt för att hitta m, här 300 kronor i fast avgift. Var beredd att tolka k och m i ord.</berattare>
+    <berattare sprak="en">The equation of a straight line is y equals k x plus m. K is the slope, meaning how much y increases when x increases by one. M is where the line crosses the y axis, the starting value. If you have two points, you calculate k as the difference in y divided by the difference in x. The transport company gets k equals 220 kronor per kilometre. Then insert one point to find m, here 300 kronor as a fixed fee. Be ready to interpret k and m in words.</berattare>
+  </bild>
+
+  <bild titel="Prova själv: räta linjen" etikett="Funktioner · prova själv">
+    <rubrik>Vad gör k och vad gör m?</rubrik>
+    <text>Dra i reglagen. <b>k</b> bestämmer hur brant linjen är (hur mycket y ändras när x ökar med 1). <b>m</b> är där linjen skär y-axeln.</text>
+    <interaktiv typ="rata-linjen" k="1" m="2"/>
+    <lista>
+      <punkt>Gör k negativ: linjen sjunker.</punkt>
+      <punkt>Sätt k = 0: linjen blir vågrät.</punkt>
+      <punkt>Ändra bara m: linjen flyttas upp eller ner men lutar lika mycket.</punkt>
+    </lista>
+    <berattare>Prova själv! Dra i reglaget för k och se hur linjen blir brantare eller flackare. Den streckade trappan visar vad k betyder: ett steg åt höger, och k steg uppåt. Gör k negativ, så sjunker linjen. Dra sedan i m. Då flyttas hela linjen upp eller ner, men lutningen är densamma. m är alltså värdet där linjen skär y-axeln, startvärdet. Under grafen ser du också var linjen skär x-axeln: x är lika med minus m delat med k.</berattare>
+    <berattare sprak="en">Try it yourself! Drag the slider for k and watch the line become steeper or flatter. The dashed step shows what k means: one step to the right, and k steps up. Make k negative and the line falls. Then drag m. The whole line moves up or down, but the slope stays the same. So m is the value where the line crosses the y axis, the starting value. Below the graph you can also see where the line crosses the x axis: x equals minus m divided by k.</berattare>
+  </bild>
+  <bild titel="Ekvationssystem och brytpunkt" etikett="Funktioner · 3 · VG">
+    <rubrik>När är två alternativ lika dyra?</rubrik>
+    <kolumner>
+      <kolumn>
+        <text>A: 199 kr + 25 kr/h<br/>B: 349 kr + 15 kr/h</text>
+        <berakning>
+          <rad>199 + 25x = 349 + 15x</rad>
+          <rad>10x = 150</rad>
+          <rad>x = 15 \text{ timmar}</rad>
+          <rad text="ja">Före 15 h: A billigast</rad>
+          <svar text="ja">Efter 15 h: B billigast</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Additionsmetoden</underrubrik>
+        <berakning>
+          <rad>x + y = 10</rad>
+          <rad>x - y = 4</rad>
+          <rad>\text{Addera: } 2x = 14 \;\Rightarrow\; x = 7</rad>
+          <svar>y = 10 - 7 = 3</svar>
+        </berakning>
+        <underrubrik>Substitutionsmetoden</underrubrik>
+        <berakning>
+          <rad>y = 2x + 1</rad>
+          <rad>3x + y = 16</rad>
+          <svar>3x + 2x + 1 = 16 \;\Rightarrow\; x = 3,\ y = 7</svar>
+        </berakning>
+        <tips>Kontrollera: sätt in x och y i båda ekvationerna.</tips>
+      </kolumn>
+    </kolumner>
+    <berattare>Ett ekvationssystem är två ekvationer som ska stämma samtidigt. Brytpunkten mellan två abonnemang hittar du genom att sätta kostnaderna lika. 199 plus 25 x är lika med 349 plus 15 x. Det ger 10 x lika med 150, alltså 15 timmar. Före det är A billigast, efter det är B billigast. Kan du både substitutionsmetoden och additionsmetoden klarar du alla varianter. Sätt alltid in svaret och kontrollera.</berattare>
+    <berattare sprak="en">A system of equations is two equations that must hold at the same time. You find the break-even point between two subscriptions by setting the costs equal. 199 plus 25 x equals 349 plus 15 x. That gives 10 x equals 150, so 15 hours. Before that, A is cheapest; after that, B is cheapest. If you know both the substitution method and the addition method, you can handle every variant. Always insert the answer and check.</berattare>
+  </bild>
+
+</lektion>

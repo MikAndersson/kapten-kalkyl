@@ -1,0 +1,185 @@
+<!-- ==========================================================================
+     SIDANS STOMME
+     Själva innehållet (bilder, uppgifter) fylls i av JavaScript längre ner.
+     ========================================================================== -->
+<div class="wrap">
+
+  <!-- Sidhuvud med kursnamn och flikar -->
+  <header class="top">
+    <div class="brand">
+      <h1 id="app-title">Kapten Kalkyl</h1>
+      <span class="sub" id="app-subtitle"></span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-lesson" aria-selected="true">Lektion</button>
+      <button role="tab" id="tab-exam" aria-selected="false">Övningstenta</button>
+    </div>
+  </header>
+
+  <!-- ===================== VY 1: LEKTIONEN ===================== -->
+  <section id="view-lesson">
+    <nav class="chapters" id="chapters" aria-label="Lektioner"></nav>
+    <div class="notice" id="lesson-notice" hidden></div>
+    <div class="stage">
+      <!-- Ritningsbladet där varje bild visas -->
+      <article class="board" id="board" aria-live="polite"></article>
+
+      <!-- Lärarpanelen -->
+      <aside class="teacher">
+        <div class="tcard" id="teacher-lesson">
+          <div class="who" data-avatar></div>
+          <div class="bubble" id="bubble-lesson"></div>
+        </div>
+        <div class="tcard" style="display:grid;gap:10px">
+          <div class="navrow">
+            <button class="btn ghost" id="prev" aria-label="Föregående bild">◀ Bakåt</button>
+            <span class="count" id="count">1 / 1</span>
+            <button class="btn primary" id="next" aria-label="Nästa bild">Nästa ▶</button>
+          </div>
+          <div class="progress"><i id="progress"></i></div>
+          <div class="ctrl">
+            <button class="btn" id="speak-lesson">▶ Läs upp</button>
+            <button class="btn ghost" id="pause-lesson" disabled>❚❚ Paus</button>
+            <label><input type="checkbox" id="autoplay"> Spela upp allt</label>
+            <label title="En kort övningstenta sist i varje avsnitt"><input type="checkbox" id="mini-toggle" checked> Minitentor</label>
+          </div>
+          <div class="ctrl">
+            <label>Röst <select id="voice" style="max-width:190px"><option value="">standard</option></select></label>
+            <label>Tempo
+              <select id="rate">
+                <option value="0.9">lugn</option>
+                <option value="1" selected>normal</option>
+                <option value="1.15">snabb</option>
+              </select>
+            </label>
+          </div>
+          <p class="note" id="voice-note">Piltangenterna bläddrar, mellanslag pausar.</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Fast kontrollrad längst ner på mobilen -->
+    <div class="mobilebar" id="mobilebar">
+      <button class="btn ghost" id="mb-prev" aria-label="Föregående bild">◀</button>
+      <button class="btn" id="mb-speak">▶ Läs upp</button>
+      <button class="btn ghost" id="mb-pause" disabled aria-label="Paus">❚❚</button>
+      <span class="count" id="mb-count"></span>
+      <button class="btn primary" id="mb-next" aria-label="Nästa bild">▶</button>
+    </div>
+  </section>
+
+  <!-- ===================== VY 2: ÖVNINGSTENTAN ===================== -->
+  <section id="view-exam" class="hidden">
+    <div class="stage">
+      <div class="exam" id="exam"></div>
+
+      <aside class="teacher">
+        <div class="tcard" id="teacher-exam">
+          <div class="who" data-avatar></div>
+          <div class="bubble" id="bubble-exam"></div>
+          <div class="btnrow">
+            <button class="btn" id="speak-exam">▶ Läs upp</button>
+            <button class="btn ghost" id="pause-exam" disabled>❚❚ Paus</button>
+          </div>
+        </div>
+        <div class="tcard" style="display:grid;gap:8px">
+          <div class="eyebrow">Skrivtid</div>
+          <div class="timer" id="timer">3:00:00</div>
+          <div class="btnrow">
+            <button class="btn primary" id="timer-start">Starta klockan</button>
+            <button class="btn ghost" id="timer-reset">Nollställ</button>
+          </div>
+          <p class="note">Räkna på papper med miniräknare och formelblad, precis som på riktigt. Skriv sedan in dina slutsvar och tryck på Rätta tentan.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- Kapten Kalkyl-figuren. Kopieras in i båda lärarpanelerna (data-avatar). -->
+<template id="avatar-template">
+  <svg viewBox="0 0 120 150" aria-hidden="true">
+    <!-- glorian syns när han pratar -->
+    <circle class="halo" cx="60" cy="60" r="56" fill="var(--accent-soft)"/>
+    <!-- mantel -->
+    <path d="M30 92 Q20 140 14 148 L106 148 Q100 140 90 92 Z" fill="var(--cape)"/>
+    <!-- hockeyfrilla: kort vid sidorna, långt i nacken – faller ut bakom axlarna -->
+    <path d="M38 64 C36 78 31 90 24 102 L31 100 L32 108 L39 101 L44 106 L50 92 L70 92 L76 106 L81 101 L88 108 L89 100 L96 102 C89 90 84 78 82 64 Z" fill="var(--hair)"/>
+    <!-- kropp -->
+    <rect x="34" y="88" width="52" height="60" rx="14" fill="var(--suit)"/>
+    <!-- π-märket -->
+    <circle cx="47" cy="115" r="9" fill="var(--accent)"/>
+    <text x="47" y="119.5" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="var(--accent-ink)">π</text>
+    <!-- cigarettpaket i bröstfickan (utan märke) -->
+    <rect x="65" y="96" width="14" height="13" rx="1" fill="#f4f1ea" stroke="var(--ink)" stroke-width=".8"/>
+    <rect x="65" y="96" width="14" height="4" fill="#c62828"/>
+    <rect x="67.5" y="92" width="3" height="5" rx=".8" fill="#e0a85a"/>
+    <rect x="72" y="93" width="3" height="4" rx=".8" fill="#e0a85a"/>
+    <rect x="62" y="103" width="20" height="13" rx="2" fill="var(--pocket)"/>
+    <line x1="62.5" y1="103.5" x2="81.5" y2="103.5" stroke="var(--ink)" stroke-width=".8" opacity=".5"/>
+    <!-- hals och ansikte -->
+    <rect x="52" y="78" width="16" height="14" fill="var(--skin)"/>
+    <circle cx="60" cy="58" r="26" fill="var(--skin)"/>
+    <!-- polisonger -->
+    <path d="M35 46 L40 46 L40 62 Q36 59 35 54 Z" fill="var(--hair)"/>
+    <path d="M85 46 L80 46 L80 62 Q84 59 85 54 Z" fill="var(--hair)"/>
+    <!-- bygghjälm -->
+    <path d="M30 46 Q32 18 60 18 Q88 18 90 46 Z" fill="var(--accent)"/>
+    <rect x="24" y="43" width="72" height="7" rx="3.5" fill="var(--accent)"/>
+    <rect x="56" y="20" width="8" height="24" rx="3" fill="var(--accent-soft)" opacity=".7"/>
+    <!-- ögon (syns bara när solglasögonen glider ner på näsan) -->
+    <g class="eyes">
+      <ellipse cx="48.5" cy="57" rx="5.2" ry="3.6" fill="#ffffff"/>
+      <ellipse cx="71.5" cy="57" rx="5.2" ry="3.6" fill="#ffffff"/>
+      <circle class="pupil" cx="49.5" cy="57.4" r="2.1" fill="#1b1b1b"/>
+      <circle class="pupil" cx="72.5" cy="57.4" r="2.1" fill="#1b1b1b"/>
+      <path d="M42 52.5 Q48.5 49 55 52 M65 52 Q71.5 49 78 52.5" stroke="var(--hair)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    </g>
+    <!-- solglasögon (pilotmodell) -->
+    <g class="glasses">
+      <line x1="38" y1="54" x2="82" y2="54" stroke="var(--shades)" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M40 54 H57 Q57 66 48.5 66 Q40 66 40 54 Z" fill="var(--shades)"/>
+      <path d="M63 54 H80 Q80 66 71.5 66 Q63 66 63 54 Z" fill="var(--shades)"/>
+      <path d="M43 57.5 L48 56.5 M66 57.5 L71 56.5" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" opacity=".55"/>
+      <line x1="39" y1="55" x2="35" y2="52" stroke="var(--shades)" stroke-width="2"/>
+      <line x1="81" y1="55" x2="85" y2="52" stroke="var(--shades)" stroke-width="2"/>
+    </g>
+    <!-- horseshoe-mustasch: tjock över läppen, långa staplar ner mot hakan -->
+    <path d="M46 70.5 C46 66.5 52 65.5 60 67 C68 65.5 74 66.5 74 70.5 L74 81 Q74 83 72 83 L70.6 83 Q69 83 69 81 L69 72.5 C66 71.6 63 71.6 60 72 C57 71.6 54 71.6 51 72.5 L51 81 Q51 83 49.4 83 L48 83 Q46 83 46 81 Z" fill="var(--hair)"/>
+    <!-- munnen: JavaScript växlar mellan formerna när han pratar (se "Munnen" i Uppläsning).
+         Ritas efter mustaschen så att grimaserna syns ovanpå den. -->
+    <g class="mouths">
+      <g data-mouth="rest">
+        <path d="M53 76 Q60 81 67 76" stroke="#3a2214" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M66 75.2 l2.2 -1.4" stroke="#3a2214" stroke-width="1.8" stroke-linecap="round"/>
+      </g>
+      <g data-mouth="o">
+        <ellipse cx="60" cy="80" rx="7.2" ry="9.5" fill="#2a160c"/>
+        <path d="M58.8 71.8 Q60 75.6 61.2 71.8 Z" fill="#d9534f"/>
+        <ellipse cx="60" cy="86" rx="4.6" ry="2.6" fill="#e0605a"/>
+      </g>
+      <g data-mouth="grin">
+        <path d="M46 73 Q60 70.6 74 73 Q72.6 89.5 60 89.5 Q47.4 89.5 46 73 Z" fill="#2a160c"/>
+        <path d="M47.4 73.6 Q60 71.6 72.6 73.6 L72 77.4 Q60 76.1 48 77.4 Z" fill="#ffffff"/>
+        <path d="M51 85.6 Q60 87.6 69 85.6 L67.6 88 Q60 89.4 52.4 88 Z" fill="#ffffff"/>
+        <path d="M54 73 V77 M60 72.4 V76.5 M66 73 V77" stroke="#2a160c" stroke-width=".7"/>
+        <ellipse cx="60" cy="83.2" rx="6" ry="2.4" fill="#e0605a"/>
+      </g>
+      <g data-mouth="smirk">
+        <path d="M50 79 Q57 75.4 72.5 71.6 Q73 84 63 85.6 Q53.6 86.6 50 79 Z" fill="#2a160c"/>
+        <path d="M58.6 75.6 L72 72.2 L71.6 75.6 L59.4 78.3 Z" fill="#ffffff"/>
+        <rect x="64.2" y="73.6" width="1.6" height="4" fill="#2a160c" transform="rotate(-13 65 75.6)"/>
+        <ellipse cx="62.6" cy="82.4" rx="4.4" ry="1.9" fill="#e0605a" transform="rotate(-12 62.6 82.4)"/>
+      </g>
+      <g data-mouth="bleh">
+        <path d="M51 74.5 Q60 72.6 69 74.5 Q68 80 60 80.4 Q52 80 51 74.5 Z" fill="#2a160c"/>
+        <path d="M54.2 77.2 Q60 75.8 65.8 77.2 L66.4 88.6 Q66.4 95.4 60 95.4 Q53.6 95.4 53.6 88.6 Z" fill="#e0605a"/>
+        <path d="M60 80 V91" stroke="#b5413c" stroke-width="1.2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </svg>
+  <div>
+    <div class="nm">Kapten Kalkyl</div>
+    <div class="rl">Din superlärare i bygg&shy;matte</div>
+  </div>
+</template>

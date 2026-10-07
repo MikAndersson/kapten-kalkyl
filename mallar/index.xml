@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  INNEHÅLLSFÖRTECKNING över tentamallarna.
+  - G.xml och VG.xml skapas av tools/generera_mallar.py (skriv inte för hand i dem,
+    de skrivs över nästa gång skriptet körs).
+  - Egna mallar (t.ex. från editorns flik "Tentafrågor"): lägg filen här och skriv en rad <fil>.
+  - Stäng av en fil med visa="nej".
+-->
+<mallar>
+  <fil>G.xml</fil>
+  <fil>VG.xml</fil>
+</mallar>

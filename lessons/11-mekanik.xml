@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="mekanik" ordning="100" omrade="Tillämpningar" titel="Massa, tyngd &amp; laster" titel-en="Mass, weight and loads">
+
+  <bild titel="Tyngdtäthet" etikett="Mekanik · 1">
+    <rubrik>G = γ · V</rubrik>
+    <kolumner>
+      <kolumn>
+        <figur namn="tyngdtriangel"/>
+        <text>Täck över det du söker: <m>G = \gamma V</m>, <m>\gamma = G / V</m>, <m>V = G / \gamma</m></text>
+        <text>γ (gamma) = tyngdtäthet i kN/m³<br/>ρ (rho) = densitet i kg/m³ → <m>\gamma = \rho \cdot g / 1000</m> (kN/m³)</text>
+      </kolumn>
+      <kolumn>
+        <tabell>
+          <rad rubrik="ja"><cell>Material</cell><cell>γ (kN/m³)</cell></rad>
+          <rad><cell>Trä</cell><cell>5</cell></rad>
+          <rad><cell>Tegel</cell><cell>20</cell></rad>
+          <rad><cell>Betong</cell><cell>24–25</cell></rad>
+          <rad><cell>Sten</cell><cell>27</cell></rad>
+          <rad><cell>Stål</cell><cell>78</cell></rad>
+        </tabell>
+        <berakning>
+          <rad text="ja">Betongvägg 60 kN, 2,5 m³:</rad>
+          <svar>\gamma = G / V = 60 / 2,5 = 24\enh{kN/m^3}</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Ett betongfundament har tyngden 45 kN och volymen 1,8 m³. Beräkna tyngdtätheten.</fraga>
+      <ruta etikett="γ" enhet="kN/m³" svar="25"/>
+      <losning><berakning><svar>\gamma = G / V = 45 / 1,8 = 25\enh{kN/m^3}</svar></berakning></losning>
+    </testa>
+    <berattare>Nu kommer tentans favoritformel: G är lika med gamma gånger V. Gamma är tyngdtätheten i kilonewton per kubikmeter. Använd triangeln: täck över det du söker. Söker du tyngden blir det gamma gånger V. Söker du gamma blir det G delat med V. Lär dig ungefärliga värden: trä 5, tegel 20, betong 24 till 25 och stål 78. Då ser du direkt om ett svar är rimligt.</berattare>
+    <berattare sprak="en">Now comes the exam's favourite formula: G equals gamma times V. Gamma is the unit weight in kilonewtons per cubic metre. Use the triangle: cover what you are looking for. If you want the weight, it's gamma times V. If you want gamma, it's G divided by V. Learn approximate values: wood 5, brick 20, concrete 24 to 25, and steel 78. Then you can see straight away whether an answer is reasonable.</berattare>
+  </bild>
+
+  <bild titel="Tyngd av byggdelar" etikett="Mekanik · 2">
+    <rubrik>Volym först, tyngd sedan</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Vägg 8 × 3 × 0,25 m, γ = 24 kN/m³</underrubrik>
+        <berakning>
+          <rad>V = 8 \cdot 3 \cdot 0,25 = 6,0\enh{m^3}</rad>
+          <rad>G = \gamma V = 24 \cdot 6,0</rad>
+          <svar>G = 144\enh{kN}</svar>
+        </berakning>
+        <underrubrik>Block 1,5 m³ som väger 3,6 ton</underrubrik>
+        <berakning>
+          <rad>G = 3600\enh{kg} \cdot 10 = 36 000\enh{N} = 36\enh{kN}</rad>
+          <svar>\gamma = 36 / 1,5 = 24\enh{kN/m^3}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Sammansatt fundament</underrubrik>
+        <text>1,5 m³ betong (24 kN/m³) och 0,8 m³ sten (27 kN/m³)</text>
+        <berakning>
+          <rad>G_1 = 1,5 \cdot 24 = 36,0\enh{kN}</rad>
+          <rad>G_2 = 0,8 \cdot 27 = 21,6\enh{kN}</rad>
+          <svar>G = 36,0 + 21,6 = 57,6\enh{kN}</svar>
+        </berakning>
+        <tips>Olika material? Räkna varje del för sig och summera.</tips>
+      </kolumn>
+    </kolumner>
+    <berattare>Så här löser du de typiska tyngduppgifterna. Steg ett: räkna volymen. Steg två: gånger tyngdtätheten. En vägg på 8 gånger 3 gånger 0,25 meter har volymen 6 kubikmeter, och gånger 24 blir det 144 kilonewton. Är byggdelen gjord av två material räknar du varje del för sig och lägger ihop. Och om massan står i ton gör du först om den till kilonewton: ett ton är tio kilonewton.</berattare>
+    <berattare sprak="en">This is how you solve the typical weight problems. Step one: calculate the volume. Step two: multiply by the unit weight. A wall of 8 by 3 by 0.25 metres has a volume of 6 cubic metres, and times 24 that gives 144 kilonewtons. If the part is made of two materials, calculate each part separately and add them up. And if the mass is given in tonnes, first convert it to kilonewtons: one tonne is ten kilonewtons.</berattare>
+  </bild>
+
+  <bild titel="Ytlast, linjelast och spill" etikett="Mekanik · 3 · VG">
+    <rubrik>kN/m², kN/m och 5 % spill</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Ytlast (kN/m²)</underrubrik>
+        <berakning>
+          <rad text="ja">Vägg 12 m², 2,4 kN/m²</rad>
+          <svar>G = 12 \cdot 2,4 = 28,8\enh{kN}</svar>
+        </berakning>
+        <underrubrik>Linjelast (kN/m)</underrubrik>
+        <berakning>
+          <rad text="ja">Balk 3,6 kN/m, 6 m lång</rad>
+          <svar>G = 3,6 \cdot 6 = 21,6\enh{kN}</svar>
+        </berakning>
+        <text>Titta på enheten: kN/m² gånger m² ger kN.</text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Spillpåslag</underrubrik>
+        <text>5 % spill ⇒ beställningsvolym = V · 1,05</text>
+        <berakning>
+          <rad text="ja">Platta 6,5 × 4,0 × 0,18 m, γ = 25</rad>
+          <rad>V = 6,5 \cdot 4,0 \cdot 0,18 = 4,68\enh{m^3}</rad>
+          <rad>V_{\text{best}} = 4,68 \cdot 1,05 = 4,914\enh{m^3}</rad>
+          <svar>G = 25 \cdot 4,914 = 122,85\enh{kN} \approx 123\enh{kN}</svar>
+        </berakning>
+        <varning>Svara på allt som frågas. Här vill de ha både beställningsvolymen och tyngden.</varning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En platta 5 × 6 × 0,2 m gjuts i betong, 25 kN/m³. Spillpåslag 5 %. Beräkna beställningsvolym och total tyngd.</fraga>
+      <ruta etikett="Beställningsvolym" enhet="m³" svar="6,3"/>
+      <ruta etikett="Tyngd" enhet="kN" svar="157,5" tolerans="0.6"/>
+      <losning>
+        <berakning>
+          <rad>V = 5 \cdot 6 \cdot 0,2 = 6,0\enh{m^3}</rad>
+          <rad>V_{\text{best}} = 6,0 \cdot 1,05 = 6,3\enh{m^3}</rad>
+          <svar>G = 25 \cdot 6,3 = 157,5\enh{kN}</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Två varianter till. Ytlast står i kilonewton per kvadratmeter, så du multiplicerar med arean. Linjelast står i kilonewton per meter, så du multiplicerar med längden. Låt enheten styra dig. Och så spillet, en klassisk VG-uppgift. Fem procent spill betyder att du multiplicerar volymen med 1,05. Plattan på 4,68 kubikmeter blir 4,914 kubikmeter att beställa, och tyngden blir ungefär 123 kilonewton. Svara på båda frågorna!</berattare>
+    <berattare sprak="en">Two more variants. Surface load is given in kilonewtons per square metre, so you multiply by the area. Line load is given in kilonewtons per metre, so you multiply by the length. Let the unit guide you. And then waste, a classic distinction-level task. Five percent waste means you multiply the volume by 1.05. The slab of 4.68 cubic metres becomes 4.914 cubic metres to order, and the weight becomes about 123 kilonewtons. Answer both questions!</berattare>
+  </bild>
+
+  <bild titel="Densitet i kg/m³, g = 9,82 och lyftkontroll" etikett="Mekanik · 4">
+    <rubrik>Massa först, sedan kraft</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel>m = \rho \cdot V \qquad \rho = \frac{m}{V}</formel>
+        <text><m>\rho</m> (rho) i kg/m³, t.ex. betong 2 400 kg/m³. Ger massa i kg.</text>
+        <berakning>
+          <rad text="ja">Platta 12 × 8 × 0,15 m, betong 2 400 kg/m³, betongbil tar 10 ton</rad>
+          <rad>V = 12 \cdot 8 \cdot 0,15 = 14,4\enh{m^3}</rad>
+          <rad>m = 2400 \cdot 14,4 = 34 560\enh{kg} = 34,56\enh{ton}</rad>
+          <svar>34,56 / 10 = 3,46 \;\Rightarrow\; 4 \text{ betongbilar}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>g = 9,82 eller 10?</underrubrik>
+        <text>Formelbladet: <m>g \approx 9,82\enh{m/s^2}</m>. Konstruktörer avrundar till 10. Står det "använd g ≈ 10" i uppgiften gör du det, annars kan du skriva vilket värde du valt.</text>
+        <berakning>
+          <rad>500\enh{kg} \cdot 9,82 = 4910\enh{N} = 4,91\enh{kN}</rad>
+          <svar>500\enh{kg} \cdot 10 = 5000\enh{N} = 5,0\enh{kN}</svar>
+        </berakning>
+        <underrubrik>Räcker kranen?</underrubrik>
+        <text>Byggdel 1 200 kg, kranen klarar 10 kN: <m>1200 \cdot 9,82 \approx 11,8\enh{kN} \gt 10\enh{kN}</m>. Nej, kranen räcker inte.</text>
+        <tips>Överslag: kg ÷ 100 ≈ kN (det är samma sak som att räkna med g ≈ 10).</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En betongbalk är 200 × 400 mm och 2 m lång. Egentyngd 25 kN/m³. Beräkna tyngden.</fraga>
+      <ruta etikett="Tyngd" enhet="kN" svar="4"/>
+      <losning><berakning><rad>V = 0,2 \cdot 0,4 \cdot 2 = 0,16\enh{m^3}</rad><svar>G = 25 \cdot 0,16 = 4,0\enh{kN}</svar></berakning></losning>
+    </testa>
+    <berattare>Två vanliga varianter från lektion åtta. Är densiteten given i kilogram per kubikmeter, till exempel betong tvåtusen fyrahundra, får du massan i kilo. Plattan på fjorton och fyra tiondels kubikmeter väger trettiofyra och ett halvt ton, och då behövs fyra betongbilar som tar tio ton var. Och så g: formelbladet säger 9,82, men konstruktörer avrundar till tio. Följ det som står i uppgiften. Ska du kontrollera en kran räknar du om massan till kraft och jämför. Tolvhundra kilo blir ungefär elva komma åtta kilonewton, så en kran för tio kilonewton räcker inte.</berattare>
+    <berattare sprak="en">Two common variants from lesson eight. If the density is given in kilograms per cubic metre, for example concrete at two thousand four hundred, you get the mass in kilograms. The slab of fourteen point four cubic metres weighs thirty-four and a half tonnes, so you need four concrete trucks that carry ten tonnes each. And then g: the formula sheet says 9.82, but structural engineers round it to ten. Follow what the task says. To check a crane you convert the mass to a force and compare. Twelve hundred kilograms is about eleven point eight kilonewtons, so a crane rated for ten kilonewtons is not enough.</berattare>
+  </bild>
+
+</lektion>

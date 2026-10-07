@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lektion 7–8 i kursen: tyngdpunkt för punktlaster och sammansatta tvärsnitt (lärandemål 2, VG: mekaniken) -->
+<lektion id="tyngdpunkt" ordning="105" omrade="Tillämpningar" titel="Tyngdpunkt" titel-en="Centre of gravity">
+
+  <bild titel="Tyngdpunkt" etikett="Tyngdpunkt · 1">
+    <rubrik>Punktlaster: viktat medelvärde av lägen</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel stor="ja">x_T = \frac{m_1 x_1 + m_2 x_2 + \dots}{m_1 + m_2 + \dots}</formel>
+        <figur namn="balk-tyngdpunkt"/>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Balk 6 m, 300 kg + paket 100 kg vid 5 m</underrubrik>
+        <berakning>
+          <rad text="ja">Balkens tyngdpunkt: mitten, 3 m</rad>
+          <rad>x_T = \frac{300 \cdot 3 + 100 \cdot 5}{300 + 100}</rad>
+          <svar>x_T = 1400 / 400 = 3,5\enh{m}</svar>
+        </berakning>
+        <tips>Svaret ska ligga mellan delarnas tyngdpunkter, och närmast den tyngsta.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En 8 m lång balk väger 400 kg. Ett paket på 200 kg ligger 7 m från vänster ände. Var ligger den gemensamma tyngdpunkten?</fraga>
+      <ruta etikett="Avstånd från vänster" enhet="m" svar="5"/>
+      <losning>
+        <berakning>
+          <rad>x_T = \frac{400 \cdot 4 + 200 \cdot 7}{600}</rad>
+          <svar>x_T = 3000 / 600 = 5,0\enh{m}</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Tyngdpunkt är ett viktat medelvärde av lägen. Varje massa gånger sitt avstånd, summera, och dela med den totala massan. En jämn balk har sin tyngdpunkt i mitten. Balken på 6 meter och 300 kilo har alltså tyngdpunkten vid 3 meter. Med paketet på 100 kilo vid 5 meter hamnar den gemensamma tyngdpunkten vid 3,5 meter. Det är rimligt: den flyttas lite mot paketet.</berattare>
+    <berattare sprak="en">The centre of gravity is a weighted average of positions. Each mass times its distance, add them up, and divide by the total mass. A uniform beam has its centre of gravity in the middle. So the 6 metre, 300 kilo beam has its centre of gravity at 3 metres. With the 100 kilo package at 5 metres, the combined centre of gravity ends up at 3.5 metres. That makes sense: it moves a little towards the package.</berattare>
+  </bild>
+
+  <bild titel="Prova själv: tyngdpunkt" etikett="Tyngdpunkt · prova själv">
+    <rubrik>Lasten drar tyngdpunkten till sig</rubrik>
+    <text>En 10 m lång balk väger 400 kg. Ändra lastens massa och läge och se var den gemensamma tyngdpunkten hamnar.</text>
+    <interaktiv typ="tyngdpunkt" langd="10" balk="400" last="300"/>
+    <formel>x_T = \frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}</formel>
+    <berattare>Här kan du prova själv. Balken väger fyrahundra kilo, och dess egen tyngdpunkt ligger i mitten, fem meter in. Den orange lådan är lasten. Dra i reglagen. Ju tyngre lasten är, och ju längre ut den ligger, desto mer drar den den gemensamma tyngdpunkten åt sitt håll. Triangeln visar var tyngdpunkten hamnar. Det är precis ett viktat medelvärde: varje massa gånger sitt läge, summerat, delat med den totala massan.</berattare>
+    <berattare sprak="en">Here you can try it yourself. The beam weighs four hundred kilograms, and its own centre of gravity is in the middle, five metres in. The orange box is the load. Drag the sliders. The heavier the load, and the further out it is, the more it pulls the common centre of gravity towards itself. The triangle shows where the centre of gravity ends up. It is exactly a weighted mean: each mass times its position, added up, divided by the total mass.</berattare>
+  </bild>
+  <bild titel="Enkla figurer och koordinatsystem" etikett="Tyngdpunkt · 2">
+    <rubrik>Mitten – eller en tredjedel</rubrik>
+    <kolumner>
+      <kolumn>
+        <figur namn="tp-enkla"/>
+        <lista>
+          <punkt><b>Rektangel, kvadrat, cirkel</b>: i mitten åt alla håll. Rektangel <m>b \times h</m>: <m>(b/2,\ h/2)</m></punkt>
+          <punkt><b>Triangel</b>: <m>1/3</m> av höjden från basen (2/3 från spetsen).</punkt>
+          <punkt>Tyngdpunkten kan ligga utanför föremålet, t.ex. i en ring eller ett L.</punkt>
+        </lista>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Lägg koordinatsystemet smart</underrubrik>
+        <steg>
+          <punkt>Lägg figuren i första kvadranten så att alla koordinater blir positiva.</punkt>
+          <punkt>Är figuren symmetrisk? Lägg symmetrilinjen på en axel – då är den koordinaten klar direkt.</punkt>
+          <punkt>Dela figuren i rektanglar och trianglar.</punkt>
+        </steg>
+        <berakning>
+          <rad text="ja">Triangel 150 mm hög</rad>
+          <svar>y_T = \frac{150}{3} = 50\enh{mm} \text{ från basen}</svar>
+        </berakning>
+        <tips>Samma material överallt? Då kan arean användas som vikt i stället för massan.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En rektangel är 100 mm bred och 200 mm hög med nedre vänstra hörnet i origo. Vilken y-koordinat har tyngdpunkten?</fraga>
+      <ruta etikett="y" enhet="mm" svar="100"/>
+      <losning><berakning><svar>y_T = 200 / 2 = 100\enh{mm}</svar></berakning></losning>
+    </testa>
+    <berattare>Innan vi räknar sammansatta figurer behöver du kunna de enkla. För rektanglar, kvadrater och cirklar ligger tyngdpunkten mitt i, åt alla håll. För en triangel ligger den en tredjedel av höjden upp från basen. En triangel som är hundrafemtio millimeter hög har alltså tyngdpunkten femtio millimeter från basen. Lärarens tips: lägg koordinatsystemet så att allt hamnar i första kvadranten, då slipper du minustecken. Och är figuren symmetrisk lägger du symmetrilinjen på en axel, då har du den koordinaten gratis.</berattare>
+    <berattare sprak="en">Before calculating composite shapes you need to know the simple ones. For rectangles, squares and circles the centre of gravity lies in the middle, in every direction. For a triangle it lies one third of the height up from the base. A triangle that is one hundred and fifty millimetres tall has its centre of gravity fifty millimetres from the base. The teacher's tip: place the coordinate system so that everything ends up in the first quadrant, then you avoid minus signs. And if the shape is symmetric, put the line of symmetry on an axis, then you get that coordinate for free.</berattare>
+  </bild>
+
+  <bild titel="Sammansatt tvärsnitt (T-profil)" etikett="Tyngdpunkt · 3 · VG">
+    <rubrik>Dela upp, vikta med arean</rubrik>
+    <kolumner>
+      <kolumn>
+        <figur namn="tp-tprofil"/>
+        <formel stor="ja">y_T = \frac{A_A y_A + A_B y_B}{A_A + A_B}</formel>
+        <text>Symmetrisk kring y-axeln ⇒ <m>x_T = 0</m>.</text>
+      </kolumn>
+      <kolumn>
+        <tabell>
+          <rad rubrik="ja"><cell>Del</cell><cell>A (mm²)</cell><cell>y (mm)</cell><cell>A · y</cell></rad>
+          <rad><cell>A: fläns 195 × 45</cell><cell>8 775</cell><cell>220 + 22,5 = 242,5</cell><cell>2 127 938</cell></rad>
+          <rad><cell>B: liv 45 × 220</cell><cell>9 900</cell><cell>110</cell><cell>1 089 000</cell></rad>
+          <rad rubrik="ja"><cell>Summa</cell><cell>18 675</cell><cell></cell><cell>3 216 938</cell></rad>
+        </tabell>
+        <berakning>
+          <rad>y_T = \frac{3 216 938}{18 675}</rad>
+          <svar>y_T \approx 172\enh{mm}, \quad T = (0;\ 172)\enh{mm}</svar>
+        </berakning>
+        <tips>Rimligt? Flänsen sitter högst upp och drar tyngdpunkten över mitten av den totala höjden (265 / 2 = 132,5 mm).</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En T-profil har en fläns 120 × 20 mm ovanpå ett liv 20 × 100 mm (livet står på x-axeln). Beräkna tyngdpunktens höjd.</fraga>
+      <ruta etikett="y_T" enhet="mm" svar="82,7" tolerans="0.3"/>
+      <losning>
+        <berakning>
+          <rad>A_A = 2400\enh{mm^2},\ y_A = 100 + 10 = 110\enh{mm}</rad>
+          <rad>A_B = 2000\enh{mm^2},\ y_B = 50\enh{mm}</rad>
+          <svar>y_T = \frac{2400 \cdot 110 + 2000 \cdot 50}{4400} \approx 82,7\enh{mm}</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Det här är lärarens exempel från presentationen om tyngdpunkt, och en typisk VG-uppgift. T-profilen är symmetrisk kring y-axeln, så x-koordinaten är noll. För y-led delar vi upp figuren i flänsen A och livet B. Flänsens tyngdpunkt ligger på tvåhundratjugo plus tjugotvå och en halv, alltså 242,5 millimeter. Livets ligger mitt på, hundratio millimeter. Eftersom materialet är detsamma använder vi arean som vikt. Gör en tabell med area, lägesvärde och produkten, summera och dela. Svaret blir ungefär hundrasjuttiotvå millimeter.</berattare>
+    <berattare sprak="en">This is the teacher's example from the slides on centre of gravity, and a typical distinction-level task. The T-section is symmetric about the y axis, so the x coordinate is zero. For the y direction we split the shape into the flange A and the web B. The flange's centre of gravity lies at two hundred and twenty plus twenty-two and a half, which is 242.5 millimetres. The web's lies in the middle, one hundred and ten millimetres. Since the material is the same we use the area as weight. Make a table with area, position and their product, add up and divide. The answer is about one hundred and seventy-two millimetres.</berattare>
+  </bild>
+
+  <bild titel="L-form och utbredd last" etikett="Tyngdpunkt · 4 · VG">
+    <rubrik>Två koordinater och en lastresultant</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>L-form: stående 50 × 200 + liggande 100 × 50 mm</underrubrik>
+        <figur namn="tp-lform"/>
+        <berakning>
+          <rad>A_1 = 10 000\enh{mm^2},\ (25;\ 100) \qquad A_2 = 5000\enh{mm^2},\ (100;\ 25)</rad>
+          <rad>x_T = \frac{10 000 \cdot 25 + 5000 \cdot 100}{15 000} = 50\enh{mm}</rad>
+          <svar>y_T = \frac{10 000 \cdot 100 + 5000 \cdot 25}{15 000} = 75\enh{mm}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Utbredd last som en triangel (jordtryck)</underrubrik>
+        <figur namn="jordtryck"/>
+        <text>Jordtrycket ökar med djupet och bildar en triangel. Hela lasten kan ersättas med en punktlast i triangelns tyngdpunkt: <b>1/3 av höjden från botten</b>.</text>
+        <berakning>
+          <rad text="ja">Källarvägg 3,0 m hög, botten på +10,5 m</rad>
+          <svar>+10,5 + \frac{3,0}{3} = +11,5\enh{m}</svar>
+        </berakning>
+        <tips>Jämnt utbredd last (rektangel) angriper i mitten, triangellast på en tredjedel.</tips>
+      </kolumn>
+    </kolumner>
+    <berattare>Två fortsättningar. L-formen behöver både x och y. Dela den i en stående och en liggande rektangel, ta fram varje dels area och tyngdpunkt, och räkna x och y var för sig med samma formel. Svaret blir femtio respektive sjuttiofem millimeter. Lägg märke till att punkten hamnar utanför själva materialet, i hörnet av L:et. Den andra varianten är en utbredd last, till exempel jordtryck mot en källarvägg. Trycket ökar med djupet och bildar en triangel, så hela lasten angriper en tredjedel av höjden upp från botten.</berattare>
+    <berattare sprak="en">Two follow-ups. The L shape needs both x and y. Split it into a standing and a lying rectangle, find each part's area and centre of gravity, and calculate x and y separately with the same formula. The answer is fifty and seventy-five millimetres. Notice that the point ends up outside the material itself, in the corner of the L. The other variant is a distributed load, for example soil pressure against a basement wall. The pressure increases with depth and forms a triangle, so the whole load acts one third of the height up from the bottom.</berattare>
+  </bild>
+
+</lektion>

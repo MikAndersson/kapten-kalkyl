@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="vektorer" ordning="70" omrade="Geometri" titel="Vektorer" titel-en="Vectors">
+
+  <bild titel="Vektorer" etikett="Vektorer · 1 · VG">
+    <rubrik>Lägg ihop krafter</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel>\vec{R} = (x_1 + x_2,\ y_1 + y_2)</formel>
+        <formel>|\vec{R}| = \sqrt{x^2 + y^2}</formel>
+        <formel>\tan v = \frac{y}{x}</formel>
+        <figur namn="vektor"/>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Två personer drar en bil ur diket: (−250, 20) N och (−245, −89) N</underrubrik>
+        <berakning>
+          <rad>\vec{R} = (-250 - 245,\ 20 - 89) = (-495,\ -69)\enh{N}</rad>
+          <rad>|\vec{R}| = \sqrt{495^2 + 69^2} \approx 500\enh{N}</rad>
+          <rad>\tan v = 69 / 495 \;\Rightarrow\; v \approx 7,9^\circ</rad>
+          <svar text="ja">Riktning: 7,9° under negativa x-axeln</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <berattare>Vektorer är krafter med riktning. Du lägger ihop dem genom att addera x-delarna för sig och y-delarna för sig. Två personer som drar en bil ur diket ger tillsammans minus 495 i x och minus 69 i y. Längden, alltså den totala dragkraften, får du med Pythagoras: ungefär 500 newton. Vinkeln får du med tangens av y delat med x. Rita gärna en skiss så att du ser åt vilket håll vektorn pekar.</berattare>
+    <berattare sprak="en">Vectors are forces with a direction. You add them by adding the x parts separately and the y parts separately. Two people pulling a car out of a ditch together give minus 495 in x and minus 69 in y. The length, meaning the total pulling force, you get with Pythagoras: about 500 newtons. The angle you get with the tangent of y divided by x. Draw a sketch so you can see which way the vector points.</berattare>
+  </bild>
+
+  <bild titel="Komposanter och slutningsfel" etikett="Vektorer · 2 · VG">
+    <rubrik>Dela upp en kraft i x och y</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Från längd och vinkel till komposanter</underrubrik>
+        <formel>F_x = F \cdot \cos v \qquad F_y = F \cdot \sin v</formel>
+        <figur namn="komposanter"/>
+        <berakning>
+          <rad text="ja">F = 500 N, v = 30° mot x-axeln</rad>
+          <rad>F_x = 500 \cdot \cos 30^\circ \approx 433\enh{N}</rad>
+          <svar>F_y = 500 \cdot \sin 30^\circ = 250\enh{N}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Slutningsfel vid mätning runt ett kvarter</underrubrik>
+        <text>Går man runt och tillbaka till start borde resultanten bli (0, 0). Det som blir över är mätfelet.</text>
+        <berakning>
+          <rad>\vec{v}_1 = (48,0;\ 0),\ \vec{v}_2 = (0;\ 31,8),\ \vec{v}_3 = (-47,7;\ 0),\ \vec{v}_4 = (0;\ -31,5)</rad>
+          <rad>\vec{R} = (0,3;\ 0,3) \;\Rightarrow\; |\vec{R}| = \sqrt{0,3^2 + 0,3^2} \approx 0,42\enh{m}</rad>
+          <rad>L = 48,0 + 31,8 + 47,7 + 31,5 = 159,0\enh{m}</rad>
+          <svar>\text{relativt fel} = \frac{0,42}{159,0} \cdot 100 \approx 0,27 %</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En vajer drar med 800 N i vinkeln 40° mot marken. Hur stor är den horisontella komposanten?</fraga>
+      <ruta etikett="F_x" enhet="N" svar="612,8" tolerans="1"/>
+      <losning><berakning><svar>F_x = 800 \cdot \cos 40^\circ \approx 612,8\enh{N}</svar></berakning></losning>
+    </testa>
+    <berattare>Vektorer på VG-nivå: komposanter. En kraft som drar snett kan delas upp i en del längs x och en del längs y. Den vågräta delen är kraften gånger cosinus för vinkeln, den lodräta är kraften gånger sinus. Femhundra newton i trettio grader ger ungefär fyrahundratrettiotre newton vågrätt och tvåhundrafemtio lodrätt. I virtuell byggmätning används vektorer för att hitta mätfel. Går man runt ett kvarter och tillbaka till start borde resultanten vara noll. Det som blir kvar är slutningsfelet. Dela det med den totala sträckan så får du det relativa felet.</berattare>
+    <berattare sprak="en">Vectors at distinction level: components. A force pulling at an angle can be split into a part along x and a part along y. The horizontal part is the force times the cosine of the angle, the vertical part is the force times the sine. Five hundred newtons at thirty degrees gives about four hundred and thirty-three newtons horizontally and two hundred and fifty vertically. In virtual surveying, vectors are used to find measurement errors. If you walk around a block and back to the start, the resultant should be zero. What is left over is the closing error. Divide it by the total distance and you get the relative error.</berattare>
+  </bild>
+
+</lektion>

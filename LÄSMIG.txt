@@ -1,0 +1,303 @@
+KAPTEN KALKYL – LÄSMIG
+======================
+
+En uppläst repetitionslektion i Tillämpad matematik (TR26), en övningstenta
+med automatisk rättning och en editor för att skriva egna lektioner.
+
+
+1. INNEHÅLL
+-----------
+  Elevversionen (mappen kapten-kalkyl, den som delas med kurskamrater):
+    index.html          Lektionerna och övningstentan. Öppna den i en webbläsare.
+    lessons/            En XML-fil per lektion.
+    lessons/index.xml   Innehållsförteckning: vilka lektionsfiler som ska visas.
+    mallar/index.xml    Innehållsförteckning: vilka mallfiler som används.
+    mallar/G.xml        Tentamallar på G-nivå (1200+).
+    mallar/VG.xml       Tentamallar på VG-nivå (800+).
+    LÄSMIG.txt          Den här filen.
+
+  Editorn (mappen kapten-kalkyl-editor, för den som skriver lektioner):
+    editor.html                 Editorn för lektioner och tentafrågor. Separat fil –
+                                den går inte att nå från lektions-/tentasidan.
+    tools/generera_mallar.py    Skript som skapar mallar/G.xml och mallar/VG.xml.
+    kallkod/                    All källkod. Kör  python3 build.py  där för att
+                                bygga om index.html och editor.html (hamnar i dist/).
+
+
+2. ÖPPNA SIDAN
+--------------
+  a) På en webbserver (t.ex. skolans webbplats, GitHub Pages, Netlify):
+     Ladda upp hela mappen. Sidan läser då XML-filerna i lessons/ och
+     mallar/ direkt, så ändringar syns så fort sidan laddas om.
+
+  b) Direkt från datorn (dubbelklicka på index.html):
+     Webbläsare får inte läsa andra filer från datorn av säkerhetsskäl.
+     Därför har index.html en inbyggd kopia av lektionerna och mallarna.
+     Har du ändrat XML-filerna: kör  python3 build.py  i källkodsmappen så
+     byggs index.html om med de nya filerna (eller lägg mappen på en server).
+
+  Formlerna ritas med MathJax, som hämtas från internet (cdnjs). Utan
+  internet visas formlerna som vanlig text.
+
+
+3. LÄGGA TILL ELLER TA BORT EN LEKTION
+--------------------------------------
+  Lägga till:
+    1. Skriv lektionen i editor.html (eller kopiera en befintlig XML-fil).
+    2. Spara den som en .xml-fil i mappen lessons/ (UTF-8).
+    3. Lägg till en rad i lessons/index.xml:   <fil>min-lektion.xml</fil>
+
+  Ta bort:
+    Ta bort raden i lessons/index.xml, eller skriv <fil visa="nej">…</fil>.
+
+
+4. SORTERING – MATEMATIKENS NATURLIGA ORDNING
+---------------------------------------------
+  Lektionerna sorteras efter attributet ordning="…" på <lektion>, lägst först.
+  Ordningen följer hur matematiken bygger på sig själv: först tal och
+  enheter, sedan algebra och funktioner, geometri, statistik och sist
+  tillämpningar som använder allt det tidigare.
+
+    0    Introduktion           Start
+    5    Tal och enheter        Tal, bråk & räkneregler      (bok kap 1.1–1.3)
+    10   Tal och enheter        Enheter
+    20   Tal och enheter        Procent
+    25   Tal och enheter        Ränta, lån & index           (bygger på förändringsfaktor)
+    30   Algebra                Uttryck, potenser, ekvationer, mönster (kap 2)
+    40   Funktioner             Funktioner, räta linjen & ekvationssystem (kap 3)
+    50   Geometri               Area, volym & skala
+    60   Geometri               Pythagoras & trigonometri    (kap 5.1)
+    70   Geometri               Vektorer                     (kap 5.2)
+    80   Statistik              Medelvärde & statistik       (kap 4.4)
+    90   Funktioner             Interpolation (bygger på räta linjen)
+    100  Tillämpningar          Massa, tyngd & laster (bygger på volym)
+    105  Tillämpningar          Tyngdpunkt (bygger på area och viktat medelvärde)
+    900  Avslutning             Tentastrategi
+
+  Ny lektion mellan Area & volym och Trigonometri? Ge den t.ex. ordning="55".
+  omrade="…" styr gruppnamnet ovanför lektionsknapparna.
+
+
+5. LEKTIONSFILENS UPPBYGGNAD
+----------------------------
+  <?xml version="1.0" encoding="UTF-8"?>
+  <lektion id="geometri" ordning="50" omrade="Geometri"
+           titel="Area &amp; volym" titel-en="Area and volume">
+    <bild titel="Areaformler" etikett="Geometri · 1">
+      ... innehåll ...
+      <berattare>Det Kapten Kalkyl säger.</berattare>
+      <berattare sprak="en">What Kapten Kalkyl says.</berattare>
+    </bild>
+  </lektion>
+
+  <lektion>  id (unikt, a–z och bindestreck), ordning, omrade, titel, titel-en
+  <bild>     en bild i lektionen. titel = namn, etikett = liten text ovanför rubriken
+
+
+6. TAGGAR INNE I EN BILD
+------------------------
+  <rubrik>…</rubrik>              Stor rubrik
+  <underrubrik>…</underrubrik>    Mindre rubrik
+  <text>…</text>                  Textstycke. Inuti texten:
+                                    <m>a^2+b^2=c^2</m>   formel i texten
+                                    <b>fet</b>  <i>kursiv</i>  <br/> radbrytning
+  <formel>G = m \cdot g</formel>  Formel i blå ruta. stor="ja" ger större.
+  <berakning>                     Uträkning steg för steg:
+    <rad>V = 9,0 \cdot 6,0 \cdot 0,20</rad>       mellanled (formel)
+    <rad text="ja">Vanlig text</rad>             mellanled (text)
+    <svar>V = 10,8\enh{m^3}</svar>               svaret (visas grönt)
+  </berakning>
+  <tips>…</tips>                  Grön tipsruta
+  <varning>…</varning>            Röd ruta för vanliga fel ("Fälla")
+  <lista> <punkt>…</punkt> </lista>        Punktlista (numrerad="ja" ger siffror)
+  <steg> <punkt>…</punkt> </steg>          Numrerade steg
+  <tabell>                                 Tabell
+    <rad rubrik="ja"><cell>…</cell></rad>  rubrikrad
+    <rad><cell>…</cell><cell>…</cell></rad>
+  </tabell>                                forstakolumn="rubrik" = första kolumnen fet
+  <kolumner> <kolumn>…</kolumn> <kolumn>…</kolumn> </kolumner>
+                                  Sida vid sida (staplas på mobil)
+  <figur namn="rektangel"/>       Färdig figur. Finns: rektangel, triangel, cirkel,
+                                  trapets, ratblock, tyngdtriangel, interpolation,
+                                  rata-linjen, pythagoras, trig-triangel, takstol,
+                                  vektor, balk-tyngdpunkt, koordinatsystem,
+                                  komposanter, tp-enkla, tp-tprofil, tp-lform,
+                                  jordtryck.
+                                  Egen figur: lägg <svg>…</svg> inuti <figur>.
+  <testa>                         "Testa dig"-uppgift:
+    <fraga>Fråga …</fraga>
+    <ruta etikett="Tyngd" enhet="kN" svar="4,5" tolerans="0,05"/>
+                                  (flera <ruta> går bra; tolerans är valfri,
+                                   standard 1 % av svaret)
+    <losning> …valfria taggar, t.ex. <berakning>… </losning>
+  </testa>
+      Vanliga felsvar kan få en egen förklaring:
+    <ruta etikett="Totalt" svar="130"><fel varde="40">Det är bara januari.</fel></ruta>
+  <diagram typ="stapel" titel="Antal per månad" x="Månad" y="Antal"
+           etiketter="Jan;Feb;Mar" varden="40;55;35"/>
+                                  Diagram. typ = stapel, linje eller punkt.
+                                  visavarden="ja" skriver ut alla värden (annars
+                                  syns värdet när man pekar på stapeln).
+                                  Flera serier: <serie namn="A"><v x="Jan" y="4"/>…</serie>
+  <diagram typ="funktion" uttryck="2*x + 1" xmin="-5" xmax="5"/>
+                                  Graf till en funktion (* = gånger, ^ = upphöjt).
+  <interaktiv typ="rata-linjen" k="1" m="2"/>
+                                  "Prova själv" med reglage. Finns:
+                                    rata-linjen (k, m)
+                                    statistik (varden="12; 15; 18")
+                                    trig (vinkel, hypotenusa)
+                                    interpolation (x1, y1, x2, y2)
+                                    tyngdpunkt (langd, balk, last)
+                                    procent (start, p1, p2)
+  <knapp typ="tenta">Starta övningstentan</knapp>
+  <berattare>…</berattare>        Uppläsning på svenska
+  <berattare sprak="en">…</berattare>
+                                  Uppläsning på engelska (används om enheten
+                                  saknar svensk röst)
+
+
+7. FORMLER (LaTeX)
+------------------
+  Formler skrivs i LaTeX, t.ex.  \frac{a}{b}  \sqrt{x}  x^2  x_1  \cdot  \approx
+  \tan^{-1}  25^\circ  \gamma  \pi  \Rightarrow  \text{vanlig text}
+  Förenklingar som fungerar direkt:
+    8,2      decimalkomma
+    24 000   tusentalsmellanslag
+    15 %     procent
+    \enh{kN/m^3}   enhet med rätt mellanrum
+  OBS i XML:  skriv  \lt  i stället för <   och  &amp;  i stället för &
+
+
+8. EDITORN (editor.html)
+------------------------
+  Editorn är en egen fil så att elever som bara ska plugga inte ser den.
+  Den har två flikar: Lektioner och Tentafrågor.
+
+  Fliken Lektioner – skapa lektioner med formulär, ingen XML behövs.
+  - Öppna lektion: börja från en tom lektion eller en kopia av kursens.
+  - Lektion: titel, område och plats i ordningen (id skapas från titeln).
+  - Bildflikar: en flik per bild. "+ Ny bild", flytta, kopiera, ta bort.
+  - Varje bild har färdiga fält: Rubrik, Brödtext och vad Kapten Kalkyl
+    säger (svenska och engelska).
+  - "+ Lägg till element" öppnar en meny: underrubrik, text, formel,
+    uträkning, tips, fälla, lista, steg, tabell, figur, två kolumner,
+    Testa dig och knapp till tentan. Elementen flyttas med ↑ ↓ och tas
+    bort med ✕.
+  - I textfält skrivs formler mellan dollartecken ($A = \pi r^2$) och
+    fet text med **dubbla stjärnor**.
+  - Förhandsvisningen visar bilden medan du skriver (på mobil: knappen
+    Förhandsvisa).
+  - Ladda ner / Kopiera XML: lägg filen i lessons/ och skriv in den i
+    lessons/index.xml (avsnitt 3). Utkastet sparas i webbläsaren tills du
+    börjar på en ny lektion.
+  - Importera XML-filer: läs in lektionsfiler från datorn för att ändra dem.
+  - Avancerat: visa och ändra XML:en direkt.
+
+  Fliken Tentafrågor – skapa egna mallar till övningstentan.
+  - Variabler: slumptal (min, max, steg, decimaler), val ur lista, lista med
+    tal, uträkningar och villkor. Villkoren ser till att siffrorna ger en
+    lösbar och rimlig uppgift.
+  - Fråga med {=a} där värdet ska stå, svar (uttryck), vanliga felsvar med
+    förklaring och lösningsrader.
+  - Förhandsvisningen slumpar fram en uppgift ("Nya siffror"). Skriv ett
+    svar och tryck Kontrollera för att prova felsvaren.
+  - "Testa 300 slumpningar" kontrollerar att mallen alltid går att lösa och
+    visar hur stora svaren blir.
+  - "Spara i min samling" sparar i webbläsaren. "Ladda ner samlingen" ger
+    egna-mallar.xml: lägg den i mallar/ och skriv <fil>egna-mallar.xml</fil>
+    i mallar/index.xml.
+  - Kursens mallar kan öppnas som kopior att utgå från.
+
+
+9. UPPLÄSNING
+-------------
+  Uppläsningen använder enhetens egna röster. Finns ingen svensk röst
+  läses den engelska texten upp. Fungerar i Chrome, Edge, Safari och
+  Firefox på dator, Android och iPhone/iPad.
+
+
+10. ÖVNINGSTENTAN, MINITENTOR OCH RÄTTNING
+------------------------------------------
+  Varje gång man trycker "Ny slumpad tenta" sätts en tenta ihop av mallarna:
+  16 p på G-nivå (Del 1) och 14 p på VG-nivå (Del 2), högst en uppgift per
+  lektion och del (om det går), plus 8 extrauppgifter av andra frågetyper.
+  Siffrorna slumpas, men villkoren i mallen ser till att uppgiften går att
+  lösa och blir rimlig.
+
+  Minitentor: sist i varje avsnitt kommer en minitenta med upp till fyra
+  uppgifter från just det avsnittet. Den kan hoppas över, och rutan
+  "Minitentor" i lärarpanelen stänger av alla.
+
+  Felsvar: ett fel svar får en förklaring när det går att se vad som hänt –
+  mallens egna felsvar (<fel>) eller allmänna mönster som fel tecken,
+  enhetsfel (×10, ×100, ×1000), glömd division med 2, radianer i stället
+  för grader och för tidig avrundning.
+
+  Redovisning: under varje uppgift finns en ruta där man kan skriva sin
+  uträkning. Vid rättningen kontrolleras formel, insättning, mellanled och
+  svar med enhet. Räknar man på papper visas en checklista att kryssa i.
+  Kontrollen är enkel och ersätter inte en lärare.
+
+  Varje tenta har ett sexsiffrigt tentanummer. Samma nummer ger alltid samma
+  tenta, så man kan dela numret (eller länken som slutar med #tenta123456)
+  med kurskamraterna. "Kursens exempeltenta" är den fasta tentan i tenta.js.
+
+  Kursens namn, kod och skrivtid ligger i src/kurs.js. Fältet ch/lektion på en
+  uppgift är id:t på den lektion som knappen "Repetera i lektionen" öppnar.
+
+
+11. TENTAMALLAR (mallar/G.xml och mallar/VG.xml)
+------------------------------------------------
+  En mall är en uppgift med variabler i stället för siffror. Exempel:
+
+  <mall id="g-ytlast-egen-1" niva="G" lektion="mekanik" poang="1">
+    <var namn="A" min="5" max="60" decimaler="1"/>     slumpat tal 5–60 (1 decimal)
+    <var namn="q" typ="val" alternativ="0,5|1,2|2,5"/>  ett av alternativen
+    <rakna namn="G">A*q</rakna>                       uträknat värde
+    <villkor>G &lt; 100</villkor>                        dras om tills villkoret gäller
+    <fraga>En vägg på {=A:1} m² väger {=q:1} kN/m². Hur stor är tyngden?</fraga>
+    <svar etikett="Tyngd" enhet="kN" varde="G" decimaler="1"/>
+    <losning><berakning><rad>G = {=q:1} \cdot {=A:1}</rad><svar>G = {=G:1}\enh{kN}</svar></berakning></losning>
+  </mall>
+
+  Taggar och attribut:
+    <mall>     id (unikt), niva G/VG, lektion (lektionens id), poang
+    <var>      namn, min, max (tal eller uttryck med tidigare variabler),
+               steg (t.ex. 0,5), decimaler.  typ="val" alternativ="a|b|c"
+    <lista>    namn, antal, min, max, decimaler – en lista med slumptal
+    <rakna>    namn – räknar ut ett värde från ett uttryck
+    <villkor>  uttryck som måste vara sant, annars slumpas allt om (max 400 ggr)
+    <fraga>    uppgiftstexten. {=uttryck} skriver ett värde, {=x:2} med två
+               decimaler, {=x:p} sätter negativa tal inom parentes (5 + (−3)),
+               {=x:s} skriver talet med tecken (4x {=b:s} → 4x − 3).
+               Inline-formler skrivs  \( … \).
+    <svar>     etikett, enhet, varde (uttryck), decimaler, exakt="ja" (för antal),
+               min/max (rimlighetsgräns). Flera <svar> = flera rutor.
+               typ="val" alternativ="Lag A|Lag B" varde="0" ger en rullista.
+               Godkänt: inom 1 % eller avrundat till angivet antal decimaler.
+               <fel varde="uttryck">förklaring</fel> inuti <svar> = vanligt felsvar.
+    <underlag> valfritt: visas under frågan, t.ex. ett <diagram> eller en <tabell>.
+    <losning>  samma taggar som i lektionerna (<berakning>, <text>, <tips> …)
+
+  Uttryck: + − * / ^, jämförelser (&lt; &gt; == !=), &amp;&amp; ||, ?: och
+  funktionerna sqrt abs ln log exp pow round(x,d) ceil floor min max
+  sin cos tan asin acos atan atan2 (grader), sum count mean median range
+  stdev (stickprov, n−1) mode uniquemode modecount sorted item if isint.
+  Konstanter: pi, g (= 9,82).
+  OBS i XML: skriv &lt; för <, &gt; för > och &amp;&amp; för &&.
+
+  Generatorn: tools/generera_mallar.py innehåller alla frågetyper (familjer)
+  med sammanhang och formuleringar. Ändra eller lägg till en familj och kör
+    python3 tools/generera_mallar.py
+  så skrivs G.xml och VG.xml om. Egna mallar (t.ex. från editorn) läggs i en
+  egen fil i mallar/ och skrivs in i mallar/index.xml – de skrivs aldrig över.
+
+
+12. KÄLLKOD (för den som vill bygga om)
+---------------------------------------
+  src/kurs.js, src/figurer.js, src/tenta.js   kursinställningar, figurer, fast tenta
+  src/styles.css                              utseende
+  src/core/      gemensamt: hjälpfunktioner, formler, XML, rendering, svar, mallmotor
+  src/student/   elevsidan: markup, uppläsning, lektion, tenta, start
+  src/editor/    editorn: markup, datamodell, formulär, start
+  build.py       bygger index.html och editor.html (+ zip-filer) i dist/

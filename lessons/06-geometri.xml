@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="geometri" ordning="50" omrade="Geometri" titel="Area &amp; volym" titel-en="Area and volume">
+
+  <bild titel="Areaformler" etikett="Geometri · 1">
+    <rubrik>Areor du måste kunna</rubrik>
+    <kolumner>
+      <kolumn><figur namn="rektangel"/><formel>\text{Rektangel: } A = l \cdot b</formel></kolumn>
+      <kolumn><figur namn="triangel"/><formel>\text{Triangel: } A = \frac{b \cdot h}{2}</formel></kolumn>
+      <kolumn><figur namn="cirkel"/><formel>\text{Cirkel: } A = \pi r^2</formel></kolumn>
+      <kolumn><figur namn="trapets"/><formel>\text{Parallelltrapets: } A = \frac{(a + b) \cdot h}{2}</formel></kolumn>
+    </kolumner>
+    <berakning>
+      <rad text="ja">Triangel: bas 4,0 m, höjd 2,5 m</rad>
+      <svar>A = \frac{4,0 \cdot 2,5}{2} = 5,0\enh{m^2}</svar>
+    </berakning>
+    <testa>
+      <fraga>En golvyta är 5,5 m × 3,5 m. Beräkna arean.</fraga>
+      <ruta etikett="Area" enhet="m²" svar="19,25" tolerans="0.06"/>
+      <losning><berakning><svar>A = 5,5 \cdot 3,5 = 19,25\enh{m^2} \approx 19,3\enh{m^2}</svar></berakning></losning>
+    </testa>
+    <berattare>Fyra areaformler täcker nästan allt. Rektangeln är längd gånger bredd. Triangeln är bas gånger höjd delat med två, glöm inte att dela med två! Cirkeln är pi gånger radien i kvadrat, och kom ihåg att radien är halva diametern. Trapetset är summan av de parallella sidorna gånger höjden, delat med två. En triangel med basen 4 meter och höjden 2,5 meter får arean 5 kvadratmeter.</berattare>
+    <berattare sprak="en">Four area formulas cover almost everything. The rectangle is length times width. The triangle is base times height divided by two. Don't forget to divide by two! The circle is pi times the radius squared, and remember that the radius is half the diameter. The trapezoid is the sum of the parallel sides times the height, divided by two. A triangle with a base of 4 metres and a height of 2.5 metres has an area of 5 square metres.</berattare>
+  </bild>
+
+  <bild titel="Volymformler" etikett="Geometri · 2">
+    <rubrik>Volym = basarea · höjd</rubrik>
+    <kolumner>
+      <kolumn>
+        <figur namn="ratblock"/>
+        <formel>\text{Rätblock: } V = l \cdot b \cdot h</formel>
+        <formel>\text{Cylinder: } V = \pi r^2 h</formel>
+        <formel>\text{Prisma: } V = \text{basarea} \cdot \text{längd}</formel>
+        <formel>\text{Kon: } V = \frac{\pi r^2 h}{3} \qquad \text{Klot: } V = \frac{4 \pi r^3}{3}</formel>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Exempel: grundplatta 9,0 × 6,0 × 0,20 m</underrubrik>
+        <berakning>
+          <rad>V = l \cdot b \cdot h</rad>
+          <rad>V = 9,0 \cdot 6,0 \cdot 0,20</rad>
+          <svar>V = 10,8\enh{m^3}</svar>
+        </berakning>
+        <underrubrik>Exempel: platta 20 m × 12 m, 20 cm tjock</underrubrik>
+        <berakning>
+          <rad>20\enh{cm} = 0,20\enh{m}</rad>
+          <svar>V = 20 \cdot 12 \cdot 0,20 = 48\enh{m^3}</svar>
+        </berakning>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En stålbalk är 2,4 m lång, 0,3 m bred och 0,25 m tjock. Beräkna volymen.</fraga>
+      <ruta etikett="Volym" enhet="m³" svar="0,18"/>
+      <losning><berakning><svar>V = 2,4 \cdot 0,3 \cdot 0,25 = 0,18\enh{m^3}</svar></berakning></losning>
+    </testa>
+    <berattare>Volym är alltid basarean gånger höjden, eller längden. För en platta eller balk blir det längd gånger bredd gånger tjocklek. En grundplatta på 9 gånger 6 gånger 0,20 meter blir 10,8 kubikmeter. Och om tjockleken står i centimeter, som 20 centimeter, gör du först om det till 0,20 meter. Cylindern är pi r i kvadrat gånger höjden. Kon och klot står på formelbladet om de skulle dyka upp.</berattare>
+    <berattare sprak="en">Volume is always the base area times the height, or the length. For a slab or a beam, that means length times width times thickness. A foundation slab of 9 by 6 by 0.20 metres is 10.8 cubic metres. And if the thickness is given in centimetres, like 20 centimetres, first convert it to 0.20 metres. The cylinder is pi r squared times the height. The cone and the sphere are on the formula sheet in case they turn up.</berattare>
+  </bild>
+
+  <bild titel="Räkna baklänges" etikett="Geometri · 3">
+    <rubrik>När volymen är känd men måttet saknas</rubrik>
+    <kolumner>
+      <kolumn>
+        <formel stor="ja">V = A \cdot t \;\Rightarrow\; t = \frac{V}{A}</formel>
+        <underrubrik>Exempel: garagegolv</underrubrik>
+        <text>Arean är 36 m² och volymen 5,4 m³. Hur tjockt är golvet?</text>
+        <berakning>
+          <rad>t = V / A</rad>
+          <rad>t = 5,4 / 36</rad>
+          <svar>t = 0,15\enh{m} = 150\enh{mm}</svar>
+        </berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Sidan i en kvadrat</underrubrik>
+        <text>En kvadratisk öppning har arean 3,24 m².</text>
+        <berakning>
+          <rad>x^2 = 3,24</rad>
+          <rad>x = \sqrt{3,24}</rad>
+          <svar>x = 1,8\enh{m}</svar>
+        </berakning>
+        <tips>Fundera på svaret: 15 cm är en normal golvtjocklek. Får du 6,7 m har du delat åt fel håll.</tips>
+      </kolumn>
+    </kolumner>
+    <berattare>Ibland vet du volymen men inte ett av måtten. Då räknar du baklänges. Volymen är arean gånger tjockleken, så tjockleken är volymen delat med arean. Ett golv med 5,4 kubikmeter betong på 36 kvadratmeter är 0,15 meter tjockt, alltså 15 centimeter. Det låter rimligt. Får du ett svar på flera meter har du delat åt fel håll. Och för en kvadrat med arean 3,24 tar du roten ur och får 1,8 meter.</berattare>
+    <berattare sprak="en">Sometimes you know the volume but not one of the dimensions. Then you work backwards. The volume is the area times the thickness, so the thickness is the volume divided by the area. A floor with 5.4 cubic metres of concrete on 36 square metres is 0.15 metres thick, that is 15 centimetres. That sounds reasonable. If you get an answer of several metres, you divided the wrong way. And for a square with an area of 3.24, you take the square root and get 1.8 metres.</berattare>
+  </bild>
+
+  <bild titel="Skala, omkrets och sammansatta ytor" etikett="Geometri · 4">
+    <rubrik>Från ritning till verklighet</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Skala 1 : 200</underrubrik>
+        <text>1 cm på ritningen är 200 cm i verkligheten.</text>
+        <berakning>
+          <rad text="ja">Vägg 4,5 cm på ritning i skala 1:200</rad>
+          <svar>4,5 \cdot 200 = 900\enh{cm} = 9,0\enh{m}</svar>
+        </berakning>
+        <berakning>
+          <rad text="ja">Bro 2,5 km, ritning i skala 1:5 000</rad>
+          <svar>250 000\enh{cm} / 5000 = 50\enh{cm}</svar>
+        </berakning>
+        <underrubrik>Omkrets</underrubrik>
+        <formel>\text{Rektangel: } O = 2l + 2b \qquad \text{Cirkel: } O = 2 \pi r</formel>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Sammansatt yta: dela upp eller dra ifrån</underrubrik>
+        <berakning>
+          <rad text="ja">Altan 8,0 × 3,6 m med urtag 1,2 × 0,9 m</rad>
+          <rad>8,0 \cdot 3,6 - 1,2 \cdot 0,9 = 28,8 - 1,08</rad>
+          <svar>A = 27,72\enh{m^2}</svar>
+        </berakning>
+        <underrubrik>Halvcylinder (ränndal), d = 0,30 m, 45 m lång</underrubrik>
+        <berakning><svar>V = \frac{\pi \cdot 0,15^2 \cdot 45}{2} \approx 1,59\enh{m^3}</svar></berakning>
+        <tips>1 hektar = 10 000 m². 1 m² = 10 000 cm². 1 m³ = 1 000 liter.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Ett fönster är 1,5 cm brett på en ritning i skala 1:200. Hur brett är det i verkligheten?</fraga>
+      <ruta etikett="Bredd" enhet="m" svar="3"/>
+      <losning><berakning><rad>1,5 \cdot 200 = 300\enh{cm}</rad><svar>= 3,0\enh{m}</svar></berakning></losning>
+    </testa>
+    <berattare>Ritningar kommer du att läsa varje dag i yrket. Skala ett till tvåhundra betyder att en centimeter på ritningen är tvåhundra centimeter i verkligheten. En vägg som är fyra och en halv centimeter på ritningen är alltså nio meter. Åt andra hållet delar du. Omkretsen av en rektangel är två längder plus två bredder, och omkretsen av en cirkel är två pi r. Sammansatta ytor delar du upp i enkla figurer, eller räknar hela ytan och drar ifrån hålen, som urtaget i altanen.</berattare>
+    <berattare sprak="en">You will read drawings every day in this job. Scale one to two hundred means that one centimetre on the drawing is two hundred centimetres in reality. A wall that is four and a half centimetres on the drawing is therefore nine metres. In the other direction you divide. The perimeter of a rectangle is two lengths plus two widths, and the circumference of a circle is two pi r. Composite areas are split into simple shapes, or you calculate the whole area and subtract the holes, like the cut-out in the deck.</berattare>
+  </bild>
+
+</lektion>

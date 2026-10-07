@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lektion id="trigonometri" ordning="60" omrade="Geometri" titel="Pythagoras &amp; trigonometri" titel-en="Pythagoras and trigonometry">
+
+  <bild titel="Pythagoras sats" etikett="Triangeln · 1">
+    <rubrik>a² + b² = c²</rubrik>
+    <kolumner>
+      <kolumn>
+        <figur namn="pythagoras"/>
+        <text>c är alltid längst och ligger mitt emot den räta vinkeln.</text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Hypotenusan: kateter 10 och 15 cm</underrubrik>
+        <berakning>
+          <rad>c = \sqrt{10^2 + 15^2} = \sqrt{325}</rad>
+          <svar>c \approx 18,0\enh{cm}</svar>
+        </berakning>
+        <underrubrik>Kateten: stege 6 m, 2 m från väggen</underrubrik>
+        <berakning>
+          <rad>b = \sqrt{6^2 - 2^2} = \sqrt{32}</rad>
+          <svar>b \approx 5,7\enh{m}</svar>
+        </berakning>
+        <tips>Söker du en katet: minus. Söker du hypotenusan: plus.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En stege är 5,0 m lång och står 1,4 m ut från väggen. Hur högt når den?</fraga>
+      <ruta etikett="Höjd" enhet="m" svar="4,8"/>
+      <losning><berakning><svar>b = \sqrt{5,0^2 - 1,4^2} = \sqrt{23,04} = 4,8\enh{m}</svar></berakning></losning>
+    </testa>
+    <berattare>Pythagoras sats gäller bara i rätvinkliga trianglar. A i kvadrat plus b i kvadrat är lika med c i kvadrat, där c är hypotenusan, den längsta sidan mitt emot den räta vinkeln. Söker du hypotenusan adderar du kvadraterna och tar roten ur. Söker du en katet tar du hypotenusan i kvadrat minus den andra kateten i kvadrat. Stegen på 6 meter som står 2 meter ut når ungefär 5,7 meter upp.</berattare>
+    <berattare sprak="en">Pythagoras' theorem only applies to right-angled triangles. A squared plus b squared equals c squared, where c is the hypotenuse, the longest side opposite the right angle. If you are looking for the hypotenuse, add the squares and take the square root. If you are looking for a leg, take the hypotenuse squared minus the other leg squared. The 6 metre ladder standing 2 metres out reaches about 5.7 metres up.</berattare>
+  </bild>
+
+  <bild titel="Sinus, cosinus och tangens" etikett="Triangeln · 2">
+    <rubrik>SOH · CAH · TOA</rubrik>
+    <kolumner>
+      <kolumn><figur namn="trig-triangel"/></kolumn>
+      <kolumn>
+        <formel>\sin v = \frac{\text{motstående}}{\text{hypotenusa}}</formel>
+        <formel>\cos v = \frac{\text{närliggande}}{\text{hypotenusa}}</formel>
+        <formel>\tan v = \frac{\text{motstående}}{\text{närliggande}}</formel>
+        <varning>Kolla att miniräknaren står i grader (DEG), inte RAD.</varning>
+        <text>Vinkelsumman i en triangel är 180°. Den tredje vinkeln = 90° − v.</text>
+      </kolumn>
+    </kolumner>
+    <berattare>Trigonometri bygger på tre förhållanden. Minnesordet är SOH CAH TOA. Sinus är motstående delat med hypotenusan. Cosinus är närliggande delat med hypotenusan. Tangens är motstående delat med närliggande. Motstående och närliggande räknas alltid från vinkeln du tittar på. Och kontrollera att miniräknaren står i grader, DEG. Står den i radianer blir allt fel.</berattare>
+    <berattare sprak="en">Trigonometry is built on three ratios. The memory word is SOH CAH TOA. Sine is opposite divided by hypotenuse. Cosine is adjacent divided by hypotenuse. Tangent is opposite divided by adjacent. Opposite and adjacent are always counted from the angle you are looking at. And check that your calculator is set to degrees, DEG. If it is in radians, everything goes wrong.</berattare>
+  </bild>
+
+  <bild titel="Prova själv: sinus, cosinus och tangens" etikett="Trigonometri · prova själv">
+    <rubrik>Kvoterna hänger på vinkeln</rubrik>
+    <text>Ändra vinkeln och hypotenusan. Sidorna ändras, men <m>\sin v</m>, <m>\cos v</m> och <m>\tan v</m> beror bara på vinkeln.</text>
+    <interaktiv typ="trig" vinkel="35" hypotenusa="6"/>
+    <tips>Liten vinkel: liten sinus, cosinus nära 1. Vid 45° är motstående och närliggande lika långa, så <m>\tan 45^\circ = 1</m>.</tips>
+    <berattare>Här kan du prova själv. Dra i vinkelreglaget och se hur triangeln ändras. Sinus är motstående delat med hypotenusan, cosinus är närliggande delat med hypotenusan och tangens är motstående delat med närliggande. Dra sedan i hypotenusan. Triangeln blir större, men sinus, cosinus och tangens är exakt samma. Det är därför miniräknaren kan ge dig ett värde för en vinkel, oavsett hur stor triangeln är. Titta också på fyrtiofem grader: där är tangens precis ett.</berattare>
+    <berattare sprak="en">Here you can try it yourself. Drag the angle slider and watch the triangle change. Sine is opposite over hypotenuse, cosine is adjacent over hypotenuse, and tangent is opposite over adjacent. Then drag the hypotenuse. The triangle grows, but sine, cosine and tangent stay exactly the same. That is why the calculator can give you one value for an angle, no matter how big the triangle is. Also look at forty-five degrees: there the tangent is exactly one.</berattare>
+  </bild>
+  <bild titel="Vinklar och lutning" etikett="Triangeln · 3 · VG">
+    <rubrik>Från sidor till vinkel</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Takprofil: horisontellt 6,0 m, höjd 2,8 m</underrubrik>
+        <berakning>
+          <rad>\tan v = \frac{\text{mot}}{\text{när}} = \frac{2,8}{6,0} = 0,4667</rad>
+          <rad>v = \tan^{-1}(0,4667)</rad>
+          <svar>v \approx 25,0^\circ</svar>
+        </berakning>
+        <text>Taksidans längd: <m>\sqrt{6,0^2 + 2,8^2} \approx 6,62\enh{m}</m></text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Lutning i procent</underrubrik>
+        <formel>\text{lutning} = \frac{\text{höjd}}{\text{längd}} \cdot 100 %</formel>
+        <berakning><svar>\frac{6}{10} \cdot 100 = 60 %</svar></berakning>
+        <underrubrik>Vinkeln mot lodlinjen</underrubrik>
+        <text>Vajer 37° mot marken ⇒ 90° − 37° = 53° mot lodlinjen.</text>
+        <tips>tan⁻¹ hittar du som SHIFT + tan på miniräknaren.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En takprofil har den horisontella längden 5,0 m och höjdskillnaden 2,0 m. Beräkna takvinkeln.</fraga>
+      <ruta etikett="Vinkel" enhet="°" svar="21,8" tolerans="0.15"/>
+      <losning>
+        <berakning>
+          <rad>\tan v = 2,0 / 5,0 = 0,4</rad>
+          <svar>v = \tan^{-1}(0,4) \approx 21,8^\circ</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>När du har två sidor och söker vinkeln använder du den omvända funktionen, till exempel tan invers. Takprofilen med 6 meter horisontellt och 2,8 meter höjd ger tangens 0,4667, och tan invers av det är ungefär 25 grader. Det var exakt uppgiften för fyra poäng på exempeltestet. Lutning i procent är något annat: höjden delat med längden gånger hundra.</berattare>
+    <berattare sprak="en">When you have two sides and want the angle, you use the inverse function, for example inverse tangent. The roof profile with 6 metres horizontally and 2.8 metres of height gives a tangent of 0.4667, and the inverse tangent of that is about 25 degrees. That was exactly the four-point task in the sample test. Slope in percent is something else: the height divided by the length, times a hundred.</berattare>
+  </bild>
+
+  <bild titel="Från vinkel till sida" etikett="Triangeln · 4 · VG">
+    <rubrik>Lyftkranen och takstolen</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Kran: 18 m på marken, vinkel 37°</underrubrik>
+        <berakning>
+          <rad>\text{höjd} = 18 \cdot \tan 37^\circ \approx 13,56\enh{m}</rad>
+          <rad>\text{vajer} = 18 / \cos 37^\circ \approx 22,54\enh{m}</rad>
+          <svar>\text{Kontroll: } \sqrt{18^2 + 13,56^2} \approx 22,54\enh{m}</svar>
+        </berakning>
+        <underrubrik>Cosinus: katet 8,0 cm intill 40°</underrubrik>
+        <berakning><svar>\text{hyp} = 8,0 / \cos 40^\circ \approx 10,4\enh{cm}</svar></berakning>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Takstol: likbent, 28°, spännvidd 10 m</underrubrik>
+        <figur namn="takstol"/>
+        <berakning>
+          <rad text="ja">Dela på mitten: halva spännvidden = 5 m</rad>
+          <svar>h = 5 \cdot \tan 28^\circ \approx 2,66\enh{m}</svar>
+        </berakning>
+        <tips>Likbent triangel? Dela den i två rätvinkliga trianglar.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>Hypotenusan är 9,4 m och vinkeln mellan hypotenusan och närliggande katet är 31°. Beräkna motstående katet.</fraga>
+      <ruta etikett="Motstående katet" enhet="m" svar="4,84" tolerans="0.02"/>
+      <losning>
+        <berakning>
+          <rad>\text{mot} = \text{hyp} \cdot \sin v = 9,4 \cdot \sin 31^\circ</rad>
+          <svar>\text{mot} \approx 4,84\enh{m}</svar>
+        </berakning>
+      </losning>
+    </testa>
+    <berattare>Har du en vinkel och en sida räknar du fram de andra sidorna. Lyftkranen: 18 meter längs marken och 37 grader. Höjden är motstående katet, och vi har närliggande, så vi använder tangens: 18 gånger tan 37, ungefär 13,56 meter. Vajern är hypotenusan: 18 delat med cos 37. Kontrollera med Pythagoras. Takstolen är likbent, så du delar den mitt itu och använder halva spännvidden.</berattare>
+    <berattare sprak="en">If you have an angle and a side, you calculate the other sides. The crane: 18 metres along the ground and 37 degrees. The height is the opposite leg, and we have the adjacent one, so we use tangent: 18 times tan 37, about 13.56 metres. The cable is the hypotenuse: 18 divided by cos 37. Check with Pythagoras. The roof truss is isosceles, so you split it down the middle and use half the span.</berattare>
+  </bild>
+
+  <bild titel="Byggmätning, lutning och trigonometriska ekvationer" etikett="Triangeln · 5 · VG">
+    <rubrik>Mät höjder du inte når</rubrik>
+    <kolumner>
+      <kolumn>
+        <underrubrik>Byggnadshöjd med instrument</underrubrik>
+        <formel stor="ja">H = d \cdot \tan(v) + h_0</formel>
+        <text><m>h_0</m> = instrumenthöjd (eller ögonhöjd). Vinkeln mäts från instrumentet, inte från marken.</text>
+        <berakning>
+          <rad text="ja">d = 20 m, v = 35°, h₀ = 1,5 m</rad>
+          <rad>20 \cdot \tan 35^\circ = 14,00\enh{m}</rad>
+          <svar>H = 14,00 + 1,5 \approx 15,5\enh{m}</svar>
+        </berakning>
+        <underrubrik>Skuggmetoden</underrubrik>
+        <text>Stav 1,80 m ger skugga 2,55 m. Byggnadens skugga 14,2 m: <m>H = 14,2 \cdot \frac{1,80}{2,55} \approx 10,0\enh{m}</m></text>
+      </kolumn>
+      <kolumn>
+        <underrubrik>Lutning 1:12 (ramp)</underrubrik>
+        <text>1 m höjd på 12 m horisontell längd.</text>
+        <berakning>
+          <rad>\tan v = \frac{1}{12} \;\Rightarrow\; v \approx 4,8^\circ</rad>
+          <svar>\text{rampens längd} = \sqrt{12^2 + 1^2} \approx 12,04\enh{m}</svar>
+        </berakning>
+        <underrubrik>Trigonometrisk ekvation</underrubrik>
+        <berakning>
+          <rad>\sin v = 0,5 \;\Rightarrow\; v = \sin^{-1}(0,5) = 30^\circ</rad>
+          <svar>\cos v = 0,8 \;\Rightarrow\; v = \cos^{-1}(0,8) \approx 36,9^\circ</svar>
+        </berakning>
+        <tips>Står miniräknaren i RAD får du 0,52 i stället för 30. Byt till DEG.</tips>
+      </kolumn>
+    </kolumner>
+    <testa>
+      <fraga>En inspektör står 30 m från en byggnad och mäter vinkeln 40° upp till taknocken. Ögonhöjden är 1,7 m. Hur hög är byggnaden?</fraga>
+      <ruta etikett="Höjd" enhet="m" svar="26,9" tolerans="0.1"/>
+      <losning><berakning><rad>H = 30 \cdot \tan 40^\circ + 1,7</rad><rad>H = 25,17 + 1,7</rad><svar>H \approx 26,9\enh{m}</svar></berakning></losning>
+    </testa>
+    <berattare>Det här är lektion sex i praktiken: virtuell byggmätning. Byggnadens höjd blir avståndet gånger tangens för vinkeln, plus instrumenthöjden. Glöm inte instrumenthöjden, för vinkeln mäts från instrumentet och inte från marken. Tjugo meter och trettiofem grader ger fjorton meter, plus en och en halv, alltså femton och en halv meter. En ramp med lutningen ett till tolv har tangens en tolftedel, ungefär 4,8 grader. Och en trigonometrisk ekvation, som sinus v lika med 0,5, löser du med den omvända funktionen. Svaret är trettio grader, om miniräknaren står i DEG.</berattare>
+    <berattare sprak="en">This is lesson six in practice: virtual building surveying. The height of the building is the distance times the tangent of the angle, plus the instrument height. Do not forget the instrument height, because the angle is measured from the instrument and not from the ground. Twenty metres and thirty-five degrees give fourteen metres, plus one and a half, so fifteen and a half metres. A ramp with a slope of one to twelve has a tangent of one twelfth, about 4.8 degrees. And a trigonometric equation, like sine v equals 0.5, is solved with the inverse function. The answer is thirty degrees, if the calculator is set to degrees.</berattare>
+  </bild>
+
+</lektion>
