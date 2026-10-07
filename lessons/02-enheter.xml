@@ -62,7 +62,7 @@
         <varning>7800 kg är 7,8 ton, men 78 kN. Ton är massa, kN är kraft.</varning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-tyngdkraft-1">
       <fraga>En stålkonstruktion väger 450 kg. Beräkna tyngden i kN (g ≈ 10).</fraga>
       <ruta etikett="Tyngd" enhet="kN" svar="4,5"/>
       <losning>

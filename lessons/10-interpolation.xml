@@ -52,7 +52,7 @@
         <tips>Ligger x exakt mitt emellan? Då är svaret medelvärdet av y₁ och y₂. Bra kontroll!</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-interpolation-2">
       <fraga>Ett isoleringsmaterial har värmemotståndet 0,55 vid 20 mm och 1,10 vid 40 mm. Bestäm värmemotståndet vid 25 mm.</fraga>
       <ruta etikett="Värmemotstånd" svar="0,6875" tolerans="0.006"/>
       <losning>
@@ -90,7 +90,7 @@
         <varning>Svaret måste ligga mellan y₁ och y₂. Gör det inte det har du räknat fel.</varning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-interpolation-2">
       <fraga>En isolering har U-värdet 0,25 vid 100 mm och 0,18 vid 150 mm. Vad blir U-värdet vid 125 mm?</fraga>
       <ruta etikett="U-värde" svar="0,215" tolerans="0.002"/>
       <losning><berakning><rad>\text{andel} = \frac{125 - 100}{150 - 100} = 0,5</rad><svar>0,25 + 0,5 \cdot (0,18 - 0,25) = 0,215</svar></berakning></losning>

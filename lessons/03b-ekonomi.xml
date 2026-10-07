@@ -6,7 +6,7 @@
     <rubrik>Enkel ränta och ränta-på-ränta</rubrik>
     <kolumner>
       <kolumn>
-        <formel>\text{ränta för en period} = K \cdot r</formel>
+        <formel>\text{Räntebelopp: } R = K \cdot \frac{r}{100}</formel>
         <berakning>
           <rad text="ja">Lån 200 000 kr, 4,5 % ränta per år</rad>
           <rad>200 000 \cdot 0,045 = 9000\enh{kr/år}</rad>
@@ -22,7 +22,7 @@
       </kolumn>
       <kolumn>
         <underrubrik>Sammansatt ränta (ränta-på-ränta)</underrubrik>
-        <formel stor="ja">K_n = K_0 \cdot (1 + r)^n</formel>
+        <formel stor="ja">K_n = K_0 \cdot \left(1 + \frac{r}{100}\right)^n</formel>
         <berakning>
           <rad text="ja">50 000 kr på kontot, 4 % per år i 5 år</rad>
           <rad>50 000 \cdot 1,04^5</rad>
@@ -31,7 +31,7 @@
         <varning>Räntan läggs på det nya beloppet varje år. 5 · 4 % = 20 % ger 60 000 kr, vilket är för lite.</varning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-ranta-2">
       <fraga>Du sätter in 20 000 kr med 3 % ränta per år. Hur mycket finns efter 4 år?</fraga>
       <ruta etikett="Belopp" enhet="kr" svar="22510" tolerans="2"><fel varde="21854">Det är beloppet efter 3 år. 20 000 kr är startbeloppet (år 0) – räntan läggs på fyra gånger.</fel><fel varde="22400">Det är enkel ränta (3 % av 20 000 varje år). Med ränta-på-ränta räknas räntan på det nya beloppet varje år.</fel></ruta>
       <losning>
@@ -47,8 +47,8 @@
         <tips>Exponenten är antalet år som räntan läggs på. Startbeloppet är år 0, inte år 1.</tips>
       </losning>
     </testa>
-    <berattare>Nu till ekonomin, som bygger direkt på förändringsfaktorn. Enkel ränta för en period är kapitalet gånger räntesatsen: tvåhundratusen gånger 0,045 blir niotusen kronor per år. Vid ett lån med rak amortering betalar du varje månad samma amortering plus ränta på det som är kvar av lånet. Ränta-på-ränta, eller sammansatt ränta, räknas med K noll gånger ett plus r upphöjt till n. Femtiotusen kronor med fyra procent i fem år blir ungefär sextiotusen åttahundratrettiotre kronor. Mer än tjugo procent, eftersom räntan också får ränta.</berattare>
-    <berattare sprak="en">Now to economics, which builds directly on the change factor. Simple interest for one period is the capital times the interest rate: two hundred thousand times 0.045 is nine thousand kronor per year. With a straight amortisation loan you pay the same amortisation every month plus interest on what is left of the loan. Compound interest is calculated with K zero times one plus r to the power of n. Fifty thousand kronor at four percent for five years becomes about sixty thousand eight hundred and thirty-three kronor. More than twenty percent, because the interest also earns interest.</berattare>
+    <berattare>Nu till ekonomin, som bygger direkt på förändringsfaktorn. Räntebeloppet för en period är kapitalet gånger räntesatsen delat med hundra: tvåhundratusen gånger 0,045 blir niotusen kronor per år. Vid ett lån med rak amortering betalar du varje månad samma amortering plus ränta på det som är kvar av lånet. Ränta-på-ränta, eller sammansatt ränta, räknas med K noll gånger ett plus r delat med hundra, allt upphöjt till n. r är räntesatsen i procent, precis som på formelbladet. Femtiotusen kronor med fyra procent i fem år blir ungefär sextiotusen åttahundratrettiotre kronor. Mer än tjugo procent, eftersom räntan också får ränta.</berattare>
+    <berattare sprak="en">Now to economics, which builds directly on the change factor. The interest for one period is the capital times the interest rate divided by one hundred: two hundred thousand times 0.045 is nine thousand kronor per year. With a straight amortisation loan you pay the same amortisation every month plus interest on what is left of the loan. Compound interest is calculated with K zero times one plus r divided by one hundred, all to the power of n. r is the interest rate in percent, just like on the formula sheet. Fifty thousand kronor at four percent for five years becomes about sixty thousand eight hundred and thirty-three kronor. More than twenty percent, because the interest also earns interest.</berattare>
   </bild>
 
   <bild titel="Avskrivning och pris över flera år" etikett="Ekonomi · 2">
@@ -56,7 +56,7 @@
     <kolumner>
       <kolumn>
         <underrubrik>Värdeminskning (avskrivning)</underrubrik>
-        <formel stor="ja">V_n = V_0 \cdot (1 - r)^n</formel>
+        <formel stor="ja">V_n = V_0 \cdot \left(1 - \frac{r}{100}\right)^n</formel>
         <berakning>
           <rad text="ja">Byggställning 15 000 kr, tappar 20 % per år</rad>
           <rad>15 000 \cdot 0,80^2 = 9600\enh{kr}</rad>
@@ -76,7 +76,7 @@
         <tips>Totalen över flera år: räkna ut varje år och summera. En tabell gör det tydligt.</tips>
       </kolumn>
     </kolumner>
-    <berattare>Avskrivning är samma sak som ränta, fast åt andra hållet. En byggställning för femtontusen kronor som tappar tjugo procent per år är värd femtontusen gånger 0,80 upphöjt till två efter två år, alltså niotusen sexhundra kronor. När ett pris ökar varje år med samma procent räknar du startpriset gånger förändringsfaktorn upphöjt till n minus ett, eftersom år ett är startåret. Ska du ha totalen över flera år räknar du ut varje år för sig och summerar. Gör gärna en tabell.</berattare>
+    <berattare>Värdeminskning, eller avskrivning, är samma sak som ränta, fast åt andra hållet. En byggställning för femtontusen kronor som tappar tjugo procent per år är värd femtontusen gånger 0,80 upphöjt till två efter två år, alltså niotusen sexhundra kronor. När ett pris ökar varje år med samma procent räknar du startpriset gånger förändringsfaktorn upphöjt till n minus ett, eftersom år ett är startåret. Ska du ha totalen över flera år räknar du ut varje år för sig och summerar. Gör gärna en tabell.</berattare>
     <berattare sprak="en">Depreciation is the same as interest, but in the other direction. A scaffold for fifteen thousand kronor that loses twenty percent per year is worth fifteen thousand times 0.80 squared after two years, which is nine thousand six hundred kronor. When a price increases every year by the same percentage you take the starting price times the change factor to the power of n minus one, because year one is the starting year. If you need the total over several years, calculate each year separately and add them up. A table helps.</berattare>
   </bild>
 
@@ -84,7 +84,8 @@
     <rubrik>Index jämför priser över tid</rubrik>
     <kolumner>
       <kolumn>
-        <formel stor="ja">\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel>
+        <formel stor="ja">V_n = V_0 \cdot \frac{I_n}{I_0}</formel>
+        <formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel>
         <berakning>
           <rad text="ja">Byggkostnadsindex 300 → 360, ett jobb kostade 5 000 kr</rad>
           <rad>5000 \cdot \frac{360}{300} = 6000\enh{kr}</rad>
@@ -101,12 +102,12 @@
         <varning>Skillnaden 360 − 300 = 60 är indexenheter, inte procent. Procenten får du med kvoten.</varning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-ranta-4">
       <fraga>Ett hus kostade 2 400 000 kr när index var 240. Nu är index 270. Vad kostar huset nu enligt index?</fraga>
       <ruta etikett="Pris" enhet="kr" svar="2700000" tolerans="10"/>
       <losning><berakning><svar>2 400 000 \cdot \frac{270}{240} = 2 700 000\enh{kr}</svar></berakning></losning>
     </testa>
-    <berattare>Index används för att jämföra priser över tid. Formeln: nytt pris är gammalt pris gånger nytt index delat med gammalt index. Om byggkostnadsindex gått från trehundra till trehundrasextio kostar ett jobb på femtusen kronor nu sextusen kronor. Kvoten trehundrasextio delat med trehundra är 1,20, alltså en ökning med tjugo procent. Se upp: skillnaden sextio är indexenheter, inte procent. Procenten får du alltid genom att dela.</berattare>
+    <berattare>Index används för att jämföra priser över tid. Formeln: nytt pris är gammalt pris gånger nytt index delat med gammalt index. På formelbladet står det V n är lika med V noll gånger I n delat med I noll. Om byggkostnadsindex gått från trehundra till trehundrasextio kostar ett jobb på femtusen kronor nu sextusen kronor. Kvoten trehundrasextio delat med trehundra är 1,20, alltså en ökning med tjugo procent. Se upp: skillnaden sextio är indexenheter, inte procent. Procenten får du alltid genom att dela.</berattare>
     <berattare sprak="en">An index is used to compare prices over time. The formula: new price is old price times new index divided by old index. If the construction cost index has gone from three hundred to three hundred and sixty, a job that cost five thousand kronor now costs six thousand kronor. The ratio three hundred and sixty divided by three hundred is 1.20, which is an increase of twenty percent. Watch out: the difference of sixty is index points, not percent. You always get the percentage by dividing.</berattare>
   </bild>
 

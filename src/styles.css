@@ -13,7 +13,7 @@
   --ok:#2c7d47; --ok-soft:#e1f2e6; --bad:#b93c27; --bad-soft:#f9e3de;
   --skin:#f0c49c; --suit:#1f5fa8; --cape:#b84f00; --hair:#6b3f1d; --shades:#141414; --pocket:#184c87;
   --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Inter", "Segoe UI", system-ui, sans-serif;
   --f-mono:"JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --r:10px;
 }
@@ -155,6 +155,10 @@ svg.fig{max-width:100%;height:auto;display:block}
 .bubble::before{content:"";position:absolute;top:-9px;left:36px;width:16px;height:16px;background:var(--paper);border-left:1.5px solid var(--line);border-top:1.5px solid var(--line);transform:rotate(45deg)}
 .bubble p{margin:.3em 0}
 .ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+/* Uppspelningsknapparna: en bred "Spela upp", eller "Paus" + "Börja om" sida vid sida */
+.playgroup{display:flex;gap:8px;flex:1 1 220px;min-width:0}
+.playgroup .btn{flex:1 1 0;justify-content:center;min-width:0}
+.playgroup .btn[hidden]{display:none}
 .ctrl label{display:flex;align-items:center;gap:6px;font-size:.88rem;color:var(--muted)}
 .ctrl select{padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
 .navrow{display:flex;gap:8px;align-items:center;justify-content:space-between}
@@ -332,6 +336,8 @@ textarea.ed-in{resize:vertical;line-height:1.45}
   .mobilebar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;gap:8px;align-items:center;justify-content:space-between;
     padding:8px 12px calc(8px + env(safe-area-inset-bottom, 0px));background:var(--surface);border-top:1.5px solid var(--ink)}
   .mobilebar .count{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+  .mobilebar .playgroup{flex:1 1 auto}
+  .mobilebar .playgroup .btn{white-space:nowrap;padding-left:8px;padding-right:8px}
   #view-lesson{padding-bottom:70px}
 }
 
@@ -406,3 +412,53 @@ textarea.ed-in{resize:vertical;line-height:1.45}
 .selfcheck{display:inline-flex;gap:5px;align-items:center;margin-right:14px;font-size:.9rem}
 .mini .q{margin:12px 0}
 .mini h2{margin-top:.2em}
+
+/* Integritetsrutan längst ner */
+.privacy{margin-top:28px;margin-bottom:24px;padding-top:12px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.privacy p{margin:0;flex:1 1 420px}
+@media (max-width:900px){ .privacy{margin-bottom:90px} }
+
+/* Repetition efter tentan */
+.review-banner{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:var(--r);padding:8px 14px;margin:0 0 10px;font-size:.92rem}
+.review-banner[hidden]{display:none}
+.wronglist{margin:4px 0 8px;padding-left:20px}
+
+/* ---------- Formelbladet (src/student/07e-formelblad.js) ----------
+   Lektions- och tentafönstret är ett kort (.flip) med bilden/tentan på framsidan
+   och formelbladet på baksidan. Vändningen görs i JavaScript (Web Animations). */
+.flip{min-width:0;position:relative}
+.flip.flipping{pointer-events:none}
+.flip-hidden{display:none!important}
+.flip > *{transform-origin:50% 50%;backface-visibility:hidden}
+.flip.flipping > *{box-shadow:0 18px 50px rgba(0,0,0,.18)}
+.fb-face{display:flex;flex-direction:column;height:calc(100vh - 24px);height:calc(100dvh - 24px);min-height:520px;
+  background:var(--surface);border:1.5px solid var(--ink);border-radius:4px;overflow:hidden}
+.fb-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;border-bottom:1.5px solid var(--ink)}
+.fb-bar [hidden]{display:none}
+.fb-title{display:grid;margin-right:auto;line-height:1.25}
+.fb-title strong{font-family:var(--f-display);font-size:1.05rem}
+.fb-frame{flex:1 1 auto;width:100%;border:0;background:#e6eaee}
+
+/* Knappen: högst upp i högerkolumnen (som följer med när man rullar). Samma knapp stänger. */
+.fb-toggle{width:100%;justify-content:center;padding:10px 14px}
+.fb-toggle.on,.fb-mobile.on,.fb-fab.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.fb-mobile{padding-left:10px;padding-right:10px}
+.fb-fab{display:none}
+@media (max-width:900px){
+  .fb-toggle{display:none}                       /* högerkolumnen hamnar längst ner på mobilen */
+  .fb-face{height:calc(100dvh - 96px)}
+  body:has(#view-exam:not(.hidden)) .fb-fab{display:inline-flex;position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom, 0px));
+    z-index:30;border-radius:999px;padding:12px 15px;font-size:1.15rem;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+}
+
+/* Formeln ur formelbladet i en övningsfråga (<testa formelblad="…">) */
+.fb-hint{display:grid;gap:6px;margin:10px 0 12px;padding:10px 14px;background:#fff;color:#18283a;border:1px solid #a9bccf;border-left:4px solid #1f6fb2;border-radius:6px;width:fit-content;max-width:100%}
+.fb-hint-head{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#1f6fb2;font-weight:700}
+.fb-hint-head small{font-family:var(--f-body);text-transform:none;letter-spacing:0;font-weight:400;color:#566475;font-size:.8rem;margin-left:6px}
+.fb-hint-formulas{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px}
+.fbx{display:block;width:auto;max-width:100%;overflow:visible}
+.fbm{font:italic 1.15rem/1.35 Cambria,"Cambria Math","STIX Two Text","Times New Roman",serif}
+.fbm p{margin:0;white-space:nowrap}
+.fbm sub{font-size:.68em;font-style:normal}
+.fbm .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;line-height:1.15}
+.fbm .frac > span:first-child{padding:0 .15em .05em;border-bottom:1px solid currentColor}

@@ -5,9 +5,10 @@
     <rubrik>Lägg ihop krafter</rubrik>
     <kolumner>
       <kolumn>
-        <formel>\vec{R} = (x_1 + x_2,\ y_1 + y_2)</formel>
-        <formel>|\vec{R}| = \sqrt{x^2 + y^2}</formel>
-        <formel>\tan v = \frac{y}{x}</formel>
+        <formel>\vec{R} = (v_{1x} + v_{2x},\ v_{1y} + v_{2y}) = (R_x,\ R_y)</formel>
+        <formel>|\vec{R}| = \sqrt{R_x^2 + R_y^2}</formel>
+        <formel>\theta = \tan^{-1}\left(\frac{R_y}{R_x}\right)</formel>
+        <text>θ mäts moturs från positiva x-axeln (0–360°). Är <m>R_x &lt; 0</m>: lägg till 180°. Är <m>R_x &gt; 0</m> och <m>R_y &lt; 0</m>: lägg till 360°.</text>
         <figur namn="vektor"/>
       </kolumn>
       <kolumn>
@@ -15,13 +16,14 @@
         <berakning>
           <rad>\vec{R} = (-250 - 245,\ 20 - 89) = (-495,\ -69)\enh{N}</rad>
           <rad>|\vec{R}| = \sqrt{495^2 + 69^2} \approx 500\enh{N}</rad>
-          <rad>\tan v = 69 / 495 \;\Rightarrow\; v \approx 7,9^\circ</rad>
-          <svar text="ja">Riktning: 7,9° under negativa x-axeln</svar>
+          <rad>\theta = \tan^{-1}\left(\frac{-69}{-495}\right) \approx 7,9^\circ</rad>
+          <rad>R_x &lt; 0 \;\Rightarrow\; \theta = 7,9^\circ + 180^\circ = 187,9^\circ</rad>
+          <svar text="ja">Riktning: 187,9°, alltså 7,9° under negativa x-axeln</svar>
         </berakning>
       </kolumn>
     </kolumner>
-    <berattare>Vektorer är krafter med riktning. Du lägger ihop dem genom att addera x-delarna för sig och y-delarna för sig. Två personer som drar en bil ur diket ger tillsammans minus 495 i x och minus 69 i y. Längden, alltså den totala dragkraften, får du med Pythagoras: ungefär 500 newton. Vinkeln får du med tangens av y delat med x. Rita gärna en skiss så att du ser åt vilket håll vektorn pekar.</berattare>
-    <berattare sprak="en">Vectors are forces with a direction. You add them by adding the x parts separately and the y parts separately. Two people pulling a car out of a ditch together give minus 495 in x and minus 69 in y. The length, meaning the total pulling force, you get with Pythagoras: about 500 newtons. The angle you get with the tangent of y divided by x. Draw a sketch so you can see which way the vector points.</berattare>
+    <berattare>Vektorer är krafter med riktning. Du lägger ihop dem genom att addera x-delarna för sig och y-delarna för sig. Två personer som drar en bil ur diket ger tillsammans minus 495 i x och minus 69 i y. Längden, alltså den totala dragkraften, får du med Pythagoras: ungefär 500 newton. Vinkeln theta får du med tangens invers av R y delat med R x. Miniräknaren ger 7,9 grader, men eftersom R x är negativ lägger du till 180 grader, precis som det står på formelbladet. Vinkeln blir 187,9 grader, mätt moturs från positiva x-axeln. Rita gärna en skiss så att du ser åt vilket håll vektorn pekar.</berattare>
+    <berattare sprak="en">Vectors are forces with a direction. You add them by adding the x parts separately and the y parts separately. Two people pulling a car out of a ditch together give minus 495 in x and minus 69 in y. The length, meaning the total pulling force, you get with Pythagoras: about 500 newtons. The angle theta you get with the inverse tangent of R y divided by R x. The calculator gives 7.9 degrees, but since R x is negative you add 180 degrees, just as the formula sheet says. The angle is 187.9 degrees, measured anticlockwise from the positive x axis. Draw a sketch so you can see which way the vector points.</berattare>
   </bild>
 
   <bild titel="Komposanter och slutningsfel" etikett="Vektorer · 2 · VG">
@@ -29,10 +31,10 @@
     <kolumner>
       <kolumn>
         <underrubrik>Från längd och vinkel till komposanter</underrubrik>
-        <formel>F_x = F \cdot \cos v \qquad F_y = F \cdot \sin v</formel>
+        <formel>F_x = F \cdot \cos \theta \qquad F_y = F \cdot \sin \theta</formel>
         <figur namn="komposanter"/>
         <berakning>
-          <rad text="ja">F = 500 N, v = 30° mot x-axeln</rad>
+          <rad text="ja">F = 500 N, θ = 30° mot x-axeln</rad>
           <rad>F_x = 500 \cdot \cos 30^\circ \approx 433\enh{N}</rad>
           <svar>F_y = 500 \cdot \sin 30^\circ = 250\enh{N}</svar>
         </berakning>
@@ -48,7 +50,7 @@
         </berakning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-vektorer-4">
       <fraga>En vajer drar med 800 N i vinkeln 40° mot marken. Hur stor är den horisontella komposanten?</fraga>
       <ruta etikett="F_x" enhet="N" svar="612,8" tolerans="1"/>
       <losning><berakning><svar>F_x = 800 \cdot \cos 40^\circ \approx 612,8\enh{N}</svar></berakning></losning>

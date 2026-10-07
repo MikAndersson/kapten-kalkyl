@@ -1,7 +1,7 @@
 /* ---------- Start ---------- */
 
 async function init() {
-  $('#app-subtitle').textContent = `${KURS.kod} ${KURS.namn} · repetition inför sluttentan`;
+  $('#app-subtitle').textContent = `${KURS.namn} · repetition inför sluttentan`;
   $$('[data-avatar]').forEach(el => el.append($('#avatar-template').content.cloneNode(true)));
 
   for (const view of VIEWS) $('#tab-' + view).onclick = () => showView(view);
@@ -9,15 +9,18 @@ async function init() {
   $('#timer-reset').onclick = resetTimer;
 
   setupMath();
+  setupPrivacy();
   setupSpeech();
   setupLessonControls();
   setupExamControls();
+  setupFormelblad();
 
   // Lektioner och tentamallar läses in (från mapparna eller de inbyggda kopiorna)
   await Promise.all([loadBuiltInLessons(), loadTemplates()]);
   combineLessons();
   buildSlideList();
   renderChapterButtons();
+  renderReviewBanner();
   renderLessonNotice();
 
   const saved = storage.get('position', null);

@@ -79,6 +79,304 @@ def calc(*rows):
     return '<berakning>' + ''.join(out) + '</berakning>'
 
 
+# ============================================================================
+# REPETITION I MINITENTAN
+# Vad Kapten Kalkyl säger när en uppgift blir fel, och vilken bild i lektionen
+# han skickar tillbaka till efter tredje felet. Per frågetyp (prefix i mallens id):
+#   prefix: (bild i lektionen, [(sökord i frågan/lösningen eller None, kort repetition), …])
+# Första träffen används. Genomgången med siffror byggs av lösningsraderna
+# (kan också skrivas för hand med <genomgang> i mallen).
+# ============================================================================
+HJALP = {
+    'g-ordning': (1, [(None, 'Räkneordningen är: parenteser först, sedan potenser, sedan gånger och delat, och sist plus och minus.')]),
+    'g-brak': (3, [(None, 'När du adderar eller subtraherar bråk behöver de samma nämnare. Eller dela ut varje bråk till ett decimaltal först.')]),
+    'g-brakav': (3, [(None, 'Ett bråk av ett tal: multiplicera talet med täljaren och dela med nämnaren.')]),
+    'g-neg': (1, [(None, 'Börja i startvärdet. Plus betyder uppåt och minus betyder nedåt. Minus minus blir plus.')]),
+    'g-avr': (4, [(None, 'Titta på siffran efter den du avrundar till. Noll till fyra avrundar nedåt, fem till nio avrundar uppåt.')]),
+    'g-tid': (4, [(None, 'Decimaldelen av en timme gånger sextio ger minuter. Noll komma fem timmar är trettio minuter.')]),
+    'g-mmvol': (1, [(None, 'Gör om millimeter till meter först, dela med tusen. Volym är bredd gånger höjd gånger längd.')]),
+    'g-mt': (2, [(None, 'Tyngd är massa gånger g. Det ger newton, och delar du med tusen får du kilonewton.')]),
+    'g-tonkn': (2, [(None, 'Ett ton är tusen kilo, och med g ungefär tio blir det ungefär tio kilonewton. Gånger tio alltså.')]),
+    'g-upp': (3, [(None, 'Dela det totala behovet med hur mycket som ryms per gång, och avrunda alltid uppåt. Annars räcker det inte.')]),
+    'g-ff': (1, [(None, 'Förändringsfaktorn är ett plus procenten i decimalform vid ökning, och ett minus vid minskning. Nya värdet är gamla värdet gånger faktorn.')]),
+    'g-proc': (2, [(None, 'Procentuell förändring är nytt minus gammalt, delat med det gamla värdet. Gånger hundra för procent.')]),
+    'g-del': (1, [(None, 'Procent av ett tal: gör om procenten till decimalform och multiplicera. Fem procent är noll komma noll fem.')]),
+    'g-penh': (2, [('procentenheter', 'Procentenheter är bara skillnaden mellan procenttalen, till exempel från tre till fyra procent är en procentenhet.'),
+                   (None, 'Förändringen i procent räknas från det gamla värdet: skillnaden delat med det gamla procenttalet.')]),
+    'g-ranta': (1, [('månad', 'Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.'),
+                    (None, 'Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.')]),
+    'g-index': (3, [(None, 'Nytt pris är gamla priset gånger nya index delat med gamla index.')]),
+    'g-moms': (1, [('exklusive moms\\?', 'Priset med moms är priset utan moms gånger ett komma tjugofem. Baklänges delar du med ett komma tjugofem.'),
+                   (None, 'Med tjugofem procent moms multiplicerar du priset utan moms med ett komma tjugofem.')]),
+    'g-jmf': (1, [(None, 'Jämförpris är priset delat med mängden, alltså vad en enhet kostar.')]),
+    'g-ekv': (3, [(None, 'Gör samma sak på båda sidor. Flytta först konstanten, och dela sedan med talet framför x.')]),
+    'g-ekv2': (3, [(None, 'Samla x-termerna på ena sidan och talen på den andra. Byt tecken när en term flyttas över likhetstecknet, dela sedan.')]),
+    'g-formel': (3, [(None, 'Lös ut den okända storheten ur formeln genom att göra samma sak på båda sidor, till exempel dela med det som står gånger.')]),
+    'g-pot': (2, [('x³|kub', 'Kantlängden i en kub är tredje roten ur volymen, alltså volymen upphöjt till en tredjedel.'),
+                  (None, 'Sidan i en kvadrat är roten ur arean.')]),
+    'g-tiopot': (2, [('vanligt tal|Vilket tal är|utan tiopotens', 'Tio upphöjt till n betyder att decimaltecknet flyttas n steg åt höger. Negativ exponent flyttar åt vänster.'),
+                     ('grundpotensform|exponent', 'Grundpotensform är ett tal mellan ett och tio gånger tio upphöjt till n. n är hur många steg decimaltecknet flyttas.'),
+                     (None, 'Kilo betyder tusen och milli betyder en tusendel. Multiplicera eller dela med tusen beroende på riktning.')]),
+    'g-talf': (5, [(None, 'I en talföljd som ökar lika mycket varje gång är tal nummer n lika med första talet plus n minus ett gånger ökningen.')]),
+    'g-uttr': (1, [(None, 'Multiplicera in i parentesen först, samla x-termerna och sätt sedan in värdet på x.')]),
+    'g-prop': (3, [('snickare|lastbilar|målare|pumpar', 'Omvänd proportionalitet: fler som jobbar ger kortare tid. Antal gånger tid är samma hela tiden.'),
+                   (None, 'Direkt proportionalitet: räkna ut värdet för en enhet först, och multiplicera sedan med det nya antalet.')]),
+    'g-linje': (2, [(None, 'Sätt in x i formeln y är lika med k x plus m och räkna ut y.')]),
+    'g-linjex': (2, [(None, 'Sätt in y-värdet i y är lika med k x plus m, och lös ut x: dra bort m och dela med k.')]),
+    'g-graf': (2, [(None, 'm är där linjen skär y-axeln. k är hur mycket y ändras när x ökar med ett. Linjen skär x-axeln där y är noll.')]),
+    'g-kpunkt': (2, [(None, 'k är skillnaden i y delat med skillnaden i x mellan punkterna. m får du genom att sätta in en punkt: m är y minus k x.')]),
+    'g-area': (1, [(None, 'Arean av en rektangel är längden gånger bredden.')]),
+    'g-tri': (1, [(None, 'Arean av en triangel är basen gånger höjden delat med två.')]),
+    'g-trap': (1, [(None, 'Arean av ett trapets är summan av de parallella sidorna, gånger höjden, delat med två.')]),
+    'g-cirkel': (1, [('arean', 'Arean av en cirkel är pi gånger radien i kvadrat. Har du diametern, dela den med två först.'),
+                     (None, 'Omkretsen av en cirkel är pi gånger diametern, eller två gånger pi gånger radien.')]),
+    'g-vol': (2, [(None, 'Volymen av ett rätblock är längd gånger bredd gånger höjd. Gör om centimeter till meter först.')]),
+    'g-cyl': (2, [(None, 'Volymen av en cylinder är basytan pi r i kvadrat, gånger höjden. Radien är halva diametern.')]),
+    'g-skala': (4, [(None, 'I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.')]),
+    'g-omkr': (4, [(None, 'Omkretsen av en rektangel är två gånger längden plus två gånger bredden.')]),
+    'g-larea': (4, [(None, 'Sammansatt yta: räkna arean av hela rektangeln och dra bort delen som saknas.')]),
+    'g-vsum': (1, [(None, 'Vinkelsumman i en triangel är hundraåttio grader. I en likbent triangel är basvinklarna lika stora.')]),
+    'g-pyt': (1, [('hypotenusan|diagonal|lång är bjälken|lång är rampen|stagningen', 'Pythagoras sats: hypotenusan i kvadrat är summan av kateternas kvadrater. Ta roten ur på slutet.'),
+                  (None, 'När hypotenusan är känd: den sökta kateten i kvadrat är hypotenusan i kvadrat minus den andra kateten i kvadrat.')]),
+    'g-trigs': (5, [('\\\\sin', 'Sinus är motstående delat med hypotenusan. Den motstående sidan är hypotenusan gånger sinus för vinkeln.'),
+                    ('\\\\cos', 'Cosinus är närliggande delat med hypotenusan. Den närliggande sidan är hypotenusan gånger cosinus för vinkeln.'),
+                    (None, 'Tangens är motstående delat med närliggande. Den motstående sidan är den närliggande gånger tangens för vinkeln.')]),
+    'g-trigv': (4, [(None, 'Tangens för vinkeln är höjden delat med den horisontella längden. Vinkeln får du med tangens invers på miniräknaren.')]),
+    'g-lutn': (4, [('1:', 'Lutningen ett till n betyder en meter höjd per n meter längd. Längden är höjden gånger n.'),
+                   (None, 'Lutning i procent är höjden delat med den horisontella längden, gånger hundra.')]),
+    'g-vek': (1, [(None, 'Lägg ihop x-delarna för sig och y-delarna för sig. Storleken är roten ur x i kvadrat plus y i kvadrat.')]),
+    'g-medel': (3, [(None, 'Medelvärdet är summan av alla värden delat med antalet värden.')]),
+    'g-median': (4, [(None, 'Medianen är mittvärdet när talen är sorterade. Är antalet jämnt tar du medelvärdet av de två mittersta.')]),
+    'g-typ': (4, [('bredd', 'Variationsbredden är största värdet minus minsta värdet.'),
+                  (None, 'Typvärdet är det värde som förekommer flest gånger.')]),
+    'g-viktat': (1, [(None, 'Viktat medelvärde: multiplicera varje värde med sin vikt, till exempel arean, summera, och dela med den totala vikten.')]),
+    'g-diagram': (6, [('medelvärde', 'Läs av alla staplar, summera och dela med antalet staplar.'),
+                      ('procent', 'Procentuell förändring är nytt minus gammalt, delat med det gamla värdet.'),
+                      ('variationsbredd|högsta', 'Variationsbredden är högsta stapeln minus lägsta stapeln.'),
+                      (None, 'Läs av varje stapel noga och lägg ihop dem.')]),
+    'g-interp': (1, [(None, 'Interpolation: startvärdet plus andelen av vägen gånger hela ökningen. Andelen är x minus x ett, delat med x två minus x ett.')]),
+    'g-tyngd': (1, [(None, 'Tyngden är tyngdtätheten gånger volymen. Räkna ut volymen först.')]),
+    'g-ytlast': (3, [('linjelast', 'Total last är linjelasten i kilonewton per meter gånger längden.'),
+                     (None, 'Total tyngd är ytlasten i kilonewton per kvadratmeter gånger arean.')]),
+    'g-dens': (4, [('volymen\\?', 'Volymen är massan delat med densiteten.'),
+                   (None, 'Massan är densiteten gånger volymen.')]),
+    'g-tp': (1, [('rektangulärt', 'Tyngdpunkten i en rektangel ligger i mitten, alltså på halva höjden.'),
+                 ('triangel', 'Tyngdpunkten i en triangel ligger på en tredjedel av höjden från basen.'),
+                 (None, 'Gemensam tyngdpunkt är ett viktat medelvärde: varje massa gånger sitt läge, summerat, delat med den totala massan. Glöm inte balkens egen vikt i mitten.')]),
+    'g-fart': (2, [('m/s', 'Från kilometer i timmen till meter per sekund delar du med tre komma sex.'),
+                   ('minuter', 'Tid är sträckan delat med hastigheten. Gånger sextio för minuter.'),
+                   (None, 'Sträcka är hastighet gånger tid.')]),
+    'g-arenh': (1, [(None, 'En kvadratmeter är hundra kvadratdecimeter och tiotusen kvadratcentimeter. En kubikmeter är tusen liter.')]),
+    # VG
+    'vg-flerproc': (3, [(None, 'Vid flera förändringar multiplicerar du förändringsfaktorerna. Lägg aldrig ihop procenten.')]),
+    'vg-snitt': (5, [(None, 'Genomsnittlig förändring per år: lös x upphöjt till antalet år lika med slutvärdet delat med startvärdet. Ta roten med exponenten ett delat med n.')]),
+    'vg-ranta': (1, [('skrivs av', 'Avskrivning: värdet gånger förändringsfaktorn, till exempel noll komma åtta, upphöjt till antalet år.'),
+                     (None, 'Ränta på ränta: kapitalet gånger ett plus räntan, upphöjt till antalet år.')]),
+    'vg-lan': (1, [(None, 'Räntan räknas på det som är kvar av lånet. Månadsräntan är skulden gånger årsräntan delat med tolv. Lägg till amorteringen.')]),
+    'vg-spill': (3, [(None, 'Räkna volymen, lägg till spillet genom att multiplicera med till exempel ett komma noll tre, och multiplicera sedan med tyngdtätheten.')]),
+    'vg-samm': (2, [(None, 'Räkna tyngden för varje material för sig, tyngdtäthet gånger volym, och lägg sedan ihop.')]),
+    'vg-viktat': (2, [(None, 'Viktat medelvärde: varje värde gånger sin area, summera och dela med den totala arean.')]),
+    'vg-stab': (3, [(None, 'Räkna medelvärde och variationsbredd för båda. Minst variationsbredd betyder minst spridning, alltså mest stabilt.')]),
+    'vg-stdav': (4, [(None, 'Standardavvikelse: ta varje värde minus medelvärdet i kvadrat, summera, dela med n minus ett och ta roten ur.')]),
+    'vg-diautv': (5, [(None, 'Total förändring är slut minus start delat med start. Per år: lös x upphöjt till fyra lika med slut delat med start.')]),
+    'vg-ki': (7, [(None, 'Standardfelet, som också kallas medelfel, är standardavvikelsen delat med roten ur antalet. Konfidensintervallet är medelvärdet plus minus ett komma nittiosex gånger medelfelet.')]),
+    'vg-tak': (4, [(None, 'Vinkeln får du med tangens invers av höjd delat med längd. Den lutande sidan får du med Pythagoras.')]),
+    'vg-matn': (6, [(None, 'Höjden är avståndet gånger tangens för vinkeln, plus instrumenthöjden.')]),
+    'vg-kran': (5, [(None, 'Höjden är avståndet gånger tangens för vinkeln. Den lutande längden är avståndet delat med cosinus för vinkeln.')]),
+    'vg-takstol': (5, [(None, 'Dela takstolen på mitten. Höjden är halva spännvidden gånger tangens, och takbenet är halva spännvidden delat med cosinus.')]),
+    'vg-ramp': (6, [(None, 'Lutning ett till n: längden är höjden gånger n. Ramplängden får du med Pythagoras, och vinkeln med tangens invers av ett delat med n.')]),
+    'vg-vek': (1, [(None, 'Lägg ihop x-delarna och y-delarna. Storleken är roten ur R x i kvadrat plus R y i kvadrat, och vinkeln theta är tangens invers av R y delat med R x. Vinkeln mäts moturs från positiva x-axeln, så är R y negativ lägger du till 360 grader.')]),
+    'vg-komp': (2, [(None, 'Den vågräta komposanten är kraften gånger cosinus för vinkeln, den lodräta är kraften gånger sinus.')]),
+    'vg-bryt': (4, [(None, 'Sätt kostnaderna lika: startavgift plus pris gånger x för båda, och lös ut x. Sätt sedan in x för att få kostnaden.')]),
+    'vg-modell': (2, [(None, 'k är skillnaden i pris delat med skillnaden i mängd. m är priset minus k gånger mängden. Lös sedan ut x ur y är k x plus m.')]),
+    'vg-ekvsys': (4, [(None, 'Ställ upp två ekvationer och lös dem, till exempel med additionsmetoden så att den ena variabeln försvinner.')]),
+    'vg-olik': (4, [(None, 'Ställ upp en olikhet: startavgift plus pris gånger x mindre än eller lika med budgeten. Lös ut x och avrunda nedåt.')]),
+    'vg-pot': (2, [(None, 'Kantlängden i en kub är tredje roten ur volymen. Ytterarean är sex gånger kanten i kvadrat.')]),
+    'vg-tprof': (4, [(None, 'Dela profilen i rektanglar. Tyngdpunktens höjd är summan av area gånger höjd till varje dels mitt, delat med den totala arean.')]),
+    'vg-lform': (5, [(None, 'Dela L-formen i två rektanglar. Tyngdpunkten är summan av area gånger läge, delat med den totala arean.')]),
+    'vg-balk2': (1, [(None, 'Gemensam tyngdpunkt: varje massa gånger sitt läge, summerat, delat med den totala massan. Balkens egen vikt ligger i mitten.')]),
+    'vg-dens': (4, [(None, 'Massan är densiteten gånger volymen. Dela med tusen för ton, avrunda antalet bilar uppåt, och tyngden är massa gånger nio komma åttiotvå.')]),
+    'vg-pelare': (4, [(None, 'Volymen av en rund pelare är pi gånger radien i kvadrat gånger höjden, gånger antalet. Tyngden är tyngdtätheten gånger volymen.')]),
+    'vg-vall': (4, [(None, 'Tvärsnittets area är ett trapets: summan av bredderna gånger höjden delat med två. Volymen är arean gånger längden. Avrunda lassen uppåt.')]),
+    'vg-itab': (1, [(None, 'Välj de två tabellvärden som x ligger mellan, och interpolera: startvärdet plus andelen gånger ökningen.')]),
+    'vg-skalarea': (4, [(None, 'Gör om båda måtten till verklighet först, gånger skalan, och multiplicera sedan. Arean växer med skalan i kvadrat.')]),
+}
+
+
+# Formeln i generell form (LaTeX) som Kapten läser upp vid första felet.
+# prefix: [(sökord eller None, formel), …] – första träffen används. Saknas formel läses bara den korta repetitionen.
+FORMEL = {
+    'g-brak': [(None, '\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\cdot d + c \\cdot b}{b \\cdot d}')],
+    'g-brakav': [(None, '\\frac{t}{n} \\text{ av } P = \\frac{t \\cdot P}{n}')],
+    'g-tid': [(None, '\\text{minuter} = \\text{decimaldel} \\cdot 60')],
+    'g-mmvol': [(None, 'V = b \\cdot h \\cdot L')],
+    'g-mt': [(None, 'G = m \\cdot g')],
+    'g-tonkn': [(None, 'G = m \\cdot g')],
+    'g-upp': [(None, '\\text{antal} = \\frac{\\text{totalt}}{\\text{per gång}}')],
+    'g-ff': [(None, '\\text{nytt} = \\text{gammalt} \\cdot \\text{förändringsfaktor}')],
+    'g-proc': [(None, '\\text{förändring} = \\frac{\\text{nytt} - \\text{gammalt}}{\\text{gammalt}}')],
+    'g-del': [(None, '\\text{delen} = \\text{andelen} \\cdot \\text{det hela}')],
+    'g-penh': [('procentenheter', '\\text{procentenheter} = p_2 - p_1'), (None, '\\text{förändring} = \\frac{p_2 - p_1}{p_1}')],
+    'g-ranta': [('månad', '\\text{ränta per månad} = \\frac{K \\cdot r}{100 \\cdot 12}'), (None, 'R = K \\cdot \\frac{r}{100}')],
+    'g-index': [(None, 'V_n = V_0 \\cdot \\frac{I_n}{I_0}')],
+    'g-moms': [('exklusive moms\\?', '\\text{utan moms} = \\frac{\\text{med moms}}{1,25}'), (None, '\\text{med moms} = \\text{utan moms} \\cdot 1,25')],
+    'g-jmf': [(None, '\\text{jämförpris} = \\frac{\\text{pris}}{\\text{mängd}}')],
+    'g-ekv': [(None, 'a x + b = c \\Rightarrow x = \\frac{c - b}{a}')],
+    'g-ekv2': [(None, 'a x + b = c x + d \\Rightarrow x = \\frac{d - b}{a - c}')],
+    'g-pot': [('x³|kub', 'x = \\sqrt[3]{V}'), (None, 'x = \\sqrt{A}')],
+    'g-tiopot': [('vanligt tal|Vilket tal är|utan tiopotens', 'a \\cdot 10^n'), ('grundpotensform|exponent', 'a \\cdot 10^n')],
+    'g-talf': [(None, 'a_n = a_1 + (n - 1) \\cdot d')],
+    'g-prop': [('snickare|lastbilar|målare|pumpar', 'n_1 \\cdot t_1 = n_2 \\cdot t_2'), (None, '\\text{värde} = \\text{pris per enhet} \\cdot \\text{antal}')],
+    'g-linje': [(None, 'y = k x + m')],
+    'g-linjex': [(None, 'y = k x + m \\Rightarrow x = \\frac{y - m}{k}')],
+    'g-graf': [(None, 'y = k x + m')],
+    'g-kpunkt': [(None, 'k = \\frac{y_2 - y_1}{x_2 - x_1}')],
+    'g-area': [(None, 'A = l \\cdot b')],
+    'g-tri': [(None, 'A = \\frac{b \\cdot h}{2}')],
+    'g-trap': [(None, 'A = \\frac{(a + b) \\cdot h}{2}')],
+    'g-cirkel': [('arean', 'A = \\pi \\cdot r^2'), (None, 'O = \\pi \\cdot d')],
+    'g-vol': [(None, 'V = l \\cdot b \\cdot h')],
+    'g-cyl': [(None, 'V = \\pi \\cdot r^2 \\cdot h')],
+    'g-skala': [(None, '\\text{verklighet} = \\text{ritning} \\cdot n')],
+    'g-omkr': [(None, 'O = 2 l + 2 b')],
+    'g-larea': [(None, 'A = L \\cdot B - l \\cdot b')],
+    'g-vsum': [('likbent', '\\text{basvinkel} = \\frac{180^\\circ - \\text{toppvinkel}}{2}'), (None, 'A + B + C = 180^\\circ')],
+    'g-pyt': [('hypotenusan|diagonal|lång är bjälken|lång är rampen|stagningen', 'c = \\sqrt{a^2 + b^2}'), (None, 'b = \\sqrt{c^2 - a^2}')],
+    'g-trigs': [('\\\\sin', '\\sin v = \\frac{\\text{motstående}}{\\text{hypotenusa}}'), ('\\\\cos', '\\cos v = \\frac{\\text{närliggande}}{\\text{hypotenusa}}'),
+                (None, '\\tan v = \\frac{\\text{motstående}}{\\text{närliggande}}')],
+    'g-trigv': [(None, '\\tan v = \\frac{\\text{höjd}}{\\text{längd}}')],
+    'g-lutn': [('1:', '\\text{längd} = \\text{höjd} \\cdot n'), (None, '\\text{lutning} = \\frac{\\text{höjd}}{\\text{längd}} \\cdot 100')],
+    'g-vek': [(None, '|R| = \\sqrt{R_x^2 + R_y^2}')],
+    'g-medel': [(None, '\\bar{x} = \\frac{\\text{summan}}{\\text{antalet}}')],
+    'g-typ': [('bredd', '\\text{variationsbredd} = \\text{största} - \\text{minsta}')],
+    'g-viktat': [(None, '\\text{medel} = \\frac{A_1 \\cdot e_1 + A_2 \\cdot e_2}{A_1 + A_2}')],
+    'g-diagram': [('medelvärde', '\\bar{x} = \\frac{\\text{summan}}{\\text{antalet}}'), ('procent', '\\text{förändring} = \\frac{\\text{nytt} - \\text{gammalt}}{\\text{gammalt}}'),
+                  ('variationsbredd|högsta', '\\text{variationsbredd} = \\text{högsta} - \\text{lägsta}')],
+    'g-interp': [(None, 'y = y_1 + \\frac{x - x_1}{x_2 - x_1} \\cdot (y_2 - y_1)')],
+    'g-tyngd': [(None, 'G = \\gamma \\cdot V')],
+    'g-ytlast': [('linjelast', 'G = q \\cdot L'), (None, 'G = q \\cdot A')],
+    'g-dens': [('volymen\\?', 'V = \\frac{m}{\\rho}'), (None, 'm = \\rho \\cdot V')],
+    'g-tp': [('rektangulärt', 'y_T = \\frac{h}{2}'), ('triangel', 'y_T = \\frac{h}{3}'), (None, 'x_T = \\frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}')],
+    'g-fart': [('m/s', '\\text{m/s} = \\frac{\\text{km/h}}{3,6}'), ('minuter', 't = \\frac{s}{v}'), (None, 's = v \\cdot t')],
+    'vg-flerproc': [(None, '\\text{nytt} = \\text{gammalt} \\cdot f_1 \\cdot f_2')],
+    'vg-snitt': [(None, 'x^n = \\frac{\\text{slut}}{\\text{start}}')],
+    'vg-ranta': [('skrivs av', 'V_n = V_0 \\cdot \\left(1 - \\frac{r}{100}\\right)^n'), (None, 'K_n = K_0 \\cdot \\left(1 + \\frac{r}{100}\\right)^n')],
+    'vg-lan': [(None, '\\text{betalning} = \\text{amortering} + \\frac{\\text{skuld} \\cdot r}{100 \\cdot 12}')],
+    'vg-spill': [(None, 'G = \\gamma \\cdot V \\cdot (1 + \\text{spill})')],
+    'vg-samm': [(None, 'G = \\gamma_1 V_1 + \\gamma_2 V_2')],
+    'vg-viktat': [(None, '\\text{medel} = \\frac{\\sum A \\cdot e}{\\sum A}')],
+    'vg-stab': [(None, '\\text{variationsbredd} = \\text{största} - \\text{minsta}')],
+    'vg-stdav': [(None, 's = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n - 1}}')],
+    'vg-diautv': [(None, 'x^4 = \\frac{\\text{slut}}{\\text{start}}')],
+    'vg-ki': [(None, 'SE = \\frac{s}{\\sqrt{n}} \\qquad \\bar{x} \\pm 1,96 \\cdot SE')],
+    'vg-tak': [(None, '\\tan v = \\frac{h}{l}')],
+    'vg-matn': [(None, 'H = d \\cdot \\tan v + h_0')],
+    'vg-kran': [(None, 'h = a \\cdot \\tan v')],
+    'vg-takstol': [(None, 'h = \\frac{S}{2} \\cdot \\tan v')],
+    'vg-ramp': [(None, 'L = h \\cdot n')],
+    'vg-vek': [(None, '|R| = \\sqrt{R_x^2 + R_y^2} \\qquad \\theta = \\tan^{-1}\\left(\\frac{R_y}{R_x}\\right)')],
+    'vg-komp': [(None, 'F_x = F \\cdot \\cos \\theta')],
+    'vg-bryt': [(None, 'm_A + k_A x = m_B + k_B x')],
+    'vg-modell': [(None, 'k = \\frac{y_2 - y_1}{x_2 - x_1}')],
+    'vg-olik': [(None, 'm + k x \\le \\text{budget}')],
+    'vg-pot': [(None, 'x = \\sqrt[3]{V}')],
+    'vg-tprof': [(None, 'y_T = \\frac{A_1 y_1 + A_2 y_2}{A_1 + A_2}')],
+    'vg-lform': [(None, 'x_T = \\frac{A_1 x_1 + A_2 x_2}{A_1 + A_2}')],
+    'vg-balk2': [(None, 'x_T = \\frac{\\sum m \\cdot x}{\\sum m}')],
+    'vg-dens': [(None, 'm = \\rho \\cdot V')],
+    'vg-pelare': [(None, 'V = \\pi \\cdot r^2 \\cdot h')],
+    'vg-vall': [(None, 'V = \\frac{(a + b) \\cdot h}{2} \\cdot L')],
+    'vg-itab': [(None, 'y = y_1 + \\frac{x - x_1}{x_2 - x_1} \\cdot (y_2 - y_1)')],
+    'vg-skalarea': [(None, 'A_{\\text{verklig}} = A_{\\text{ritning}} \\cdot n^2')],
+    'vg-ekvsys': [(None, 'a_1 x + b_1 y = S_1')],
+}
+
+
+# Tips för varje del i uppgifter med flera svar. Kapten Kalkyl ser vilka delar som är fel
+# och ger bara tipsen för dem. En post per svarsruta, i samma ordning: (formel i LaTeX, kort tips).
+# Skrivs som attributen formel="…" och tips="…" på <svar>.
+DELAR = {
+    'vg-flerproc': [('\\text{nytt} = \\text{gammalt} \\cdot f_1 \\cdot f_2', 'Den nya kostnaden får du genom att multiplicera med båda förändringsfaktorerna, en i taget.'),
+                    ('p = (f_1 \\cdot f_2 - 1) \\cdot 100', 'Den totala förändringen är den sammanlagda förändringsfaktorn minus ett, gånger hundra. Lägg aldrig ihop procenten.')],
+    'vg-ranta': [('V_n = V_0 \\cdot \\left(1 - \\frac{r}{100}\\right)^n', 'Värdet efter n år är inköpspriset gånger förändringsfaktorn upphöjt till antalet år.'),
+                 ('\\text{minskning} = V_0 - V_n', 'Minskningen är inköpspriset minus värdet efter de n åren.')],
+    'vg-spill': [('V_{\\text{best}} = l \\cdot b \\cdot t \\cdot (1 + \\text{spill})', 'Räkna volymen, längd gånger bredd gånger tjocklek, och lägg till spillet. Tre procent spill betyder gånger ett komma noll tre.'),
+                 ('G = \\gamma \\cdot V_{\\text{best}}', 'Tyngden är tyngdtätheten gånger beställningsvolymen, alltså volymen med spill.')],
+    'vg-stab': [('\\bar{x} = \\frac{\\sum x}{n}', 'Medelvärdet för lag A är summan av lag A:s tider delat med antalet.'),
+                ('\\bar{x} = \\frac{\\sum x}{n}', 'Medelvärdet för lag B är summan av lag B:s tider delat med antalet.'),
+                ('R = x_{max} - x_{min}', 'Variationsbredden för lag A är den största tiden minus den minsta.'),
+                ('R = x_{max} - x_{min}', 'Variationsbredden för lag B är den största tiden minus den minsta.'),
+                ('', 'Mest stabilt är det lag som har minst variationsbredd, alltså minst spridning.')],
+    'vg-stdav': [('\\bar{x} = \\frac{\\sum x_i}{n}', 'Medelvärdet är summan av alla mätvärden delat med antalet.'),
+                 ('s = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{n - 1}}', 'Ta varje värde minus medelvärdet i kvadrat, summera, dela med n minus ett och ta roten ur.')],
+    'vg-tak': [('v = \\tan^{-1}\\left(\\frac{h}{l}\\right)', 'Vinkeln får du med tangens invers av höjdskillnaden delat med den horisontella längden.'),
+               ('L = \\sqrt{l^2 + h^2}', 'Den lutande sidan är hypotenusan. Använd Pythagoras.')],
+    'vg-kran': [('h = a \\cdot \\tan v', 'Höjden är avståndet längs marken gånger tangens för vinkeln.'),
+                ('c = \\frac{a}{\\cos v}', 'Den lutande längden är avståndet längs marken delat med cosinus för vinkeln.')],
+    'vg-takstol': [('h = \\frac{S}{2} \\cdot \\tan v', 'Dela takstolen på mitten. Höjden är halva spännvidden gånger tangens för takvinkeln.'),
+                   ('L = \\frac{S/2}{\\cos v}', 'Takbenet är halva spännvidden delat med cosinus för takvinkeln.')],
+    'vg-vek': [('|R| = \\sqrt{R_x^2 + R_y^2}', 'Lägg först ihop x-delarna och y-delarna för sig, och använd sedan Pythagoras.'),
+               ('\\theta = \\tan^{-1}\\left(\\frac{R_y}{R_x}\\right)', 'Vinkeln mäts moturs från positiva x-axeln, så är R y negativ lägger du till 360 grader.')],
+    'vg-komp': [('F_x = F \\cdot \\cos \\theta', 'Den vågräta komposanten är kraften gånger cosinus för vinkeln.'),
+                ('F_y = F \\cdot \\sin \\theta', 'Den lodräta komposanten är kraften gånger sinus för vinkeln.')],
+    'vg-bryt': [('m_A + k_A x = m_B + k_B x', 'Sätt kostnaderna lika och lös ut x: samla x-termerna på ena sidan och talen på den andra.'),
+                ('y = m + k x', 'Kostnaden får du genom att sätta in x i någon av de två prisformlerna.')],
+    'vg-modell': [('k = \\frac{y_2 - y_1}{x_2 - x_1}', 'k är skillnaden i pris delat med skillnaden i mängd.'),
+                  ('m = y_1 - k \\cdot x_1', 'm får du genom att sätta in en av punkterna: priset minus k gånger mängden.'),
+                  ('x = \\frac{y - m}{k}', 'Mängden får du genom att lösa ut x ur y är k x plus m: budgeten minus m, delat med k.')],
+    'vg-dens': [('m = \\rho \\cdot V', 'Massan är densiteten gånger volymen. Dela med tusen för att få ton.'),
+                ('\\text{antal} = \\frac{m}{8 \\text{ ton}}', 'Antalet bilar är massan i ton delat med åtta. Avrunda alltid uppåt, en halv bil räcker inte.'),
+                ('G = m \\cdot g', 'Tyngden är massan i kilo gånger nio komma åttiotvå. Dela med tusen för kilonewton.')],
+    'vg-pot': [('x = \\sqrt[3]{V}', 'Kantlängden är tredje roten ur volymen, alltså volymen upphöjt till en tredjedel.'),
+               ('A = 6 \\cdot x^2', 'Ytterarean är sex sidor, och varje sida är kantlängden i kvadrat.')],
+    'vg-ekvsys': [('a_1 x + b_1 y = S_1', 'Ställ upp två ekvationer och eliminera y, till exempel med additionsmetoden. Då får du priset för den första varan.'),
+                  ('y = \\frac{S_1 - a_1 x}{b_1}', 'Sätt in det första priset i en av ekvationerna och lös ut det andra.')],
+    'vg-diautv': [('p = \\frac{\\text{slut} - \\text{start}}{\\text{start}} \\cdot 100', 'Total förändring är slutvärdet minus startvärdet, delat med startvärdet, gånger hundra.'),
+                  ('f = \\left(\\frac{\\text{slut}}{\\text{start}}\\right)^{1/n}', 'Per år: ta slut delat med start, upphöjt till ett delat med antalet förändringar, som är fyra. Dra bort ett och gör om till procent.')],
+    'vg-ki': [('SE = \\frac{s}{\\sqrt{n}}', 'Standardfelet är standardavvikelsen delat med roten ur antalet mätningar.'),
+              ('\\bar{x} - 1,96 \\cdot SE', 'Undre gränsen är medelvärdet minus ett komma nittiosex gånger standardfelet.'),
+              ('\\bar{x} + 1,96 \\cdot SE', 'Övre gränsen är medelvärdet plus ett komma nittiosex gånger standardfelet.')],
+    'vg-pelare': [('V = N \\cdot \\pi \\cdot r^2 \\cdot h', 'Volymen av en pelare är pi gånger radien i kvadrat gånger höjden, gånger antalet. Radien är halva diametern, i meter.'),
+                  ('G = \\gamma \\cdot V', 'Tyngden är tyngdtätheten gånger den totala volymen.')],
+    'vg-vall': [('V = \\frac{(a + b) \\cdot h}{2} \\cdot L', 'Tvärsnittet är ett trapets: summan av bredderna gånger höjden delat med två. Volymen är arean gånger längden.'),
+                ('\\text{lass} = \\frac{V}{\\text{lasstorlek}}', 'Antalet lass är volymen delat med vad ett lass rymmer. Avrunda uppåt.')],
+    'vg-ramp': [('L = h \\cdot n', 'Lutning ett till n: den horisontella längden är höjdskillnaden gånger n.'),
+                ('s = \\sqrt{L^2 + h^2}', 'Rampens längd längs ytan är hypotenusan. Använd Pythagoras.'),
+                ('v = \\tan^{-1}\\left(\\frac{1}{n}\\right)', 'Vinkeln är tangens invers av ett delat med n.')],
+}
+
+
+def with_part_tips(tid, answers):
+    """Lägger formel="…" och tips="…" på varje <svar> enligt DELAR."""
+    import re as _re
+    parts = DELAR.get(_re.sub(r'-\d+$', '', tid))
+    if not parts or len(answers) < 2:
+        return answers
+    out = []
+    for i, a in enumerate(answers):
+        if i < len(parts):
+            formel, tips = parts[i]
+            extra = (f' formel={quoteattr(formel)}' if formel else '') + (f' tips={quoteattr(tips)}' if tips else '')
+            a = _re.sub(r'(<svar etikett="[^"]*")', lambda m: m.group(1) + extra, a, count=1)
+        out.append(a)
+    return out
+
+
+def hjalp_xml(tid, text):
+    """<hjalp sida="…"><formel>…</formel><kort>…</kort></hjalp> för en mall (eller tom sträng)."""
+    import re as _re
+    prefix = _re.sub(r'-\d+$', '', tid)
+    if prefix not in HJALP:
+        return ''
+    sida, choices = HJALP[prefix]
+    formel = next((f for p, f in FORMEL.get(prefix, []) if p is None or _re.search(p, text, _re.I)), '')
+    for pattern, kort in choices:
+        if pattern is None or _re.search(pattern, text, _re.I):
+            return (f'<hjalp sida="{sida}">' + (f'<formel>{escape(formel)}</formel>' if formel else '') +
+                    f'<kort>{escape(kort)}</kort></hjalp>')
+    return ''
+
+
 def add(level, tid, lesson, points, parts, question, answers, solution, underlag=''):
     """underlag = färdig XML (t.ex. ett <diagram>) som visas under frågan."""
     TEMPLATES[level].append(
@@ -86,8 +384,10 @@ def add(level, tid, lesson, points, parts, question, answers, solution, underlag
         + ''.join('    ' + p + '\n' for p in parts)
         + f'    <fraga>{escape(question)}</fraga>\n'
         + (f'    <underlag>{underlag}</underlag>\n' if underlag else '')
-        + ''.join('    ' + a + '\n' for a in answers)
-        + f'    <losning>{solution}</losning>\n  </mall>')
+        + ''.join('    ' + a + '\n' for a in with_part_tips(tid, answers))
+        + f'    <losning>{solution}</losning>\n'
+        + (f'    {h}\n' if (h := hjalp_xml(tid, question + ' ' + solution)) else '')
+        + '  </mall>')
 
 
 def fam(prefix):
@@ -828,7 +1128,7 @@ def vg_ranta_avskr():
                 [v('K', 5, 90), r('K', 'K*1000'), val('p', [2, 2.5, 3, 3.5, 4, 5]), val('n', [3, 4, 5, 6, 8, 10]), r('svar', 'K*(1 + p/100)^n')],
                 f'{ctx} {{=K}} kr med {{=p}} % ränta per år (ränta-på-ränta). Hur stort är beloppet efter {{=n}} år?',
                 [ans('Belopp', 'kr', 'svar', 0, fel=[('K*(1 + p/100*n)', 'Du har räknat enkel ränta. Med ränta-på-ränta multiplicerar du med förändringsfaktorn n gånger.')])],
-                calc('K_n = K_0 \\cdot (1 + r)^n', 'K = {=K} \\cdot {=1+p/100:3}^{{=n}}', '\\approx {=svar:0}\\enh{kr}'))
+                calc('K_n = K_0 \\cdot \\left(1 + \\frac{r}{100}\\right)^n', 'K = {=K} \\cdot {=1+p/100:3}^{{=n}}', '\\approx {=svar:0}\\enh{kr}'))
     for thing, unit in SAKER:
         for k in range(2):
             add('VG', nxt(), 'ekonomi', 2,
@@ -974,16 +1274,24 @@ def vg_takstol():
 
 def vg_vektor():
     nxt = fam('vg-vek')
+    # Vinkeln θ mäts som på formelbladet: moturs från positiva x-axeln, 0–360°.
+    # Rx är alltid positiv här. Är Ry negativ blir θ = tan⁻¹(Ry/Rx) + 360°.
     for ctx, unit in [('Två personer drar en bil', 'N'), ('Två vajrar håller en mast', 'N'), ('Två krafter verkar på ett fäste', 'kN'),
                       ('Två bogserlinor drar en pråm', 'kN'), ('En mätare går två sträckor', 'm'), ('Två stag belastar en nod', 'kN')]:
         for k in range(4):
+            uppat = k % 2 == 0
+            steg = (['\\theta = \\tan^{-1}\\left(\\frac{{=Ry}}{{=Rx}}\\right) \\approx {=vinkel:1}^\\circ'] if uppat else
+                    ['\\theta = \\tan^{-1}\\left(\\frac{{=Ry}}{{=Rx}}\\right) \\approx {=v0:1}^\\circ',
+                     'R_x > 0,\\ R_y < 0 \\Rightarrow \\theta = {=v0:1}^\\circ + 360^\\circ \\approx {=vinkel:1}^\\circ'])
+            fel = () if uppat else [('v0', 'Miniräknaren ger en negativ vinkel. På formelbladet mäts θ moturs från positiva x-axeln (0–360°), så lägg till 360°.'),
+                                    ('abs(v0)', 'Vektorn pekar under x-axeln. På formelbladet mäts θ moturs från positiva x-axeln (0–360°): θ = tan⁻¹(R_y/R_x) + 360°.')]
             add('VG', nxt(), 'vektorer', 3,
                 [v('a', 20, 400), v('b', -150, 200), v('c', 20, 400), v('d', -150, 200),
-                 r('Rx', 'a + c'), r('Ry', 'b + d'), c('abs(Ry) > 10'), r('R', 'sqrt(Rx^2 + Ry^2)'), r('vinkel', 'atan(abs(Ry)/Rx)')],
-                f'{ctx}: ({{=a}}, {{=b}}) {unit} och ({{=c}}, {{=d}}) {unit}. Beräkna resultantens storlek och vinkeln mot x-axeln.',
-                [ans('|R|', unit, 'R', 1), ans('Vinkel', '°', 'vinkel', 1)],
-                calc('\\vec{R} = ({=Rx};\\ {=Ry})', '|\\vec{R}| = \\sqrt{{=Rx:p}^2 + {=Ry:p}^2} \\approx {=R:1}' + f'\\enh{{{unit}}}',
-                     '\\tan v = \\frac{{=abs(Ry)}}{{=Rx}} \\Rightarrow v \\approx {=vinkel:1}^\\circ', 'T:Vinkeln räknas ovanför x-axeln om Ry > 0, annars under.'))
+                 r('Rx', 'a + c'), r('Ry', 'b + d'), c('Ry > 10' if uppat else 'Ry < -10'), r('R', 'sqrt(Rx^2 + Ry^2)'),
+                 r('v0', 'atan(Ry/Rx)'), r('vinkel', 'v0' if uppat else 'v0 + 360')],
+                f'{ctx}: ({{=a}}, {{=b}}) {unit} och ({{=c}}, {{=d}}) {unit}. Beräkna resultantens storlek och vinkeln θ, mätt moturs från positiva x-axeln.',
+                [ans('|R|', unit, 'R', 1), ans('Vinkel θ', '°', 'vinkel', 1, fel=fel)],
+                calc('\\vec{R} = ({=Rx};\\ {=Ry})', '|\\vec{R}| = \\sqrt{{=Rx:p}^2 + {=Ry:p}^2} \\approx {=R:1}' + f'\\enh{{{unit}}}', *steg))
 
 
 def vg_komposant():
@@ -1493,10 +1801,10 @@ def vg_konfidens():
             add('VG', nxt(), 'statistik', 3,
                 [val('n', [16, 25, 36, 49, 64, 100]), v('m', mlo, mhi, dec), v('s', slo, shi, dec + 1 if shi < 1 else 1), r('SE', 's/sqrt(n)'),
                  r('lo', 'm - 1.96*SE'), r('hi', 'm + 1.96*SE')],
-                f'{text}. Medelvärdet blev {{=m:{dec}}} {unit} och standardavvikelsen {{=s}} {unit}. Beräkna medelfelet och ett 95 % konfidensintervall för medelvärdet (använd 1,96).',
-                [ans('Medelfel', unit, 'SE', 3, fel=[('s/n', 'Medelfelet är s delat med roten ur n.')]),
-                 ans('Undre gräns', unit, 'lo', dec + 1, fel=[('m - 1.96*s', 'Du har använt standardavvikelsen. Intervallet byggs med medelfelet s/√n.')]),
-                 ans('Övre gräns', unit, 'hi', dec + 1, fel=[('m + 1.96*s', 'Du har använt standardavvikelsen. Intervallet byggs med medelfelet s/√n.')])],
+                f'{text}. Medelvärdet blev {{=m:{dec}}} {unit} och standardavvikelsen {{=s}} {unit}. Beräkna standardfelet (medelfelet) och ett 95 % konfidensintervall för medelvärdet (använd 1,96).',
+                [ans('Standardfel', unit, 'SE', 3, fel=[('s/n', 'Standardfelet är s delat med roten ur n.')]),
+                 ans('Undre gräns', unit, 'lo', dec + 1, fel=[('m - 1.96*s', 'Du har använt standardavvikelsen. Intervallet byggs med standardfelet s/√n.')]),
+                 ans('Övre gräns', unit, 'hi', dec + 1, fel=[('m + 1.96*s', 'Du har använt standardavvikelsen. Intervallet byggs med standardfelet s/√n.')])],
                 calc('SE = \\frac{s}{\\sqrt{n}} = \\frac{{=s}}{\\sqrt{{=n}}} \\approx {=SE:3}', '1{,}96 \\cdot {=SE:3} \\approx {=1.96*SE:3}',
                      '{=m:' + str(dec) + '} \\pm {=1.96*SE:3} \\Rightarrow [{=lo:' + str(dec + 1) + '};\\ {=hi:' + str(dec + 1) + '}]' + f'\\enh{{{unit}}}'))
 

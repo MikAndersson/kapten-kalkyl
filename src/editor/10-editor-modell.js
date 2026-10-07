@@ -11,7 +11,7 @@
      { type: 'formel', tex: 'G = m \\cdot g', stor: false }
      { type: 'berakning', rows: [{ kind: 'rad' | 'radtext' | 'svar' | 'svartext', text }] }
      { type: 'kolumner', cols: [[block, …], [block, …]] }
-     { type: 'testa', fraga, rutor: [{ etikett, enhet, svar, tolerans }], losning: [block, …] }
+     { type: 'testa', fraga, formelblad, rutor: [{ etikett, enhet, svar, tolerans }], losning: [block, …] }
 
    I textfälten skriver man vanlig text där
      $formel$  blir en formel (LaTeX),  **fet** blir fet,  ny rad blir radbrytning. */
@@ -112,6 +112,7 @@ function elementToBlock(el) {
       return {
         type: 'testa',
         fraga: q ? xmlToFriendly(q) : '',
+        formelblad: el.getAttribute('formelblad') || '',
         rutor: [...el.getElementsByTagName('ruta')].map(r => ({
           etikett: r.getAttribute('etikett') || '', enhet: r.getAttribute('enhet') || '',
           svar: r.getAttribute('svar') || '', tolerans: r.getAttribute('tolerans') || '',
@@ -208,7 +209,8 @@ function blockToXml(b, d) {
         (r.enhet ? ` enhet="${xmlEscape(r.enhet)}"` : '') + ` svar="${xmlEscape(r.svar)}"` +
         (String(r.tolerans).trim() ? ` tolerans="${xmlEscape(r.tolerans)}"` : '') + felToXml(r.fel));
       const sol = blocksToXml(b.losning, d + 2);
-      return `${pad}<testa>\n${ind(d + 1)}<fraga>${friendlyToXml(b.fraga)}</fraga>\n${rutor.join('\n')}` +
+      const fb = String(b.formelblad || '').trim();
+      return `${pad}<testa${fb ? ` formelblad="${xmlEscape(fb)}"` : ''}>\n${ind(d + 1)}<fraga>${friendlyToXml(b.fraga)}</fraga>\n${rutor.join('\n')}` +
         (sol ? `\n${ind(d + 1)}<losning>\n${sol}\n${ind(d + 1)}</losning>` : '') + `\n${pad}</testa>`;
     }
     case 'knapp':

@@ -23,7 +23,7 @@
         <berakning><svar>240 \cdot 38 = 9120\enh{kr}</svar></berakning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-procent-3">
       <fraga>Ett parti isolering kostar 6 400 kr. Priset höjs med 15 %. Beräkna det nya priset.</fraga>
       <ruta etikett="Nytt pris" enhet="kr" svar="7360" tolerans="1"/>
       <losning><berakning><svar>6400 \cdot 1,15 = 7360\enh{kr}</svar></berakning></losning>
@@ -57,7 +57,7 @@
         <varning>Dela alltid med det ursprungliga värdet, alltså det gamla. Att dela med 4,2 ger 14,3 %, vilket är fel.</varning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-procent-1">
       <fraga>En byggställning kostade 25 000 kr men säljs för 18 000 kr. Hur stor är värdeminskningen i procent?</fraga>
       <ruta etikett="Värdeminskning" enhet="%" svar="28"/>
       <losning>

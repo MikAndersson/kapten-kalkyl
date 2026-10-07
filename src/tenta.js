@@ -30,7 +30,7 @@ const EXAM=[
 {part:1,n:7,p:2,ch:'procent',q:'En byggställning köptes för 42 000 kr och säljs senare för 31 500 kr. Beräkna värdeminskningen i procent.',
  f:[{l:'Värdeminskning',u:'%',a:25}],s:C('(31 500 − 42 000) / 42 000','= −10 500 / 42 000 = −0,25','Värdeminskning: 25 %')},
 {part:1,n:8,p:2,ch:'interpolation',q:'Ett formfaktorvärde är 0,62 vid 10 m höjd och 0,86 vid 20 m höjd. Bestäm värdet vid 14 m med linjär interpolation.',
- f:[{l:'Värde vid 14 m',u:'',a:0.716,tol:0.006}],s:C('y = y₁ + (x − x₁) · (y₂ − y₁) / (x₂ − x₁)','y = 0,62 + (14 − 10) · (0,86 − 0,62) / (20 − 10)','y = 0,62 + 4 · 0,024','y = 0,716 ≈ 0,72')},
+ f:[{l:'Värde vid 14 m',u:'',a:0.716,tol:0.006}],s:C('y = y₁ + (x − x₁) / (x₂ − x₁) · (y₂ − y₁)','y = 0,62 + (14 − 10) / (20 − 10) · (0,86 − 0,62)','y = 0,62 + 0,4 · 0,24','y = 0,716 ≈ 0,72')},
 {part:1,n:9,p:2,ch:'statistik',q:'Ett kontor består av 900 m² som använder 22 kWh/m² och 600 m² som använder 42 kWh/m². Beräkna den viktade medelförbrukningen.',
  f:[{l:'Medelförbrukning',u:'kWh/m²',a:30}],s:C('E_tot = 900 · 22 + 600 · 42','E_tot = 19 800 + 25 200 = 45 000 kWh','A_tot = 1 500 m²','E_medel = 45 000 / 1 500 = 30 kWh/m²')},
 {part:1,n:10,p:1,ch:'enheter',q:'Ett bygge behöver transportera 15,4 ton material. En lastbil tar 1,8 ton per körning. Hur många hela körningar krävs?',
@@ -62,7 +62,7 @@ const EXTRA=[
 {n:'E3',ch:'tyngdpunkt',q:'En 8 m lång balk väger 400 kg. Ett paket på 200 kg ligger 2 m från vänster ände. Bestäm gemensam tyngdpunkt från vänster ände.',
  f:[{l:'x_T',u:'m',a:3.333,tol:0.02}],s:C('x_T = (400 · 4 + 200 · 2) / 600','x_T = 2 000 / 600 ≈ 3,33 m')},
 {n:'E4',ch:'vektorer',q:'Två krafter verkar på en punkt: F₁ = (300, 40) N och F₂ = (180, −100) N. Beräkna resultantens storlek och vinkel mot positiva x-axeln.',
- f:[{l:'|R|',u:'N',a:483.7,tol:1},{l:'Vinkel (under x-axeln)',u:'°',a:7.1,tol:0.15}],s:C('R = (480, −60) N','|R| = √(480² + 60²) ≈ 483,7 N','tan v = 60 / 480 ⇒ v ≈ 7,1° under x-axeln')},
+ f:[{l:'|R|',u:'N',a:483.7,tol:1},{l:'Vinkel θ',u:'°',a:352.9,tol:0.15}],s:C('R = (480, −60) N','|R| = √(480² + 60²) ≈ 483,7 N','θ = tan⁻¹(−60 / 480) ≈ −7,1°','Rₓ > 0 och R_y < 0 ⇒ θ = −7,1° + 360° = 352,9° (moturs från positiva x-axeln, som på formelbladet)')},
 {n:'E5',ch:'algebra',q:'Lös ut r ur V = π · r² · h. Beräkna sedan r för en cylinder med V = 2,0 m³ och h = 1,5 m.',
  f:[{l:'r',u:'m',a:0.6515,tol:0.006}],s:C('r² = V / (π h)  ⇒  r = √(V / (π h))','r = √(2,0 / (π · 1,5)) = √0,4244','r ≈ 0,65 m')},
 {n:'E6',ch:'tyngdpunkt',q:'En T-profil har en fläns 150 × 30 mm ovanpå ett liv 30 × 120 mm. Livet står på x-axeln och profilen är symmetrisk kring y-axeln. Beräkna tyngdpunktens höjd y.',
@@ -81,20 +81,21 @@ const EXTRA=[
 const EXAM_TEXTS = {
   intro: 'Välkommen till övningstentan! Den är byggd som sluttentan: del 1 på G-nivå och del 2 på VG-nivå, 30 poäng totalt. Starta klockan, räkna på papper med miniräknare och formelblad, och redovisa precis som på riktigt. Skriv sedan in dina slutsvar i rutorna. När du trycker på Rätta tentan ser du poängen, vilka svar som stämmer och hela lösningen till varje uppgift. Längst ner finns extrauppgifter om linjära modeller, vektorer och tyngdpunkt. Lycka till!',
   fullScore: max => `Fantastiskt, full pott! Alla ${max} poäng. Nu gäller det bara att redovisa lika snyggt på tentan: formel, insättning, mellanled och svar med enhet. Du är redo!`,
-  result: ({ total, max, part1, part2, empty, repeat }) =>
+  result: ({ total, max, part1, part2, empty, repeat, wrongNos, wrongCount }) =>
     `Du fick ${total} av ${max} poäng: ${part1} på del 1 och ${part2} på del 2. ` +
     (empty ? `Du lämnade ${empty} svarsrutor tomma. ` : '') +
-    (repeat ? `Titta på lösningarna till de uppgifter som är markerade, och repetera ${repeat} i lektionen. ` : '') +
-    'Varje fel nu är en poäng du inte tappar på tentan. Gör om uppgifterna utan facit om en stund!',
+    (wrongCount ? `${wrongCount === 1 ? 'Uppgift' : 'Uppgift'} ${wrongNos} blev fel. ${wrongCount === 1 ? 'Den hör' : 'De hör'} till ${repeat}. ` +
+      'Jag har satt ihop en repetitionslista med bara de avsnitten. Tryck på Repetera bara de här avsnitten, så går vi igenom dem, och sedan gör du tentan igen. ' : '') +
+    'Varje fel nu är en poäng du inte tappar på tentan!',
 };
 
 // Engelska versioner av replikerna, används om datorn saknar svensk röst.
 const EXAM_TEXTS_EN = {
   intro: 'Welcome to the practice exam! It is built like the final exam: part 1 at pass level and part 2 at distinction level, 30 points in total. Start the clock, work on paper with your calculator and formula sheet, and show your working just like on the real exam. Then type your final answers into the boxes. When you press the button to mark the exam, you will see your points, which answers are correct and the full solution to every task. At the bottom there are extra tasks on linear models, vectors and centre of gravity. Good luck!',
   fullScore: max => `Fantastic, full marks! All ${max} points. Now you just need to show your working just as neatly on the exam: formula, substitution, intermediate steps and an answer with a unit. You are ready!`,
-  result: ({ total, max, part1, part2, empty, repeat }) =>
+  result: ({ total, max, part1, part2, empty, repeat, wrongNos, wrongCount }) =>
     `You got ${total} out of ${max} points: ${part1} on part 1 and ${part2} on part 2. ` +
     (empty ? `You left ${empty} answer boxes empty. ` : '') +
-    (repeat ? `Look at the solutions to the marked tasks, and review ${repeat} in the lesson. ` : '') +
+    (wrongCount ? `Task ${wrongNos} ${wrongCount === 1 ? 'was' : 'were'} wrong, which belongs to ${repeat}. I have put together a review list with just those sections. Press the review button, go through them, and then take the exam again. ` : '') +
     'Every mistake now is a point you will not lose on the exam. Try the tasks again without the solutions in a while!',
 };

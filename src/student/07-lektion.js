@@ -11,18 +11,26 @@ const showMinis = () => storage.get('mini', true);
 
 function buildSlideList() {
   slides = [];
-  lessonStore.all.forEach((lesson, lessonNo) => {
+  // I repetitionsläget (efter tentan) visas bara de avsnitt som blev fel
+  const lessons = activeLessons();
+  lessons.forEach(lesson => {
+    const lessonNo = lessonStore.all.indexOf(lesson);
     lesson.slides.forEach((slide, i) => slides.push({ lesson, slide, lessonNo, slideNoInLesson: i }));
     if (showMinis() && hasTemplatesFor(lesson.id)) {
       slides.push({ lesson, slide: miniSlideInfo(lesson), lessonNo, slideNoInLesson: lesson.slides.length, mini: true });
     }
   });
+  const review = reviewState();
+  if (review && lessons.length) {   // sista bilden: gör tentan igen
+    const last = lessons[lessons.length - 1];
+    slides.push({ lesson: last, slide: reviewEndInfo(review), lessonNo: lessonStore.all.indexOf(last), slideNoInLesson: 9999, reviewEnd: true });
+  }
 }
 
 function renderChapterButtons() {
   let html = '';
   let lastArea = null;
-  for (const lesson of lessonStore.all) {
+  for (const lesson of activeLessons()) {
     if (lesson.omrade !== lastArea) {
       html += `<span class="area">${escapeHtml(lesson.omrade)}</span>`;
       lastArea = lesson.omrade;
@@ -37,15 +45,15 @@ function renderSlide() {
     $('#board').innerHTML = '<h2>Inga lektioner hittades</h2><p>Kontrollera lessons/index.xml.</p>';
     return;
   }
-  const { lesson, slide, lessonNo, slideNoInLesson, mini } = slides[slideIndex];
+  const { lesson, slide, lessonNo, slideNoInLesson, mini, reviewEnd } = slides[slideIndex];
   fieldCounter = 0;
   Object.keys(quizRegistry).forEach(k => delete quizRegistry[k]);
 
-  $('#board').innerHTML = (mini ? renderMini(lesson) : renderSlideContent(slide.element)) + `
+  $('#board').innerHTML = (reviewEnd ? renderReviewEnd() : mini ? renderMini(lesson) : renderSlideContent(slide.element)) + `
     <div class="titleblock">
-      <span>${escapeHtml(KURS.kod)} · ${escapeHtml(lesson.omrade)}</span>
+      <span>${escapeHtml(KURS.namn)} · ${escapeHtml(lesson.omrade)}</span>
       <span>Lektion <b>${lessonNo + 1}</b> ${escapeHtml(lesson.titel)}</span>
-      <span>${mini ? '<b>Minitenta</b>' : `Blad <b>${slideNoInLesson + 1}</b>/${lesson.slides.length}`}</span>
+      <span>${reviewEnd ? '<b>Repetition klar</b>' : mini ? '<b>Minitenta</b>' : `Blad <b>${slideNoInLesson + 1}</b>/${lesson.slides.length}`}</span>
     </div>`;
   typeset($('#board'));
   setupWidgets($('#board'));
@@ -65,11 +73,13 @@ function renderSlide() {
   if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
 
   storage.set('position', { lesson: lesson.id, slide: slideNoInLesson });
+  if (typeof updateSheetButton === 'function') updateSheetButton();
 }
 
 function goToSlide(index) {
   if (index < 0 || index >= slides.length) return;
   slideIndex = index;
+  if (typeof cancelAutoAdvance === 'function') cancelAutoAdvance();
   stopSpeaking();
   renderSlide();
   if ($('#autoplay').checked) readCurrentSlide();
@@ -84,11 +94,12 @@ function goToLesson(lessonId, slideNo = 0) {
 // Läser upp aktuell bild. Med "Spela upp allt" bläddrar den vidare själv,
 // men stannar på bilder med "Testa dig" så att man hinner räkna.
 function readCurrentSlide() {
-  const { slide, mini } = slides[slideIndex];
-  const hasQuiz = mini || slide.element.getElementsByTagName('testa').length > 0;
+  const { slide, mini, reviewEnd } = slides[slideIndex];
+  const from = slideIndex;
+  const hasQuiz = mini || reviewEnd || slide.element.getElementsByTagName('testa').length > 0;
   speak(narration(slide.say, slide.sayEn), $('#teacher-lesson'), () => {
     if ($('#autoplay').checked && slideIndex < slides.length - 1 && !hasQuiz) {
-      setTimeout(() => { if ($('#autoplay').checked && !isSpeaking()) goToSlide(slideIndex + 1); }, 900);
+      setTimeout(() => { if ($('#autoplay').checked && !isSpeaking() && slideIndex === from) goToSlide(from + 1); }, 900);
     }
   });
 }
@@ -110,6 +121,8 @@ function setupLessonControls() {
   };
   $('#board').addEventListener('click', handleSlideClick);
   $('#board').addEventListener('click', handleMiniClick);
+  document.addEventListener('click', handleReviewClick);
+  $('#board').addEventListener('focusin', trackMiniFocus);
   $('#mini-toggle').checked = showMinis();
   $('#mini-toggle').onchange = e => {
     const current = slides[slideIndex];
@@ -119,17 +132,10 @@ function setupLessonControls() {
     slideIndex = same >= 0 ? same : Math.min(slideIndex, slides.length - 1);
     renderSlide();
   };
-  $('#board').addEventListener('keydown', e => {
-    if (e.key === 'Enter' && e.target.matches('.mini input')) { e.preventDefault(); $('[data-mini="check"]').click(); return; }
-    if (e.key === 'Enter' && e.target.matches('.quiz input')) {
-      e.preventDefault();
-      const button = e.target.closest('.quiz').querySelector('[data-action="check-quiz"]');
-      if (button) button.click();
-    }
-  });
   $('#prev').onclick = () => goToSlide(slideIndex - 1);
   $('#next').onclick = () => goToSlide(slideIndex + 1);
-  $('#speak-lesson').onclick = () => (isSpeaking() ? stopSpeaking() : readCurrentSlide());
+  // Spelar inget: spela upp. Spelar: börja om bilden från början.
+  $('#speak-lesson').onclick = () => { if (isSpeaking()) stopSpeaking(); readCurrentSlide(); };
   // Mobilraden gör samma sak som knapparna i lärarpanelen
   $('#mb-prev').onclick = () => goToSlide(slideIndex - 1);
   $('#mb-next').onclick = () => goToSlide(slideIndex + 1);
@@ -150,19 +156,7 @@ function setupLessonControls() {
     if (Math.abs(dx) > 70 && !e.target.closest('.tbl, .calc, input, select, textarea, .widget')) goToSlide(slideIndex + (dx < 0 ? 1 : -1));
   }, { passive: true });
 
-  // Tangentbord: pilar bläddrar, mellanslag startar/pausar uppläsningen
-  document.addEventListener('keydown', e => {
-    if (/INPUT|SELECT|TEXTAREA|BUTTON/.test(document.activeElement.tagName)) return;
-    const view = currentView();
-    if (view === 'lesson' && e.key === 'ArrowRight') goToSlide(slideIndex + 1);
-    if (view === 'lesson' && e.key === 'ArrowLeft') goToSlide(slideIndex - 1);
-    if (e.key === ' ') {
-      e.preventDefault();
-      if (isSpeaking()) togglePause();
-      else if (view === 'lesson') readCurrentSlide();
-      else $('#speak-exam').click();
-    }
-  });
+  setupKeyboard();   // se 07c-tangentbord.js
 }
 
 // Anropas av formeldelen om MathJax laddas in efter att reservvisningen redan använts.

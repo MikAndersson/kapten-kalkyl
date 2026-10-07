@@ -11,6 +11,8 @@ function showView(view) {
     $('#tab-' + v).setAttribute('aria-selected', v === view);
   }
   storage.set('view', view);
+  closeSheet(true);
+  updateSheetButtons();
   window.scrollTo({ top: 0 });
 }
 
@@ -88,7 +90,7 @@ function renderExam() {
 
   $('#exam').innerHTML = `
     <div class="examhead">
-      <div class="eyebrow">Övningstenta · ${KURS.kod} bygg- och ingenjörsmatematik</div>
+      <div class="eyebrow">Övningstenta · bygg- och ingenjörsmatematik</div>
       <h2>${KURS.namn}${generated ? ` <small class="examno">Tenta nr ${exam.seed}</small>` : ''}</h2>
       <div class="exam-choose">
         <button class="btn primary" id="exam-new">＋ Ny slumpad tenta</button>
@@ -186,16 +188,22 @@ function setupExamControls() {
     }
   });
 
-  $('#speak-exam').onclick = () =>
-    (isSpeaking() ? stopSpeaking() : speak(narration(examMessage, examMessageEn), $('#teacher-exam')));
+  $('#speak-exam').onclick = () => {   // spelar det redan börjar det om från början
+    if (isSpeaking()) stopSpeaking();
+    speak(narration(examMessage, examMessageEn), $('#teacher-exam'));
+  };
   $('#pause-exam').onclick = togglePause;
 }
+
+// Uppgifterna som blev fel vid senaste rättningen (används av repetitionen)
+let lastWrongQuestions = [];
 
 function gradeExam() {
   const scores = { 1: 0, 2: 0 };
   const weakChapters = new Set();
   let emptyFields = 0;
   let workingChecked = 0, workingComplete = 0;
+  const wrong = [];
 
   for (const question of exam.questions) {
     let correctFields = 0;
@@ -209,7 +217,7 @@ function gradeExam() {
     // Poängen delas lika mellan svarsrutorna, avrundat till halva poäng
     const points = Math.round(question.p * correctFields / question.f.length * 2) / 2;
     scores[question.part] += points;
-    if (points < question.p) weakChapters.add(question.ch);
+    if (points < question.p) { weakChapters.add(question.ch); wrong.push(question); }
 
     const box = $('#q-' + question.n);
     box.classList.remove('graded-full', 'graded-part', 'graded-zero');
@@ -236,8 +244,12 @@ function gradeExam() {
       <div class="big">${swedishNumber(total)} / ${max1 + max2} p</div>
       <div class="bar"><span>Del 1 · G</span><span class="tr"><i style="width:${scores[1] / max1 * 100}%"></i></span><span>${swedishNumber(scores[1])} / ${max1}</span></div>
       <div class="bar"><span>Del 2 · VG</span><span class="tr"><i style="width:${scores[2] / max2 * 100}%"></i></span><span>${swedishNumber(scores[2])} / ${max2}</span></div>
-      ${repeat.length
-        ? `<p><b>Repetera:</b></p><div class="btnrow">${repeat.map(c => `<button class="btn ghost" data-repeat="${c.id}">${c.t}</button>`).join('')}</div>`
+      ${wrong.length
+        ? `<p><b>Det här blev fel:</b></p>
+           <ul class="wronglist">${wrong.map(q => `<li>Uppgift ${q.n} – ${escapeHtml(lessonTitle(q.ch))}</li>`).join('')}</ul>
+           <div class="btnrow"><button class="btn primary" data-review="start">▶ Repetera bara de här avsnitten (${repeat.length})</button></div>
+           <p class="note">Lektionsvyn visar då bara ${repeat.length === 1 ? 'det avsnittet' : 'de avsnitten'}, med minitentor. Sist kan du göra tentan igen.
+             Enskilda avsnitt: ${repeat.map(c => `<button class="linkbtn" data-repeat="${c.id}">${escapeHtml(c.t)}</button>`).join(', ')}</p>`
         : '<p>Alla slutsvar stämmer. Kontrollera nu att din redovisning har formel, mellanled och enhet.</p>'}
       <p>${workingChecked
         ? `<b>Redovisning:</b> ${workingComplete} av ${workingChecked} skrivna redovisningar har formel, insättning, mellanled och svar med enhet.`
@@ -245,6 +257,7 @@ function gradeExam() {
       <p class="note">Betygsgränserna sätts av läraren. Sikta på i stort sett full pott på Del 1 och så många poäng som möjligt på Del 2.</p>
     </div>`;
 
+  lastWrongQuestions = wrong;
   const fullScore = total === max1 + max2;
   examMessage = fullScore
     ? EXAM_TEXTS.fullScore(max1 + max2)
@@ -252,7 +265,8 @@ function gradeExam() {
         total: swedishNumber(total), max: max1 + max2,
         part1: swedishNumber(scores[1]), part2: swedishNumber(scores[2]),
         empty: emptyFields,
-        repeat: repeat.map(c => c.t.toLowerCase()).join(', '),
+        repeat: joinWords(repeat.map(c => c.t.toLowerCase().replace(/ & /g, ' och '))),
+        wrongNos: joinWords(wrong.map(q => String(q.n))), wrongCount: wrong.length,
       });
   examMessageEn = fullScore
     ? EXAM_TEXTS_EN.fullScore(max1 + max2)
@@ -260,6 +274,7 @@ function gradeExam() {
         total, max: max1 + max2, part1: scores[1], part2: scores[2],
         empty: emptyFields,
         repeat: repeat.map(c => (c.en || c.t).toLowerCase()).join(', '),
+        wrongNos: wrong.map(q => q.n).join(', '), wrongCount: wrong.length,
       });
   $('#bubble-exam').innerHTML = toParagraphs(examMessage);
   $('#score').scrollIntoView({ behavior: 'smooth', block: 'center' });

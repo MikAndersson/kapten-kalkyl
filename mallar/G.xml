@@ -3106,7 +3106,7 @@
     <fraga>Ett byggföretag lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per år?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><svar>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta} = K \cdot r</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
+    <hjalp sida="1"><formel>R = K \cdot \frac{r}{100}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
   </mall>
   <mall id="g-ranta-002" niva="G" lektion="ekonomi" poang="2">
     <var namn="K" min="5" max="90"/>
@@ -3117,7 +3117,7 @@
     <fraga>Ett byggföretag lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per månad?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</rad><svar>{=arsranta:0} / 12 \approx {=svar:0}\enh{kr/månad}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
+    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{100 \cdot 12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
   </mall>
   <mall id="g-ranta-003" niva="G" lektion="ekonomi" poang="1">
     <var namn="K" min="5" max="90"/>
@@ -3128,7 +3128,7 @@
     <fraga>Ett hushåll lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per år?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><svar>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta} = K \cdot r</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
+    <hjalp sida="1"><formel>R = K \cdot \frac{r}{100}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
   </mall>
   <mall id="g-ranta-004" niva="G" lektion="ekonomi" poang="2">
     <var namn="K" min="5" max="90"/>
@@ -3139,7 +3139,7 @@
     <fraga>Ett hushåll lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per månad?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</rad><svar>{=arsranta:0} / 12 \approx {=svar:0}\enh{kr/månad}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
+    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{100 \cdot 12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
   </mall>
   <mall id="g-ranta-005" niva="G" lektion="ekonomi" poang="1">
     <var namn="K" min="5" max="90"/>
@@ -3150,7 +3150,7 @@
     <fraga>En bostadsrättsförening lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per år?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><svar>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta} = K \cdot r</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
+    <hjalp sida="1"><formel>R = K \cdot \frac{r}{100}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
   </mall>
   <mall id="g-ranta-006" niva="G" lektion="ekonomi" poang="2">
     <var namn="K" min="5" max="90"/>
@@ -3161,7 +3161,7 @@
     <fraga>En bostadsrättsförening lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per månad?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</rad><svar>{=arsranta:0} / 12 \approx {=svar:0}\enh{kr/månad}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
+    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{100 \cdot 12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
   </mall>
   <mall id="g-ranta-007" niva="G" lektion="ekonomi" poang="1">
     <var namn="K" min="5" max="90"/>
@@ -3172,7 +3172,7 @@
     <fraga>Du lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per år?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><svar>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta} = K \cdot r</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
+    <hjalp sida="1"><formel>R = K \cdot \frac{r}{100}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
   </mall>
   <mall id="g-ranta-008" niva="G" lektion="ekonomi" poang="2">
     <var namn="K" min="5" max="90"/>
@@ -3183,7 +3183,7 @@
     <fraga>Du lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per månad?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</rad><svar>{=arsranta:0} / 12 \approx {=svar:0}\enh{kr/månad}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
+    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{100 \cdot 12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
   </mall>
   <mall id="g-ranta-009" niva="G" lektion="ekonomi" poang="1">
     <var namn="K" min="5" max="90"/>
@@ -3194,7 +3194,7 @@
     <fraga>En kommun lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per år?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><svar>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta} = K \cdot r</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
+    <hjalp sida="1"><formel>R = K \cdot \frac{r}{100}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
   </mall>
   <mall id="g-ranta-010" niva="G" lektion="ekonomi" poang="2">
     <var namn="K" min="5" max="90"/>
@@ -3205,7 +3205,7 @@
     <fraga>En kommun lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per månad?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</rad><svar>{=arsranta:0} / 12 \approx {=svar:0}\enh{kr/månad}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
+    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{100 \cdot 12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
   </mall>
   <mall id="g-ranta-011" niva="G" lektion="ekonomi" poang="1">
     <var namn="K" min="5" max="90"/>
@@ -3216,7 +3216,7 @@
     <fraga>En snickerifirma lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per år?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><svar>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta} = K \cdot r</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
+    <hjalp sida="1"><formel>R = K \cdot \frac{r}{100}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Tre procent är noll komma noll tre.</kort></hjalp>
   </mall>
   <mall id="g-ranta-012" niva="G" lektion="ekonomi" poang="2">
     <var namn="K" min="5" max="90"/>
@@ -3227,7 +3227,7 @@
     <fraga>En snickerifirma lånar {=K} kr med {=p} % ränta per år. Hur stor blir räntan per månad?</fraga>
     <svar etikett="Ränta" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>{=K} \cdot {=p/100:3} = {=arsranta:0}\enh{kr/år}</rad><svar>{=arsranta:0} / 12 \approx {=svar:0}\enh{kr/månad}</svar></berakning></losning>
-    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
+    <hjalp sida="1"><formel>\text{ränta per månad} = \frac{K \cdot r}{100 \cdot 12}</formel><kort>Räntan per år är lånet gånger räntan i decimalform. Per månad delar du den med tolv.</kort></hjalp>
   </mall>
   <mall id="g-index-001" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3238,7 +3238,7 @@
     <fraga>Ett byggjobb kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-002" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3249,7 +3249,7 @@
     <fraga>Ett byggjobb kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-003" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3260,7 +3260,7 @@
     <fraga>Ett byggjobb kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-004" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3271,7 +3271,7 @@
     <fraga>En lägenhet kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-005" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3282,7 +3282,7 @@
     <fraga>En lägenhet kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-006" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3293,7 +3293,7 @@
     <fraga>En lägenhet kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-007" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3304,7 +3304,7 @@
     <fraga>Ett ton armering kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-008" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3315,7 +3315,7 @@
     <fraga>Ett ton armering kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-009" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3326,7 +3326,7 @@
     <fraga>Ett ton armering kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-010" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3337,7 +3337,7 @@
     <fraga>En kubikmeter betong kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-011" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3348,7 +3348,7 @@
     <fraga>En kubikmeter betong kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-012" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3359,7 +3359,7 @@
     <fraga>En kubikmeter betong kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-013" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3370,7 +3370,7 @@
     <fraga>En entreprenad kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-014" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3381,7 +3381,7 @@
     <fraga>En entreprenad kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-015" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3392,7 +3392,7 @@
     <fraga>En entreprenad kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-016" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3403,7 +3403,7 @@
     <fraga>Ett takbyte kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-017" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3414,7 +3414,7 @@
     <fraga>Ett takbyte kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-index-018" niva="G" lektion="ekonomi" poang="2">
     <var namn="I1" min="180" max="320"/>
@@ -3425,7 +3425,7 @@
     <fraga>Ett takbyte kostade {=P} kr när byggkostnadsindex var {=I1}. Nu är index {=I2}. Vad kostar det nu enligt index?</fraga>
     <svar etikett="Pris" enhet="kr" varde="svar" decimaler="0"/>
     <losning><berakning><rad>\text{nytt pris} = {=P} \cdot \frac{{=I2}}{{=I1}}</rad><svar>\approx {=svar:0}\enh{kr}</svar></berakning></losning>
-    <hjalp sida="3"><formel>\text{nytt pris} = \text{gammalt pris} \cdot \frac{\text{nytt index}}{\text{gammalt index}}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
+    <hjalp sida="3"><formel>V_n = V_0 \cdot \frac{I_n}{I_0}</formel><kort>Nytt pris är gamla priset gånger nya index delat med gamla index.</kort></hjalp>
   </mall>
   <mall id="g-ekv-001" niva="G" lektion="algebra" poang="1">
     <var namn="a" min="2" max="12"/>
@@ -5838,7 +5838,7 @@
     <fraga>En vägg mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-002" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5846,7 +5846,7 @@
     <fraga>En vägg mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-003" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5854,7 +5854,7 @@
     <fraga>En vägg mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-004" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5862,7 +5862,7 @@
     <fraga>En vägg mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-005" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5870,7 +5870,7 @@
     <fraga>Ett fönster mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-006" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5878,7 +5878,7 @@
     <fraga>Ett fönster mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-007" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5886,7 +5886,7 @@
     <fraga>Ett fönster mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-008" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5894,7 +5894,7 @@
     <fraga>Ett fönster mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-009" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5902,7 +5902,7 @@
     <fraga>En dörr mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-010" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5910,7 +5910,7 @@
     <fraga>En dörr mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-011" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5918,7 +5918,7 @@
     <fraga>En dörr mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-012" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5926,7 +5926,7 @@
     <fraga>En dörr mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-013" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5934,7 +5934,7 @@
     <fraga>Ett rum mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-014" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5942,7 +5942,7 @@
     <fraga>Ett rum mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-015" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5950,7 +5950,7 @@
     <fraga>Ett rum mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-016" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5958,7 +5958,7 @@
     <fraga>Ett rum mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-017" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5966,7 +5966,7 @@
     <fraga>En balk mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-018" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5974,7 +5974,7 @@
     <fraga>En balk mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-019" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5982,7 +5982,7 @@
     <fraga>En balk mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-020" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5990,7 +5990,7 @@
     <fraga>En balk mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-021" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -5998,7 +5998,7 @@
     <fraga>En fasad mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-022" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6006,7 +6006,7 @@
     <fraga>En fasad mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-023" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6014,7 +6014,7 @@
     <fraga>En fasad mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-024" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6022,7 +6022,7 @@
     <fraga>En fasad mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-025" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6030,7 +6030,7 @@
     <fraga>En carport mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-026" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6038,7 +6038,7 @@
     <fraga>En carport mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-027" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6046,7 +6046,7 @@
     <fraga>En carport mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-028" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6054,7 +6054,7 @@
     <fraga>En carport mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-029" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6062,7 +6062,7 @@
     <fraga>En trappa mäter {=cm:1} cm på en ritning i skala 1:50. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 50 = {=cm*50:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-030" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6070,7 +6070,7 @@
     <fraga>En trappa mäter {=cm:1} cm på en ritning i skala 1:100. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 100 = {=cm*100:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-031" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6078,7 +6078,7 @@
     <fraga>En trappa mäter {=cm:1} cm på en ritning i skala 1:200. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 200 = {=cm*200:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-skala-032" niva="G" lektion="geometri" poang="1">
     <var namn="cm" min="0.8" max="12" decimaler="1"/>
@@ -6086,7 +6086,7 @@
     <fraga>En trappa mäter {=cm:1} cm på en ritning i skala 1:500. Hur lång är den i verkligheten i meter?</fraga>
     <svar etikett="Längd" enhet="m" varde="svar" decimaler="2"/>
     <losning><berakning><rad>{=cm:1} \cdot 500 = {=cm*500:0}\enh{cm}</rad><svar>= {=svar:2}\enh{m}</svar></berakning></losning>
-    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot \text{skala}</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
+    <hjalp sida="4"><formel>\text{verklighet} = \text{ritning} \cdot n</formel><kort>I skala ett till femtio är verkligheten femtio gånger större än ritningen. Multiplicera, och gör sedan om till meter.</kort></hjalp>
   </mall>
   <mall id="g-omkr-001" niva="G" lektion="geometri" poang="1">
     <var namn="l" min="4" max="30" decimaler="1"/>

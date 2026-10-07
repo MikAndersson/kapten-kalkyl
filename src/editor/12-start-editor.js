@@ -19,8 +19,9 @@ function showEditorTab(tab) {
 }
 
 async function initEditor() {
-  $('#app-subtitle').textContent = `${KURS.kod} ${KURS.namn}`;
+  $('#app-subtitle').textContent = KURS.namn;
   setupMath();
+  setupPrivacy();
   setupEditor();
   setupMallEditor();
   $('#tab-lektioner').onclick = () => showEditorTab('lektioner');

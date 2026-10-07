@@ -28,7 +28,7 @@
         <berakning><rad>250x = 4000</rad><svar>x = 16 \text{ minuter}</svar></berakning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-rata-linjen-1">
       <fraga>Betong kostar <m>f(x) = 1200x + 5000</m> kr, där x är antal m³. Beräkna <m>f(10)</m>.</fraga>
       <ruta etikett="f(10)" enhet="kr" svar="17000" tolerans="1"/>
       <losning><berakning><svar>f(10) = 1200 \cdot 10 + 5000 = 17 000\enh{kr}</svar></berakning></losning>
@@ -55,7 +55,7 @@
         <text><b>Tolka:</b> k = 220 kr per km, m = 300 kr fast avgift.</text>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-rata-linjen-1">
       <fraga>Kostnaden för en målare är <m>y = 550x + 2500</m> (x = timmar). Vad kostar 10 timmar?</fraga>
       <ruta etikett="Kostnad" enhet="kr" svar="8000" tolerans="1"/>
       <losning><berakning><svar>y = 550 \cdot 10 + 2500 = 8000\enh{kr}</svar></berakning></losning>

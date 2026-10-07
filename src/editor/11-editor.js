@@ -99,6 +99,7 @@ function blockBody(b, path) {
           ${blockList(col, path.concat('cols', i), true)}</div>`).join('')}</div>`;
     case 'testa':
       return textArea(path, 'fraga', b.fraga, { label: 'Fråga', rows: 2, hint: TEXT_HINT }) +
+        inputField(path, 'formelblad', b.formelblad || '', { label: 'Formel från formelbladet (valfritt)', placeholder: 'f-procent-3' }) +
         `<div class="ed-sub">Svarsrutor</div>` +
         b.rutor.map((r, i) => {
           const rp = path.concat('rutor', i);

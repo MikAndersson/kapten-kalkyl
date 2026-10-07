@@ -76,7 +76,7 @@ function loadVoices() {
 }
 
 function updateVoiceNote(message) {
-  let note = 'Piltangenterna bläddrar, mellanslag pausar.';
+  let note = 'Piltangenterna bläddrar, mellanslag startar/pausar. Skriv en siffra så hamnar du i första obesvarade svarsrutan, Enter går vidare.';
   if (message) note = message;
   else if (voices.length && !hasSwedishVoice) {
     note = 'Ingen svensk röst hittades, så Kapten Kalkyl läser upp lektionen på engelska. ' +
@@ -256,16 +256,23 @@ function stopSpeaking() {
 
 const isSpeaking = () => speech.card !== null;
 
+// Inget spelas: en stor "Spela upp"-knapp. Spelar: den delas i "Paus" och "Börja om".
 function updateSpeechButtons() {
+  const playing = isSpeaking();
   for (const id of ['#speak-lesson', '#speak-exam', '#mb-speak']) {
     const b = $(id);
-    if (b) b.textContent = isSpeaking() ? '■ Stoppa' : '▶ Läs upp';
+    if (!b) continue;
+    b.textContent = playing ? '↺ Börja om' : '▶ Spela upp';
+    b.setAttribute('aria-label', playing ? 'Börja om från början' : 'Spela upp');
+    b.classList.toggle('ghost', playing);
   }
   for (const id of ['#pause-lesson', '#pause-exam', '#mb-pause']) {
     const b = $(id);
     if (!b) continue;
-    b.disabled = !isSpeaking();
-    b.textContent = id === '#mb-pause' ? (speech.paused ? '▶' : '❚❚') : (speech.paused ? '▶ Fortsätt' : '❚❚ Paus');
+    b.hidden = !playing;
+    b.classList.toggle('ghost', !playing);
+    b.textContent = speech.paused ? '▶ Fortsätt' : '❚❚ Paus';
+    b.setAttribute('aria-label', speech.paused ? 'Fortsätt' : 'Paus');
   }
 }
 

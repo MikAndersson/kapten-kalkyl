@@ -100,7 +100,7 @@
         <tips>Division: behåll det första bråket, vänd det andra och multiplicera.</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-brak-1">
       <fraga>Beräkna <m>\frac{1}{2} + \frac{1}{3}</m>. Svara i decimalform med två decimaler.</fraga>
       <ruta etikett="Svar" svar="0,83" tolerans="0.006"/>
       <losning><berakning><rad>\frac{3}{6} + \frac{2}{6} = \frac{5}{6}</rad><svar>\frac{5}{6} \approx 0,83</svar></berakning></losning>

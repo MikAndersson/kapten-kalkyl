@@ -15,7 +15,27 @@ const storage = {
   set(key, value) {
     try { localStorage.setItem('kk-' + key, JSON.stringify(value)); return true; } catch (e) { return false; }
   },
+  // Raderar allt Kapten Kalkyl har sparat i den här webbläsaren
+  clearAll() {
+    try { Object.keys(localStorage).filter(k => k.startsWith('kk-')).forEach(k => localStorage.removeItem(k)); return true; } catch (e) { return false; }
+  },
 };
+
+/* Integritetsrutan längst ner. Knappen raderar det som sparats (kräver två klick). */
+function setupPrivacy() {
+  const button = document.getElementById('clear-storage');
+  if (!button) return;
+  button.onclick = () => {
+    if (!button.dataset.armed) {
+      button.dataset.armed = '1';
+      button.textContent = 'Klicka igen för att radera';
+      setTimeout(() => { delete button.dataset.armed; button.textContent = 'Radera det som sparats'; }, 4000);
+      return;
+    }
+    storage.clearAll();
+    location.reload();
+  };
+}
 
 const escapeHtml = text => String(text)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

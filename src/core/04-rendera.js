@@ -85,6 +85,28 @@ function renderBlocks(container) {
   }).join('');
 }
 
+// <testa formelblad="f-procent-3 f-procent-1">: visar just de formlerna ur formelbladet.
+// Namnen (f-…) finns i formelbladets formelbibliotek. Formler som står som text i bladet
+// heter m-<kort>-<nr>, t.ex. m-skala-1 (första textformeln i kortet Skala).
+// build.py lägger formlerna i sidan.
+function formelbladHint(ids) {
+  if (typeof FORMELBLAD_FORMLER === 'undefined') return '';
+  const items = String(ids || '').split(/[\s,]+/).filter(id => FORMELBLAD_FORMLER[id]);
+  if (!items.length) return '';
+  const titles = [...new Set(items.map(id => {
+    const m = FORMELBLAD_FORMLER[id];
+    return m.rubrik && m.rubrik.toLowerCase() !== m.kort.toLowerCase() ? `${m.kort} · ${m.rubrik}` : m.kort;
+  }))];
+  const formulas = items.map(id => {
+    const m = FORMELBLAD_FORMLER[id];
+    if (m.html) return `<div class="fbm">${m.html}</div>`;   // formel som står som text i formelbladet
+    const height = parseFloat(m.vb.split(' ')[3]) * 1.5;
+    return `<svg class="fbx" viewBox="${m.vb}" style="height:${height.toFixed(1)}px" role="img" aria-label="Formel ur formelbladet: ${escapeHtml(m.kort)}"><use href="#${id}"/></svg>`;
+  }).join('');
+  return `<div class="fb-hint"><div class="fb-hint-head">📐 Formelbladet <small>${escapeHtml(titles.join(', '))}</small></div>
+    <div class="fb-hint-formulas">${formulas}</div></div>`;
+}
+
 // <testa>: fråga, svarsrutor, kontrollknapp och lösning.
 function renderQuiz(el) {
   const quizId = 'quiz-' + (++fieldCounter);
@@ -101,6 +123,7 @@ function renderQuiz(el) {
   return `<div class="quiz" id="${quizId}">
     <div class="qh">Testa dig</div>
     ${question ? `<p>${inline(question)}</p>` : ''}
+    ${formelbladHint(el.getAttribute('formelblad'))}
     ${fields.map((f, i) => fieldHTML(f, `${quizId}-${i}`)).join('')}
     <div class="btnrow">
       <button class="btn primary" data-action="check-quiz" data-quiz="${quizId}">Kontrollera</button>

@@ -268,11 +268,13 @@ function instantiate(template, rnd, number, part) {
     const answers = [...template.element.getElementsByTagName('svar')].filter(s => s.parentNode === template.element);
     const fields = [];
     let ok = true;
+    // Tips för just den här delen (formel="…" tips="…" på <svar>), används när uppgiften har flera svar
+    const partTip = s => ({ formel: s.getAttribute('formel') || '', kort: s.getAttribute('tips') || '' });
     for (const s of answers) {
       const value = evaluate(s.getAttribute('varde'), scope);
       if (s.getAttribute('typ') === 'val') {
         const options = s.getAttribute('alternativ').split('|');
-        fields.push({ l: s.getAttribute('etikett') || 'Svar', sel: options, a: options[value] });
+        fields.push({ l: s.getAttribute('etikett') || 'Svar', sel: options, a: options[value], tip: partTip(s) });
         if (options[value] === undefined) ok = false;
         continue;
       }
@@ -285,7 +287,7 @@ function instantiate(template, rnd, number, part) {
       // Godkänt: inom 1 % eller avrundat till angivet antal decimaler
       const tol = exact ? 1e-9 : Math.max(Math.abs(value) * 0.01, dec != null ? 0.5 * 10 ** -dec + 1e-9 : 0.005);
       const fel = [...s.getElementsByTagName('fel')].map(f => ({ v: evaluate(f.getAttribute('varde'), scope), t: '' }));
-      fields.push({ l: s.getAttribute('etikett') || 'Svar', u: s.getAttribute('enhet') || '', a: dec != null ? Math.round(value * 10 ** dec) / 10 ** dec : value, tol, fel });
+      fields.push({ l: s.getAttribute('etikett') || 'Svar', u: s.getAttribute('enhet') || '', a: dec != null ? Math.round(value * 10 ** dec) / 10 ** dec : value, tol, fel, tip: partTip(s) });
     }
     if (!ok) continue;
 
@@ -303,9 +305,129 @@ function instantiate(template, rnd, number, part) {
     return {
       part, n: number, p: template.poang, ch: template.lektion, mall: template.id,
       q: q ? inline(q) : '', u: extra ? renderBlocks(extra) : '', f: fields, s: sol ? renderBlocks(sol) : '',
+      hjalp: readHelp(el, sol, fields),
     };
   }
   return null;
+}
+
+/* ----- Hjälp när en uppgift blir fel (används i minitentan) -----
+   <hjalp sida="2">                        bild i lektionen att repetera (valfri, annars första bilden)
+     <formel>A = l \cdot b</formel>       formeln i generell form (LaTeX), läses upp vid första felet
+     <kort>Arean är längd gånger bredd.</kort>          kort förklaring utan siffror
+     <genomgang>A är {=l} gånger {=b}.</genomgang>       siffrorna insatta, utan svaret (valfri)
+   </hjalp>
+   Saknas formeln används den första formeln i lösningen. Saknas genomgången byggs
+   den av lösningsraderna, med slutresultaten borttagna. */
+// Första formeln i lösningen med bokstäver och likhetstecken men utan siffror, t.ex. "A = l \cdot b"
+function firstSymbolicRow(sol) {
+  if (!sol) return '';
+  const row = [...sol.getElementsByTagName('rad')].find(r => !isYes(r, 'text') && /[a-zA-Z]\s*=/.test(r.textContent) &&
+    !/\d/.test(r.textContent.replace(/\\[a-zA-Z]+/g, '').replace(/_\{?\w+\}?/g, '').replace(/\^\{?\d+\}?/g, '')));
+  return row ? row.textContent.trim() : '';
+}
+
+// Genomgång med uppgiftens siffror insatta, men utan svaret: slutresultat (= 12,5 m) tas bort,
+// och rader som bara innehåller svaret hoppas över.
+function substitutionSpeech(sol, fields, givenText = '') {
+  if (!sol) return '';
+  const near = (n, a) => Math.abs(n - a) <= Math.max(Math.abs(a) * 0.001, 1e-6);
+  const given = numbersIn(givenText);
+  // Svaren som inte redan står i uppgiften (små heltal som 2 och 3 i "1/3" räknas inte)
+  const same = (n, g) => Math.abs(n - g) < 1e-9;
+  const answers = fields.filter(f => !f.sel).map(f => f.a)
+    .filter(a => !given.some(g => same(g, a)) && !(Number.isInteger(a) && Math.abs(a) <= 3));
+  const isAnswer = text => numbersIn(text).some(n => answers.some(a => near(n, a)));
+  const isGiven = text => numbersIn(text).every(n => given.some(g => same(n, g))) && numbersIn(text).length > 0;
+  const resultOnly = seg => {
+    const t = seg.replace(/\\enh\{[^{}]*\}/g, '').replace(/\\text\{[^{}]*\}/g, '').replace(/\\[,;!]|\\quad/g, '').replace(/[{}()\s]/g, '');
+    return t === '' || /^[-−]?[\d.,]+(\\%|%|\^\\circ)?$/.test(t);
+  };
+  const parts = [];
+  for (const row of sol.getElementsByTagName('*')) {
+    if (row.localName !== 'rad' && row.localName !== 'svar') continue;
+    if (isYes(row, 'text')) {
+      if (row.localName === 'svar' || isAnswer(row.textContent)) continue;
+      parts.push(plainToSpeech(row.textContent.trim()).replace(/[.:]+$/, ''));
+      continue;
+    }
+    // Dela vid likhetstecken och ≈ (utanför klamrar) och ta bort slutresultaten
+    const segs = [];
+    let depth = 0, cur = '';
+    const tex = row.textContent;
+    for (let i = 0; i < tex.length; i++) {
+      const ch = tex[i];
+      if (ch === '{') depth++;
+      if (ch === '}') depth--;
+      if (depth === 0 && ch === '=') { segs.push(cur); cur = ''; continue; }
+      if (depth === 0 && tex.startsWith('\\approx', i)) { segs.push(cur); cur = ''; i += 6; continue; }
+      if (depth === 0 && tex.startsWith('\\Rightarrow', i)) { segs.push(cur); segs.push('⇒'); cur = ''; i += 10; continue; }
+      cur += ch;
+    }
+    segs.push(cur);
+    // Ta bort uträknade resultat i slutet (men inte tal som står i uppgiften, t.ex. "9x + 19 = 64")
+    while (segs.length && ((resultOnly(segs[segs.length - 1]) && !isGiven(segs[segs.length - 1])) || segs[segs.length - 1] === '⇒')) segs.pop();
+    const kept = segs.filter(sg => sg.trim());
+    if (!kept.length) continue;
+    const spoken = kept.map(sg => (sg === '⇒' ? 'alltså' : texToSpeech(sg))).join(' är ').replace(/ är alltså är /g, ', alltså ')
+      .replace(/,? (är )?alltså \w{1,3}$/, '').replace(/[ ,.]+$/, '').trim();
+    if (!spoken || /^\w{1,3}$/.test(spoken) || isAnswer(spoken)) continue;            // aldrig svaret
+    const hasOperation = /gånger|delat|plus|minus|roten|upphöjt|kvadrat|kubik|procent av/.test(spoken);
+    if ((row.localName === 'svar' || kept.length === 1) && !hasOperation) continue;   // t.ex. bara "148x" kvar
+    parts.push(spoken);
+  }
+  return parts.length ? parts.join('. ') + '.' : '';
+}
+
+// Genomgång för en enskild del k av en uppgift med flera svar: lösningsraderna efter föregående
+// dels svar, fram till raden där del k räknas ut. Svaren på delarna i "wrong" sägs aldrig,
+// men rätt besvarade delar får nämnas (t.ex. beställningsvolymen när bara tyngden är fel).
+function partSubstitution(h, fields, k, wrong) {
+  if (!h || !h.sol || !fields[k] || fields[k].sel) return '';
+  const rows = [...h.sol.getElementsByTagName('*')].filter(r => r.localName === 'rad' || r.localName === 'svar');
+  // Tal som de står skrivna i raden, med antal decimaler: "3,09" -> [3.09, 2]
+  const written = text => (String(text).replace(/−/g, '-').replace(/\{,\}/g, ',').replace(/\\,/g, ' ').replace(/\\[a-zA-Z]+/g, ' ')
+    .match(/-?\d{1,3}(?:[  ]\d{3})+(?:[.,]\d+)?|-?\d+(?:[.,]\d+)?/g) || [])
+    .map(t => [parseNumber(t), (/[.,](\d+)$/.exec(t) || ['', ''])[1].length]);
+  const shows = (row, a) => written(row.textContent).some(([n, d]) =>
+    Math.abs(n - Math.round(a * 10 ** d) / 10 ** d) < 1e-9 && Math.abs(n - a) <= Math.max(Math.abs(a) * 0.01, 0.5 * 10 ** -d));
+  // Resultatet i en rad: det som står efter sista = eller ≈ (där räknas svaret ut)
+  const result = row => { const t = row.textContent.split(/=|\\approx|≈|\\Rightarrow|⇒|→/); return { textContent: t[t.length - 1] }; };
+  const endOf = j => {
+    if (fields[j].sel) return -1;
+    const i = rows.findIndex(r => shows(result(r), fields[j].a));
+    return i >= 0 ? i : rows.findIndex(r => shows(r, fields[j].a));
+  };
+  const end = endOf(k);
+  if (end < 0) return '';
+  const before = fields.map((f, j) => (j < k ? endOf(j) : -1)).filter(e => e >= 0 && e < end);
+  const start = before.length ? Math.max(...before) + 1 : 0;
+  const part = h.sol.cloneNode(false);
+  rows.slice(start, end + 1).forEach(r => part.appendChild(r.cloneNode(true)));
+  return substitutionSpeech(part, fields.filter((f, j) => wrong.includes(j)), h.given || '');
+}
+
+// Talen som står i uppgiften (fråga + underlag) – de får gärna sägas i genomgången
+function givenTextOf(el) {
+  const q = el.getElementsByTagName('fraga')[0];
+  const u = el.getElementsByTagName('underlag')[0];
+  const attrs = u ? [...u.getElementsByTagName('*')].map(x => [...x.attributes].map(a => a.value.replace(/;/g, ' ')).join(' ')).join(' ') : '';
+  return (q ? q.textContent : '') + ' ' + (u ? u.textContent : '') + ' ' + attrs;
+}
+
+function readHelp(el, sol, fields) {
+  const h = el.getElementsByTagName('hjalp')[0];
+  const get = tag => { const x = h && h.getElementsByTagName(tag)[0]; return x ? x.textContent.replace(/\s+/g, ' ').trim() : ''; };
+  const formel = get('formel') || firstSymbolicRow(sol);
+  const sida = h ? parseInt(h.getAttribute('sida'), 10) : NaN;
+  return {
+    formel,                                         // LaTeX, t.ex. "y = k x + m"
+    kort: get('kort'),                              // kort förklaring utan siffror
+    genomgang: get('genomgang') || substitutionSpeech(sol, fields || [], givenTextOf(el)),   // siffrorna insatta, utan svaret
+    sida: isNaN(sida) ? 1 : sida,
+    sol,                                            // lösningen (ifylld), för genomgång av en enskild del
+    given: givenTextOf(el),
+  };
 }
 
 /* ----- Sätt ihop en tenta: 16 p på G-nivå och 14 p på VG-nivå ----- */

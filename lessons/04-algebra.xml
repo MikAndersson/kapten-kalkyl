@@ -27,7 +27,7 @@
         </berakning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-algebraiska-uttryck-4">
       <fraga>Förenkla <m>5(x - 2) + 3x</m> och beräkna värdet när <m>x = 4</m>.</fraga>
       <ruta etikett="Värde" svar="22" tolerans="0"/>
       <losning><berakning><rad>5x - 10 + 3x = 8x - 10</rad><svar>8 \cdot 4 - 10 = 22</svar></berakning></losning>
@@ -61,7 +61,7 @@
         <varning><m>2^3</m> är inte <m>2 \cdot 3</m>. Det är 8, inte 6.</varning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-potenser-1 f-potenser-2">
       <fraga>Förenkla <m>\frac{x^5 \cdot x^3}{x^2}</m>. Vilken exponent får <m>x</m>?</fraga>
       <ruta etikett="Exponent" svar="6" tolerans="0"/>
       <losning><berakning><rad>x^{5+3} = x^8</rad><svar>\frac{x^8}{x^2} = x^{8-2} = x^6</svar></berakning></losning>

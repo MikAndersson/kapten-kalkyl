@@ -22,7 +22,7 @@
         <tips>Söker du en katet: minus. Söker du hypotenusan: plus.</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-trigonometri-pythagoras-4">
       <fraga>En stege är 5,0 m lång och står 1,4 m ut från väggen. Hur högt når den?</fraga>
       <ruta etikett="Höjd" enhet="m" svar="4,8"/>
       <losning><berakning><svar>b = \sqrt{5,0^2 - 1,4^2} = \sqrt{23,04} = 4,8\enh{m}</svar></berakning></losning>
@@ -76,7 +76,7 @@
         <tips>tan⁻¹ hittar du som SHIFT + tan på miniräknaren.</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-trigonometri-pythagoras-3">
       <fraga>En takprofil har den horisontella längden 5,0 m och höjdskillnaden 2,0 m. Beräkna takvinkeln.</fraga>
       <ruta etikett="Vinkel" enhet="°" svar="21,8" tolerans="0.15"/>
       <losning>
@@ -113,7 +113,7 @@
         <tips>Likbent triangel? Dela den i två rätvinkliga trianglar.</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-trigonometri-pythagoras-1">
       <fraga>Hypotenusan är 9,4 m och vinkeln mellan hypotenusan och närliggande katet är 31°. Beräkna motstående katet.</fraga>
       <ruta etikett="Motstående katet" enhet="m" svar="4,84" tolerans="0.02"/>
       <losning>
@@ -157,7 +157,7 @@
         <tips>Står miniräknaren i RAD får du 0,52 i stället för 30. Byt till DEG.</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-trigonometri-pythagoras-3">
       <fraga>En inspektör står 30 m från en byggnad och mäter vinkeln 40° upp till taknocken. Ögonhöjden är 1,7 m. Hur hög är byggnaden?</fraga>
       <ruta etikett="Höjd" enhet="m" svar="26,9" tolerans="0.1"/>
       <losning><berakning><rad>H = 30 \cdot \tan 40^\circ + 1,7</rad><rad>H = 25,17 + 1,7</rad><svar>H \approx 26,9\enh{m}</svar></berakning></losning>

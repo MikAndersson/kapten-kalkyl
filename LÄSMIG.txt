@@ -1,7 +1,7 @@
 KAPTEN KALKYL – LÄSMIG
 ======================
 
-En uppläst repetitionslektion i Tillämpad matematik (TR26), en övningstenta
+En uppläst repetitionslektion i Tillämpad matematik, en övningstenta
 med automatisk rättning och en editor för att skriva egna lektioner.
 
 
@@ -14,6 +14,8 @@ med automatisk rättning och en editor för att skriva egna lektioner.
     mallar/index.xml    Innehållsförteckning: vilka mallfiler som används.
     mallar/G.xml        Tentamallar på G-nivå (1200+).
     mallar/VG.xml       Tentamallar på VG-nivå (800+).
+    formelblad.html     Formelbladet som egen sida (för utskrift). Samma blad finns
+                        inbyggt i index.html.
     LÄSMIG.txt          Den här filen.
 
   Editorn (mappen kapten-kalkyl-editor, för den som skriver lektioner):
@@ -38,6 +40,13 @@ med automatisk rättning och en editor för att skriva egna lektioner.
 
   Formlerna ritas med MathJax, som hämtas från internet (cdnjs). Utan
   internet visas formlerna som vanlig text.
+
+  Integritet: sidan använder inga cookies och skickar inga uppgifter någonstans.
+  Svar, position och inställningar sparas bara i webbläsarens lokala lagring
+  (nycklar som börjar med kk-) och kan raderas med knappen längst ner på sidan.
+  Typsnitten (Inter, Bricolage Grotesque, JetBrains Mono, licens OFL) ligger
+  inbakade i sidan, så inget hämtas från Google Fonts. Det enda som hämtas
+  utifrån är MathJax från cdnjs.com.
 
 
 3. LÄGGA TILL ELLER TA BORT EN LEKTION
@@ -124,7 +133,8 @@ med automatisk rättning och en editor för att skriva egna lektioner.
                                   komposanter, tp-enkla, tp-tprofil, tp-lform,
                                   jordtryck.
                                   Egen figur: lägg <svg>…</svg> inuti <figur>.
-  <testa>                         "Testa dig"-uppgift:
+  <testa>                         "Testa dig"-uppgift. <testa formelblad="f-procent-3">
+                                  visar dessutom den formeln ur formelbladet.
     <fraga>Fråga …</fraga>
     <ruta etikett="Tyngd" enhet="kN" svar="4,5" tolerans="0,05"/>
                                   (flera <ruta> går bra; tolerans är valfri,
@@ -215,7 +225,7 @@ med automatisk rättning och en editor för att skriva egna lektioner.
   pausar uppläsningen, ← → bläddrar. Skriver man en siffra hamnar man i första
   obesvarade svarsrutan. Enter i en ruta rättar övningsuppgiften (när alla dess
   rutor är ifyllda) och går vidare till nästa obesvarade ruta. Esc släpper rutan.
-  Med "Spela upp allt" går Kapten vidare till nästa bild 4 sekunder efter att
+  Med "Spela upp allt" går Kapten vidare till nästa bild 2 sekunder efter att
   bildens uppgifter besvarats rätt. Är något svar fel stannar han kvar.
 
   Uppläsningen använder enhetens egna röster. Finns ingen svensk röst
@@ -243,7 +253,15 @@ med automatisk rättning och en editor för att skriva egna lektioner.
                senare skickas man tillbaka till den uppgiftens avsnitt.
   Felen räknas för varje uppgift för sig, och bara när uppgiften fått ett nytt
   svar (eller man klickat i rutan) sedan förra rättningen.
+  Är flera uppgifter fel tar han först den som fått ett nytt fel och sedan de
+  andra ("Du svarade också fel på fråga …"), var och en med tipset för sin nivå.
+  En uppgift med samma svar som förut gås igenom igen på samma nivå.
   Texterna och bilden ställs in i mallens <hjalp> (se avsnitt 11).
+
+  Repetition efter tentan: när tentan rättas listar Kapten vilka uppgifter som
+  blev fel och sätter ihop en repetitionslista med bara de avsnitten. Lektions-
+  vyn visar då bara dem (med minitentor), och sist kan man göra samma tenta
+  igen eller en ny. "Visa alla lektioner" avslutar repetitionen.
 
   Felsvar: ett fel svar får en förklaring när det går att se vad som hänt –
   mallens egna felsvar (<fel>) eller allmänna mönster som fel tecken,
@@ -259,8 +277,25 @@ med automatisk rättning och en editor för att skriva egna lektioner.
   tenta, så man kan dela numret (eller länken som slutar med #tenta123456)
   med kurskamraterna. "Kursens exempeltenta" är den fasta tentan i tenta.js.
 
-  Kursens namn, kod och skrivtid ligger i src/kurs.js. Fältet ch/lektion på en
+  Kursens namn och skrivtid ligger i src/kurs.js. Fältet ch/lektion på en
   uppgift är id:t på den lektion som knappen "Repetera i lektionen" öppnar.
+
+  FORMELBLADET
+  Lärarens godkända formelblad ligger orört i src/formelblad/formelblad.html.
+  build.py bygger in en kopia i index.html (utan Google Fonts och utan årskurskod
+  som "TR26") och lägger den även som formelblad.html bredvid.
+    - Knappen 📐 Formelblad högst upp i högerkolumnen (eller tangenten F) vänder
+      tent-/minitentafönstret som ett kort. Samma knapp vänder tillbaka, och markören
+      hamnar då i samma svarsruta som innan. På vanliga lektionsbilder är knappen avstängd.
+    - Under övningstentan visas hela bladet.
+    - Under minitentorna visas bara korten som hör till avsnittet. Vilka kort det är
+      står i KURS.formelbladKort i src/kurs.js. Kortnamnet kommer från kommentaren
+      "KORT: <titel>" i formelbladet: det som står före "·", små bokstäver, utan
+      å/ä/ö och med bindestreck, t.ex. "Tid ↔ decimaler" -> tid-decimaler.
+    - En "Testa dig"-fråga i en lektion kan visa just den formel som behövs:
+      <testa formelblad="f-procent-3">. Flera formler skrivs med mellanslag. Namnen
+      (f-…) står i formelbiblioteket längst ner i formelbladet (<g id="f-…">).
+  Nytt formelblad: ersätt src/formelblad/formelblad.html och kör python3 build.py.
 
 
 11. TENTAMALLAR (mallar/G.xml och mallar/VG.xml)
@@ -293,6 +328,12 @@ med automatisk rättning och en editor för att skriva egna lektioner.
                typ="val" alternativ="Lag A|Lag B" varde="0" ger en rullista.
                Godkänt: inom 1 % eller avrundat till angivet antal decimaler.
                <fel varde="uttryck">förklaring</fel> inuti <svar> = vanligt felsvar.
+               formel="…" tips="…" = tips för just den delen (uppgifter med flera
+               svar). Kapten säger då vilka delar som är rätt och vilka som är fel,
+               och ger bara tipsen för de felaktiga delarna. Vid andra felet går han
+               igenom just den delens lösningsrader med siffrorna insatta.
+               Exempel: <svar etikett="Tyngd" enhet="kN" varde="G"
+                          formel="G = \gamma \cdot V" tips="Tyngden är tyngdtätheten gånger volymen."/>
     <underlag> valfritt: visas under frågan, t.ex. ett <diagram> eller en <tabell>.
     <hjalp sida="4">  vad Kapten säger när uppgiften blir fel i minitentan.
                       sida = bild i lektionen att repetera efter tredje felet.

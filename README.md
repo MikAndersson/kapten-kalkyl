@@ -1,4 +1,4 @@
-# Kapten Kalkyl – TR26 Tillämpad matematik
+# Kapten Kalkyl – Tillämpad matematik
 
 En uppläst repetitionslektion med interaktiva bilder och minitentor, och en övningstenta som slumpas fram ur över 2 000 mallar. Rättningen förklarar vanliga fel och kontrollerar redovisningen.
 

@@ -18,14 +18,25 @@
 
   <!-- ===================== VY 1: LEKTIONEN ===================== -->
   <section id="view-lesson">
+    <div class="review-banner" id="review-banner" hidden></div>
     <nav class="chapters" id="chapters" aria-label="Lektioner"></nav>
     <div class="notice" id="lesson-notice" hidden></div>
     <div class="stage">
       <!-- Ritningsbladet där varje bild visas -->
-      <article class="board" id="board" aria-live="polite"></article>
+      <!-- Kortet vänds (flip) mellan bilden och formelbladet -->
+      <div class="flip" id="flip-lesson">
+        <article class="board flip-front" id="board" aria-live="polite"></article>
+        <div class="fb-face flip-hidden" id="fb-face-lesson" role="region" aria-label="Formelblad">
+          <div class="fb-bar">
+            <div class="fb-title"><span class="eyebrow">Formelblad</span><strong class="fb-heading">Hela formelbladet</strong></div>
+          </div>
+          <iframe class="fb-frame" title="Formelblad"></iframe>
+        </div>
+      </div>
 
       <!-- Lärarpanelen -->
       <aside class="teacher">
+        <button class="btn fb-toggle" data-fb-toggle aria-pressed="false" title="Formelblad (F)">📐 Formelblad</button>
         <div class="tcard" id="teacher-lesson">
           <div class="who" data-avatar></div>
           <div class="bubble" id="bubble-lesson"></div>
@@ -38,8 +49,10 @@
           </div>
           <div class="progress"><i id="progress"></i></div>
           <div class="ctrl">
-            <button class="btn" id="speak-lesson">▶ Läs upp</button>
-            <button class="btn ghost" id="pause-lesson" disabled>❚❚ Paus</button>
+            <span class="playgroup">
+              <button class="btn ghost" id="pause-lesson" hidden>❚❚ Paus</button>
+              <button class="btn" id="speak-lesson">▶ Spela upp</button>
+            </span>
             <label><input type="checkbox" id="autoplay"> Spela upp allt</label>
             <label title="En kort övningstenta sist i varje avsnitt"><input type="checkbox" id="mini-toggle" checked> Minitentor</label>
           </div>
@@ -53,7 +66,7 @@
               </select>
             </label>
           </div>
-          <p class="note" id="voice-note">Piltangenterna bläddrar, mellanslag pausar.</p>
+          <p class="note" id="voice-note">Piltangenterna bläddrar, mellanslag startar/pausar. Börja skriva en siffra så hamnar du i första obesvarade svarsrutan, Enter går vidare. F visar och döljer formelbladet.</p>
         </div>
       </aside>
     </div>
@@ -61,8 +74,11 @@
     <!-- Fast kontrollrad längst ner på mobilen -->
     <div class="mobilebar" id="mobilebar">
       <button class="btn ghost" id="mb-prev" aria-label="Föregående bild">◀</button>
-      <button class="btn" id="mb-speak">▶ Läs upp</button>
-      <button class="btn ghost" id="mb-pause" disabled aria-label="Paus">❚❚</button>
+      <span class="playgroup">
+        <button class="btn ghost" id="mb-pause" hidden aria-label="Paus">❚❚</button>
+        <button class="btn" id="mb-speak">▶ Spela upp</button>
+      </span>
+      <button class="btn ghost fb-mobile" data-fb-toggle aria-pressed="false" aria-label="Formelblad">📐</button>
       <span class="count" id="mb-count"></span>
       <button class="btn primary" id="mb-next" aria-label="Nästa bild">▶</button>
     </div>
@@ -71,15 +87,26 @@
   <!-- ===================== VY 2: ÖVNINGSTENTAN ===================== -->
   <section id="view-exam" class="hidden">
     <div class="stage">
-      <div class="exam" id="exam"></div>
+      <div class="flip" id="flip-exam">
+        <div class="exam flip-front" id="exam"></div>
+        <div class="fb-face flip-hidden" id="fb-face-exam" role="region" aria-label="Formelblad">
+          <div class="fb-bar">
+            <div class="fb-title"><span class="eyebrow">Formelblad</span><strong class="fb-heading">Hela formelbladet</strong></div>
+          </div>
+          <iframe class="fb-frame" title="Formelblad"></iframe>
+        </div>
+      </div>
 
       <aside class="teacher">
+        <button class="btn fb-toggle" data-fb-toggle aria-pressed="false" title="Formelblad (F)">📐 Formelblad</button>
         <div class="tcard" id="teacher-exam">
           <div class="who" data-avatar></div>
           <div class="bubble" id="bubble-exam"></div>
           <div class="btnrow">
-            <button class="btn" id="speak-exam">▶ Läs upp</button>
-            <button class="btn ghost" id="pause-exam" disabled>❚❚ Paus</button>
+            <span class="playgroup">
+              <button class="btn ghost" id="pause-exam" hidden>❚❚ Paus</button>
+              <button class="btn" id="speak-exam">▶ Spela upp</button>
+            </span>
           </div>
         </div>
         <div class="tcard" style="display:grid;gap:8px">
@@ -89,12 +116,24 @@
             <button class="btn primary" id="timer-start">Starta klockan</button>
             <button class="btn ghost" id="timer-reset">Nollställ</button>
           </div>
-          <p class="note">Räkna på papper med miniräknare och formelblad, precis som på riktigt. Skriv sedan in dina slutsvar och tryck på Rätta tentan.</p>
+          <p class="note">Räkna på papper med miniräknare och formelblad (knappen 📐 Formelblad eller tangenten F), precis som på riktigt. Skriv sedan in dina slutsvar och tryck på Rätta tentan.</p>
         </div>
       </aside>
     </div>
   </section>
 </div>
+
+<!-- Formelbladsknapp för tentan på mobilen (där högerkolumnen hamnar längst ner) -->
+<button class="btn fb-fab" data-fb-toggle aria-pressed="false" aria-label="Formelblad">📐</button>
+
+<!-- ===================== INTEGRITET ===================== -->
+<footer class="wrap privacy">
+  <p><b>Integritet:</b> Kapten Kalkyl använder inga cookies och samlar inte in några uppgifter om dig.
+    Dina svar, var du är i lektionerna och dina inställningar sparas bara i din egen webbläsare (lokal lagring)
+    och skickas inte någonstans. Uppläsningen görs av enhetens egna röster. Formlerna ritas med MathJax, som
+    hämtas från cdnjs.com (Cloudflare). Typsnitten ligger i själva sidan.</p>
+  <button class="btn ghost small" id="clear-storage">Radera det som sparats</button>
+</footer>
 
 <!-- Kapten Kalkyl-figuren. Kopieras in i båda lärarpanelerna (data-avatar). -->
 <template id="avatar-template">

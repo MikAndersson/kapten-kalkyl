@@ -36,6 +36,7 @@ function newMallModel() {
       fel: '2*(a + b) = Det är omkretsen. Arean är längd gånger bredd.' }],
     losning: [{ kind: 'rad', text: 'A = l \\cdot b = {=a:1} \\cdot {=b:1}' }, { kind: 'svar', text: 'A = {=svar:2}\\enh{m^2}' }],
     losningXml: '',
+    hjalp: { sida: '1', formel: 'A = l \\cdot b', kort: 'Arean av en rektangel är längden gånger bredden.', genomgang: '' },
   };
 }
 
@@ -67,7 +68,9 @@ function mallToXml(m) {
     const head = String(s.alternativ || '').trim()
       ? `    <svar${a('etikett', s.etikett)} typ="val"${a('alternativ', s.alternativ)}${a('varde', s.varde)}`
       : `    <svar${a('etikett', s.etikett)}${a('enhet', s.enhet)}${a('varde', s.varde)}${a('decimaler', s.decimaler)}${s.exakt ? ' exakt="ja"' : ''}`;
-    return fel ? `${head}>${fel}</svar>` : `${head}/>`;
+    const tips = a('formel', s.formel || '') + a('tips', s.tips || '');   // tips för just den här delen
+    const headTips = head + tips;
+    return fel ? `${headTips}>${fel}</svar>` : `${headTips}/>`;
   });
   const solution = m.losningXml.trim()
     ? m.losningXml.trim()
@@ -81,7 +84,12 @@ function mallToXml(m) {
     `    <fraga>${friendlyToXml(m.fraga)}</fraga>\n` +
     (m.underlag.trim() ? `    <underlag>${m.underlag.trim()}</underlag>\n` : '') +
     answers.join('\n') + '\n' +
-    `    <losning>${solution}</losning>\n  </mall>`;
+    `    <losning>${solution}</losning>\n` +
+    (m.hjalp && (m.hjalp.kort.trim() || m.hjalp.genomgang.trim() || (m.hjalp.formel || '').trim() || String(m.hjalp.sida).trim())
+      ? `    <hjalp${a('sida', m.hjalp.sida)}>${(m.hjalp.formel || '').trim() ? `<formel>${xmlEscape(m.hjalp.formel.trim())}</formel>` : ''}` +
+        `${m.hjalp.kort.trim() ? `<kort>${xmlEscape(m.hjalp.kort.trim())}</kort>` : ''}` +
+        `${m.hjalp.genomgang.trim() ? `<genomgang>${xmlEscape(m.hjalp.genomgang.trim())}</genomgang>` : ''}</hjalp>\n` : '') +
+    '  </mall>';
 }
 
 const innerXml = el => [...el.childNodes].map(n => new XMLSerializer().serializeToString(n)).join('').replace(/ xmlns="[^"]*"/g, '');
@@ -90,6 +98,7 @@ function xmlToMall(el) {
   const m = {
     id: el.getAttribute('id') || 'egen', niva: el.getAttribute('niva') || 'G', lektion: el.getAttribute('lektion') || '',
     poang: el.getAttribute('poang') || '1', parts: [], fraga: '', underlag: '', svar: [], losning: [], losningXml: '',
+    hjalp: { sida: '', formel: '', kort: '', genomgang: '' },
   };
   for (const c of el.children) {
     const g = n => c.getAttribute(n) || '';
@@ -102,10 +111,15 @@ function xmlToMall(el) {
       case 'rakna': m.parts.push({ kind: 'rakna', namn: g('namn'), uttryck: c.textContent.trim() }); break;
       case 'villkor': m.parts.push({ kind: 'villkor', uttryck: c.textContent.trim() }); break;
       case 'fraga': m.fraga = xmlToFriendly(c); break;
+      case 'hjalp': {
+        const t = tag => { const x = c.getElementsByTagName(tag)[0]; return x ? x.textContent.trim() : ''; };
+        m.hjalp = { sida: c.getAttribute('sida') || '', formel: t('formel'), kort: t('kort'), genomgang: t('genomgang') };
+        break;
+      }
       case 'underlag': m.underlag = innerXml(c).trim(); break;
       case 'svar':
         m.svar.push({ etikett: g('etikett'), enhet: g('enhet'), varde: g('varde'), decimaler: g('decimaler'), exakt: g('exakt') === 'ja',
-          alternativ: g('typ') === 'val' ? g('alternativ') : '',
+          alternativ: g('typ') === 'val' ? g('alternativ') : '', formel: g('formel'), tips: g('tips'),
           fel: [...c.getElementsByTagName('fel')].map(f => `${f.getAttribute('varde')} = ${f.textContent.trim()}`).join('\n') });
         break;
       case 'losning': {
@@ -206,6 +220,9 @@ function renderMallForm() {
             ${inputField(p, 'alternativ', s.alternativ || '', { label: 'Rullista i stället för textruta (valfritt)', placeholder: 'Lag A|Lag B  – rätt svar är då 0, 1, 2 … (ordningen)' })}
             ${textArea(p, 'fel', s.fel, { label: 'Vanliga felsvar (valfritt)', rows: 2, placeholder: '2*(a + b) = Det är omkretsen. Arean är längd gånger bredd.',
               hint: 'En rad per felsvar: <code>uttryck = förklaring</code>. Förklaringen visas när eleven svarar just det.' })}
+            ${m.svar.length > 1 ? `${inputField(p, 'formel', s.formel || '', { label: 'Formel för just den här delen (LaTeX, valfritt)', cls: 'mono', placeholder: 'G = \\gamma \\cdot V' })}
+            ${textArea(p, 'tips', s.tips || '', { label: 'Tips för just den här delen (valfritt)', rows: 2, placeholder: 'Tyngden är tyngdtätheten gånger volymen.',
+              hint: 'Har uppgiften flera svar säger Kapten vilka delar som är fel och ger bara tipsen för dem.' })}` : ''}
           </div></div>`;
       }).join('')}
       <div class="me-add"><button type="button" class="btn small ghost" data-action="me-svar-add">＋ Svarsruta</button></div>
@@ -224,8 +241,29 @@ function renderMallForm() {
       }).join('')}</div>
       <div class="me-add"><button type="button" class="btn small ghost" data-action="me-row-add">＋ Rad</button></div>
       <small class="ed-hint">${TEX_HINT} Värden skrivs med <code>{=a}</code> även här.</small>`}
+    </section>
+
+    <section class="ed-section">
+      <h3>Om svaret blir fel (minitentan)</h3>
+      <small class="ed-hint">1:a felet: Kapten läser formeln i generell form och den korta förklaringen. 2:a felet: han sätter in
+        uppgiftens siffror i formeln, men säger inte svaret. 3:e felet: han skickar tillbaka eleven till bilden nedan i lektionen.</small>
+      ${inputField(['hjalp'], 'formel', m.hjalp.formel || '', { label: 'Formeln i generell form (LaTeX)', cls: 'mono', placeholder: 'A = l \\cdot b' })}
+      ${textArea(['hjalp'], 'kort', m.hjalp.kort, { label: 'Kort förklaring (utan siffror, skriv som man säger det)', rows: 2, placeholder: 'Arean av en rektangel är längden gånger bredden.' })}
+      ${textArea(['hjalp'], 'genomgang', m.hjalp.genomgang, { label: 'Genomgång med siffror, utan svaret (valfri – annars byggs den av lösningen)', rows: 3,
+        placeholder: 'A är {=a:1} gånger {=b:1}. Räkna ut det.' })}
+      ${hjalpSlideSelect(m)}
     </section>`;
   updateMallPreview();
+}
+
+// Rullista med bilderna i mallens lektion
+function hjalpSlideSelect(m) {
+  const lesson = lessonStore.all.find(l => l.id === m.lektion);
+  const slides = lesson ? lesson.slides : [];
+  const current = parseInt(m.hjalp.sida, 10) || 1;
+  return `<label class="ed-field"><span>Bild att repetera efter tredje felet</span><select class="ed-in" data-path='["hjalp"]' data-key="sida">
+    ${slides.map((s, i) => `<option value="${i + 1}"${i + 1 === current ? ' selected' : ''}>${i + 1}. ${escapeHtml(s.titel || 'Bild')}</option>`).join('')}
+  </select></label>`;
 }
 
 /* ----- Förhandsvisning och test ----- */
@@ -255,7 +293,10 @@ function updateMallPreview() {
       <div class="btnrow"><button class="btn small" data-action="me-check">Kontrollera</button></div>
       <p class="note"><b>Rätt svar:</b> ${q.f.map(f => `${escapeHtml(f.l)} = ${f.sel ? escapeHtml(f.a) : formatNumber(f.a)} ${escapeHtml(f.u || '')}`).join(' · ')}
         ${q.f.some(f => f.fel && f.fel.length) ? `<br><b>Felsvar:</b> ${q.f.flatMap(f => (f.fel || []).map(x => formatNumber(x.v, 3))).join(' · ')}` : ''}</p>
-      <div class="sol">${q.s}</div></div>` : '';
+      <div class="sol">${q.s}</div>
+      ${q.hjalp ? `<div class="tip"><b>Vid fel 1:</b> ${q.hjalp.formel ? 'Formeln är: ' + escapeHtml(texToSpeech(q.hjalp.formel)) + '. ' : ''}${escapeHtml(q.hjalp.kort || '')}<br>
+        <b>Vid fel 2:</b> ${escapeHtml(q.hjalp.genomgang || '(formeln och förklaringen igen)')}<br>
+        <b>Vid fel 3:</b> tillbaka till bild ${q.hjalp.sida} i lektionen.</div>` : ''}</div>` : '';
   mallEditor.lastQuestion = q;
   typeset($('#me-preview'));
   setupWidgets($('#me-preview'));
@@ -366,7 +407,7 @@ function onMallInput(e) {
   if (!el.dataset || !el.dataset.key) return;
   const target = getAt(mallEditor.model, JSON.parse(el.dataset.path));
   target[el.dataset.key] = el.type === 'checkbox' ? el.checked : el.value;
-  if (el.dataset.key === 'kind') { renderMallForm(); return; }
+  if (el.dataset.key === 'kind' || el.dataset.key === 'lektion') { renderMallForm(); return; }
   clearTimeout(mallEditor.timer);
   mallEditor.timer = setTimeout(() => { storage.set('mall-utkast', mallToXml(mallEditor.model)); updateMallPreview(); }, 250);
 }

@@ -19,7 +19,7 @@
         <tips>Svaret ska ligga mellan delarnas tyngdpunkter, och närmast den tyngsta.</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-tyngdpunkt-2">
       <fraga>En 8 m lång balk väger 400 kg. Ett paket på 200 kg ligger 7 m från vänster ände. Var ligger den gemensamma tyngdpunkten?</fraga>
       <ruta etikett="Avstånd från vänster" enhet="m" svar="5"/>
       <losning>
@@ -97,7 +97,7 @@
         <tips>Rimligt? Flänsen sitter högst upp och drar tyngdpunkten över mitten av den totala höjden (265 / 2 = 132,5 mm).</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-tyngdpunkt-6">
       <fraga>En T-profil har en fläns 120 × 20 mm ovanpå ett liv 20 × 100 mm (livet står på x-axeln). Beräkna tyngdpunktens höjd.</fraga>
       <ruta etikett="y_T" enhet="mm" svar="82,7" tolerans="0.3"/>
       <losning>

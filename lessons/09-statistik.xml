@@ -24,7 +24,7 @@
         </berakning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-statistik-2">
       <fraga>En skola består av 900 m² med 25 kWh/m² och 600 m² med 40 kWh/m². Beräkna medelförbrukningen.</fraga>
       <ruta etikett="Medel" enhet="kWh/m²" svar="31"/>
       <losning>
@@ -112,7 +112,7 @@
         <text>Litet <m>s</m> = jämna värden = stabilt. I Excel: =STDAV.S(…)</text>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-statistik-3">
       <fraga>Tider i dagar: 12, 15, 14, 13, 16, 14, 18, 17, 15, 13. Bestäm medianen.</fraga>
       <ruta etikett="Median" enhet="dagar" svar="14,5" tolerans="0.01"/>
       <losning><berakning><rad text="ja">Sorterat: 12, 13, 13, 14, 14, 15, 15, 16, 17, 18</rad><svar>\text{median} = \frac{14 + 15}{2} = 14,5</svar></berakning></losning>
@@ -159,7 +159,7 @@
     <berattare>På tentan kan det komma diagram som du ska läsa av. Gör alltid samma tre steg. Läs först titeln och axlarna, så du vet vad som visas och i vilken enhet. Läs sedan av värdena noga. Här kan du peka på en stapel så syns värdet. Räkna till sist det som efterfrågas, till exempel medelvärde eller procentuell förändring. Medel per månad blir trehundratjugo delat med sex, ungefär femtiotre fönster. Från april till maj ökar det från sextio till åttio, alltså trettiotre procent. Och se upp med y-axeln: börjar den inte på noll ser skillnaderna större ut än de är.</berattare>
     <berattare sprak="en">In the exam there may be charts that you need to read. Always do the same three steps. First read the title and the axes, so you know what is shown and in which unit. Then read the values carefully. Here you can point at a bar to see its value. Finally calculate what is asked for, for example the mean or the percentage change. The mean per month is three hundred and twenty divided by six, about fifty-three windows. From April to May it increases from sixty to eighty, which is thirty-three percent. And watch the y axis: if it does not start at zero, the differences look bigger than they are.</berattare>
   </bild>
-  <bild titel="Medelfel, konfidensintervall, Excel och diagram" etikett="Statistik · 5 · VG">
+  <bild titel="Standardfel, konfidensintervall, Excel och diagram" etikett="Statistik · 5 · VG">
     <rubrik>Hur säkert är medelvärdet?</rubrik>
     <kolumner>
       <kolumn>
@@ -169,7 +169,7 @@
           <rad>SE = 0,81 / \sqrt{5} \approx 0,36\enh{m}</rad>
           <svar>KI \approx 9,67 \pm 0,72 = [8,95;\ 10,39]\enh{m}</svar>
         </berakning>
-        <text>Smalare intervall = säkrare mätserie. Fler mätningar ger mindre medelfel. (Vid mycket få mätningar är intervallet egentligen något bredare, men 2·SE räcker i kursen.)</text>
+        <text>Smalare intervall = säkrare mätserie. Fler mätningar ger mindre standardfel. (Vid mycket få mätningar är intervallet egentligen något bredare, men 2·SE räcker i kursen.)</text>
         <underrubrik>Bonus: sannolikhet "minst en"</underrubrik>
         <text><m>P(\text{minst ett fel}) = 1 - P(\text{inget fel})</m>. 3 % fel, tre kort: <m>1 - 0,97^3 \approx 8,7 %</m></text>
       </kolumn>
@@ -192,7 +192,7 @@
         <tips>Diagram behöver rubrik, axlar med enheter och 2–4 meningar tolkning.</tips>
       </kolumn>
     </kolumner>
-    <berattare>På VG-nivå och i Excel-uppgiften kommer medelfel och konfidensintervall, som också står på formelbladet. Medelfelet är standardavvikelsen delat med roten ur antalet mätningar. Ett ungefärligt nittiofemprocentigt konfidensintervall är medelvärdet plus minus två medelfel. Ju smalare intervall, desto säkrare mätserie. I Excel heter funktionerna MEDEL, MEDIAN, TYPVÄRDE, MAX, MIN och STDAV punkt S. Välj stapeldiagram för att jämföra, linjediagram för tid och histogram för fördelning. Och skriv alltid några meningar om vad resultatet betyder.</berattare>
+    <berattare>På VG-nivå och i Excel-uppgiften kommer standardfel, som också kallas medelfel, och konfidensintervall. Båda står på formelbladet. Standardfelet är standardavvikelsen delat med roten ur antalet mätningar. Ett ungefärligt nittiofemprocentigt konfidensintervall är medelvärdet plus minus två standardfel. Mer exakt är det 1,96 gånger standardfelet, och står det "använd 1,96" i uppgiften gör du det. Ju smalare intervall, desto säkrare mätserie. I Excel heter funktionerna MEDEL, MEDIAN, TYPVÄRDE, MAX, MIN och STDAV punkt S. Välj stapeldiagram för att jämföra, linjediagram för tid och histogram för fördelning. Och skriv alltid några meningar om vad resultatet betyder.</berattare>
     <berattare sprak="en">At distinction level and in the Excel assignment you will meet the standard error and the confidence interval, which are also on the formula sheet. The standard error is the standard deviation divided by the square root of the number of measurements. An approximate ninety-five percent confidence interval is the mean plus or minus two standard errors. The narrower the interval, the more reliable the series. In Excel the functions are AVERAGE, MEDIAN, MODE, MAX, MIN and STDEV dot S. Choose a bar chart to compare, a line chart for time and a histogram for distribution. And always write a few sentences about what the result means.</berattare>
   </bild>
 

@@ -24,7 +24,7 @@
         </berakning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-tyngdtathet-2">
       <fraga>Ett betongfundament har tyngden 45 kN och volymen 1,8 m³. Beräkna tyngdtätheten.</fraga>
       <ruta etikett="γ" enhet="kN/m³" svar="25"/>
       <losning><berakning><svar>\gamma = G / V = 45 / 1,8 = 25\enh{kN/m^3}</svar></berakning></losning>
@@ -92,7 +92,7 @@
         <varning>Svara på allt som frågas. Här vill de ha både beställningsvolymen och tyngden.</varning>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-tyngdtathet-2">
       <fraga>En platta 5 × 6 × 0,2 m gjuts i betong, 25 kN/m³. Spillpåslag 5 %. Beräkna beställningsvolym och total tyngd.</fraga>
       <ruta etikett="Beställningsvolym" enhet="m³" svar="6,3"/>
       <ruta etikett="Tyngd" enhet="kN" svar="157,5" tolerans="0.6"/>
@@ -133,7 +133,7 @@
         <tips>Överslag: kg ÷ 100 ≈ kN (det är samma sak som att räkna med g ≈ 10).</tips>
       </kolumn>
     </kolumner>
-    <testa>
+    <testa formelblad="f-tyngdtathet-2">
       <fraga>En betongbalk är 200 × 400 mm och 2 m lång. Egentyngd 25 kN/m³. Beräkna tyngden.</fraga>
       <ruta etikett="Tyngd" enhet="kN" svar="4"/>
       <losning><berakning><rad>V = 0,2 \cdot 0,4 \cdot 2 = 0,16\enh{m^3}</rad><svar>G = 25 \cdot 0,16 = 4,0\enh{kN}</svar></berakning></losning>
