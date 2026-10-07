@@ -211,6 +211,13 @@ med automatisk rättning och en editor för att skriva egna lektioner.
 
 9. UPPLÄSNING
 -------------
+  Tangentbord (när markören inte står i en svarsruta): mellanslag startar och
+  pausar uppläsningen, ← → bläddrar. Skriver man en siffra hamnar man i första
+  obesvarade svarsrutan. Enter i en ruta rättar övningsuppgiften (när alla dess
+  rutor är ifyllda) och går vidare till nästa obesvarade ruta. Esc släpper rutan.
+  Med "Spela upp allt" går Kapten vidare till nästa bild 4 sekunder efter att
+  bildens sista uppgift besvarats och rättats.
+
   Uppläsningen använder enhetens egna röster. Finns ingen svensk röst
   läses den engelska texten upp. Fungerar i Chrome, Edge, Safari och
   Firefox på dator, Android och iPhone/iPad.
