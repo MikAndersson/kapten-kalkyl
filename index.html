@@ -26720,7 +26720,7 @@ function answerEntered(field) {
   }
 }
 
-/* ----- "Spela upp allt": gå vidare 4 sekunder efter att sista uppgiften besvarats ----- */
+/* ----- "Spela upp allt": gå vidare 4 sekunder efter att alla uppgifter besvarats rätt ----- */
 const AUTO_ADVANCE_MS = 4000;
 let autoAdvanceTimer = null;
 
@@ -26729,13 +26729,26 @@ function cancelAutoAdvance() {
   autoAdvanceTimer = null;
 }
 
-// Anropas när en uppgift rättats. Är alla rutor på bilden ifyllda och "Spela upp allt"
+// Anropas när en uppgift rättats. Är alla rutor på bilden rätt besvarade och "Spela upp allt"
 // ikryssad bläddrar Kapten vidare efter 4 sekunder (efter att han pratat klart).
+// Är något svar fel stannar han kvar.
 function maybeAutoAdvance() {
   if (currentView() !== 'lesson' || !$('#autoplay').checked) return;
   const fields = visibleAnswerFields();
   if (!fields.length || fields.some(isEmpty) || slideIndex >= slides.length - 1) return;
   cancelAutoAdvance();
+  $$('#bubble-lesson .auto-next').forEach(n => n.remove());
+  // Bara när allt är rätt. Är något fel stannar Kapten kvar så att man kan rätta till det.
+  const boxes = fields.map(f => f.closest('.field'));
+  if (!boxes.every(b => b && b.classList.contains('ok'))) {
+    if (boxes.some(b => b && b.classList.contains('bad'))) {
+      const note = document.createElement('p');
+      note.className = 'note auto-next';
+      note.textContent = 'Något blev fel, så vi stannar här. Ändra svaret och rätta igen, eller titta på lösningen och bläddra vidare själv.';
+      $('#bubble-lesson').append(note);
+    }
+    return;
+  }
   const from = slideIndex;
   const tick = () => {
     if (!$('#autoplay').checked || slideIndex !== from || currentView() !== 'lesson') return cancelAutoAdvance();
@@ -26744,7 +26757,6 @@ function maybeAutoAdvance() {
     goToSlide(from + 1);
   };
   autoAdvanceTimer = setTimeout(tick, AUTO_ADVANCE_MS);
-  $$('#bubble-lesson .auto-next').forEach(n => n.remove());
   const note = document.createElement('p');
   note.className = 'note auto-next';
   note.textContent = 'Vi går vidare till nästa bild om 4 sekunder … (bocka ur "Spela upp allt" för att stanna)';
