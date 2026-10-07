@@ -216,7 +216,7 @@ med automatisk rättning och en editor för att skriva egna lektioner.
   obesvarade svarsrutan. Enter i en ruta rättar övningsuppgiften (när alla dess
   rutor är ifyllda) och går vidare till nästa obesvarade ruta. Esc släpper rutan.
   Med "Spela upp allt" går Kapten vidare till nästa bild 4 sekunder efter att
-  bildens sista uppgift besvarats och rättats.
+  bildens uppgifter besvarats rätt. Är något svar fel stannar han kvar.
 
   Uppläsningen använder enhetens egna röster. Finns ingen svensk röst
   läses den engelska texten upp. Fungerar i Chrome, Edge, Safari och
@@ -234,6 +234,16 @@ med automatisk rättning och en editor för att skriva egna lektioner.
   Minitentor: sist i varje avsnitt kommer en minitenta med upp till fyra
   uppgifter från just det avsnittet. Den kan hoppas över, och rutan
   "Minitentor" i lärarpanelen stänger av alla.
+  Blir en uppgift fel börjar Kapten Kalkyl prata en sekund efter rättningen:
+    1:a felet  "Jag ser att du svarade fel på fråga …" + formeln i generell
+               form (t.ex. y = kx + m) och en kort förklaring
+    2:a felet  "… fortfarande inte sitter, så vi går igenom den tillsammans"
+               + formeln med uppgiftens siffror insatta – men inte svaret
+    3:e felet  "Det är nog bäst att vi repeterar det här" och två sekunder
+               senare skickas man tillbaka till den uppgiftens avsnitt.
+  Felen räknas för varje uppgift för sig, och bara när uppgiften fått ett nytt
+  svar (eller man klickat i rutan) sedan förra rättningen.
+  Texterna och bilden ställs in i mallens <hjalp> (se avsnitt 11).
 
   Felsvar: ett fel svar får en förklaring när det går att se vad som hänt –
   mallens egna felsvar (<fel>) eller allmänna mönster som fel tecken,
@@ -284,6 +294,14 @@ med automatisk rättning och en editor för att skriva egna lektioner.
                Godkänt: inom 1 % eller avrundat till angivet antal decimaler.
                <fel varde="uttryck">förklaring</fel> inuti <svar> = vanligt felsvar.
     <underlag> valfritt: visas under frågan, t.ex. ett <diagram> eller en <tabell>.
+    <hjalp sida="4">  vad Kapten säger när uppgiften blir fel i minitentan.
+                      sida = bild i lektionen att repetera efter tredje felet.
+      <formel>A = l \cdot b</formel>                  formeln i generell form (LaTeX)
+      <kort>Arean är längden gånger bredden.</kort>   kort förklaring (utan siffror)
+      <genomgang>A är {=l} gånger {=b}.</genomgang>
+                      siffrorna insatta, utan svaret. Valfri: saknas den byggs den
+                      av lösningsraderna med slutresultaten borttagna.
+    </hjalp>          Skriv kort och genomgång som man säger det.
     <losning>  samma taggar som i lektionerna (<berakning>, <text>, <tips> …)
 
   Uttryck: + − * / ^, jämförelser (&lt; &gt; == !=), &amp;&amp; ||, ?: och
