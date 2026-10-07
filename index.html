@@ -28839,7 +28839,6 @@ const mini = {
   wrong: {},          // hur många gånger varje uppgift (index) har blivit fel
   lastAnswer: {},     // svaret som räknades senast för varje uppgift
   touched: {},        // har eleven gått in i uppgiftens ruta sedan senaste rättningen?
-  lastOk: {},         // var uppgiften rätt vid förra rättningen?
   feedbackTimer: null,
 };
 
@@ -28859,7 +28858,6 @@ function newMini(lessonId) {
   mini.wrong = {};
   mini.lastAnswer = {};
   mini.touched = {};
-  mini.lastOk = {};
 }
 
 function renderMini(lesson) {
@@ -28904,15 +28902,12 @@ function handleMiniClick(event) {
     let right = 0;
     const counted = [];     // fel som räknas den här gången (nytt svar eller rutan har fått fokus)
     const stillWrong = [];  // fel med samma svar som förra gången – räknas inte igen
-    let newlyRight = false; // blev någon uppgift rätt nu som var fel förra gången?
     mini.questions.forEach((q, i) => {
       const ok = q.f.map((f, k) => checkField(f, `mini-${i}-${k}`)).every(Boolean);
       const values = q.f.map((f, k) => String(document.getElementById(`mini-${i}-${k}`).value).trim());
       const answered = values.every(v => v !== '');
       const signature = values.join('|');
-      const wasOk = mini.lastOk[i];
-      mini.lastOk[i] = ok;
-      if (ok) { right++; if (wasOk === false) newlyRight = true; }
+      if (ok) right++;
       else if (answered) {
         if (signature !== mini.lastAnswer[i] || mini.touched[i]) {
           mini.wrong[i] = (mini.wrong[i] || 0) + 1;
@@ -28927,12 +28922,9 @@ function handleMiniClick(event) {
     const total = mini.questions.length;
     clearTimeout(mini.feedbackTimer);
     let fb;
-    if (counted.length || (stillWrong.length && newlyRight)) fb = miniFeedback(counted, stillWrong);
-    else if (stillWrong.length) {
-      const list = stillWrong.map(i => i + 1).join(' och ');
-      fb = { level: 0, text: `Fråga ${list} har samma svar som förut och är fortfarande fel. Ändra svaret och rätta igen.`,
-        textEn: `Question ${list} has the same answer as before and is still wrong. Change the answer and check again.` };
-    } else {
+    // Alla fel gås igenom med tipset för sin nivå. Fel med samma svar som förut räknas inte upp en nivå.
+    if (counted.length || stillWrong.length) fb = miniFeedback(counted, stillWrong, right > 0);
+    else {
       const text = right === total
         ? `Alla ${total} rätt! Avsnittet sitter. Gå vidare till nästa.`
         : `${right} av ${total} rätt. Fyll i de tomma rutorna och rätta igen.`;
@@ -28975,7 +28967,7 @@ function trackMiniFocus(event) {
    Uppgiften som fick ett nytt fel tas först ("Jag ser att du svarade fel på fråga …"),
    sedan de andra felen i frågeordning ("Du svarade också fel på fråga …"), var och en
    med tipset för sin nivå. Texterna kommer från mallens <hjalp> (se LÄSMIG.txt). */
-function miniTip(index, level, first) {
+function miniTip(index, level, first, also = true) {
   const q = mini.questions[index];
   const h = q.hjalp || { formel: '', kort: '', genomgang: '', sida: 1 };
   const no = index + 1;
@@ -28984,14 +28976,15 @@ function miniTip(index, level, first) {
   const steps = h.genomgang || `${formula.said} ${h.kort}`;
   if (level >= 2) {
     const intro = first ? `Jag ser att fråga ${no} fortfarande inte sitter, så vi går igenom den tillsammans.`
-      : `Du svarade också fel på fråga ${no}. Den har blivit fel förut, så vi sätter in siffrorna.`;
+      : `${also ? 'Du svarade också fel på' : 'Fortfarande fel på'} fråga ${no}. Den har blivit fel förut, så vi sätter in siffrorna.`;
     return { said: `${intro} ${steps}`, html: escapeHtml(`${intro} ${steps}`) };
   }
-  const intro = first ? `Jag ser att du svarade fel på fråga ${no}.` : `Du svarade också fel på fråga ${no}.`;
+  const intro = first ? `Jag ser att du svarade fel på fråga ${no}.` : `${also ? 'Du svarade också fel på' : 'Fortfarande fel på'} fråga ${no}.`;
   return { said: `${intro} ${formula.said} ${h.kort}`, html: `${escapeHtml(intro)} ${formula.html} ${escapeHtml(h.kort)}` };
 }
 
-function miniFeedback(counted, stillWrong) {
+// anyRight: någon uppgift är rätt – då heter det "Du svarade också fel på fråga …"
+function miniFeedback(counted, stillWrong, anyRight = true) {
   const clean = t => t.replace(/\s+/g, ' ').trim();
   // Tre fel på någon uppgift: tillbaka till den uppgiftens avsnitt
   const third = [...counted].sort((a, b) => a - b).find(i => mini.wrong[i] >= 3);
@@ -29002,7 +28995,7 @@ function miniFeedback(counted, stillWrong) {
       textEn: 'I think we had better review this. Let\'s go back to that section.' };
   }
   const order = [...[...counted].sort((a, b) => a - b), ...[...stillWrong].sort((a, b) => a - b)];
-  const tips = order.map((i, n) => miniTip(i, mini.wrong[i] || 1, n === 0 && counted.length > 0));
+  const tips = order.map((i, n) => miniTip(i, mini.wrong[i] || 1, n === 0 && counted.length > 0, anyRight || n > 0));
   const nos = order.map(i => i + 1).join(' och ');
   return {
     index: order[0], level: Math.min(2, mini.wrong[order[0]] || 1),
