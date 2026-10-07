@@ -228,6 +228,11 @@ med automatisk rättning och en editor för att skriva egna lektioner.
   Med "Spela upp allt" går Kapten vidare till nästa bild 2 sekunder efter att
   bildens uppgifter besvarats rätt. Är något svar fel stannar han kvar.
 
+  Pekskärm: svep åt vänster = nästa bild, åt höger = föregående bild. Under
+  minitentorna och övningstentan vänder ett svep i stället mellan uppgifterna och
+  formelbladet. Svep som börjar i en svarsruta, ett reglage, kapitellistan eller
+  vid skärmens kant räknas inte (src/student/07f-svep.js).
+
   Uppläsningen använder enhetens egna röster. Finns ingen svensk röst
   läses den engelska texten upp. Fungerar i Chrome, Edge, Safari och
   Firefox på dator, Android och iPhone/iPad.
