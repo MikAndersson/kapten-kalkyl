@@ -26969,10 +26969,10 @@ function texToPlain(tex) {
     [/\\dots/g, '…'], [/\\%/g, '%'], [/\^\\circ/g, '°'], [/\^\{-1\}/g, '⁻¹'],
     [/\^2/g, '²'], [/\^3/g, '³'], [/\\(sin|cos|tan)/g, '$1'],
     [/_\{([^{}]*)\}/g, '$1'], [/_(\w)/g, '$1'], [/\^\{([^{}]*)\}/g, '^($1)'],
-    [/[{}]/g, ''],
   ];
-  for (let pass = 0; pass < 3; pass++) rules.forEach(([re, to]) => { t = t.replace(re, to); });
-  return t.replace(/\s+/g, ' ').trim();
+  // Flera varv så att nästlade uttryck (\frac{\text{a}}{b}) också blir klara; klamrar tas bort sist
+  for (let pass = 0; pass < 4; pass++) rules.forEach(([re, to]) => { t = t.replace(re, to); });
+  return t.replace(/\\[a-zA-Z]+/g, '').replace(/[{}]/g, '').replace(/\s+/g, ' ').trim();
 }
 
 /* LaTeX -> text som går att läsa upp ("A = \frac{b h}{2}" -> "A är b h delat med 2").
@@ -28839,6 +28839,7 @@ const mini = {
   wrong: {},          // hur många gånger varje uppgift (index) har blivit fel
   lastAnswer: {},     // svaret som räknades senast för varje uppgift
   touched: {},        // har eleven gått in i uppgiftens ruta sedan senaste rättningen?
+  lastOk: {},         // var uppgiften rätt vid förra rättningen?
   feedbackTimer: null,
 };
 
@@ -28858,6 +28859,7 @@ function newMini(lessonId) {
   mini.wrong = {};
   mini.lastAnswer = {};
   mini.touched = {};
+  mini.lastOk = {};
 }
 
 function renderMini(lesson) {
@@ -28902,12 +28904,15 @@ function handleMiniClick(event) {
     let right = 0;
     const counted = [];     // fel som räknas den här gången (nytt svar eller rutan har fått fokus)
     const stillWrong = [];  // fel med samma svar som förra gången – räknas inte igen
+    let newlyRight = false; // blev någon uppgift rätt nu som var fel förra gången?
     mini.questions.forEach((q, i) => {
       const ok = q.f.map((f, k) => checkField(f, `mini-${i}-${k}`)).every(Boolean);
       const values = q.f.map((f, k) => String(document.getElementById(`mini-${i}-${k}`).value).trim());
       const answered = values.every(v => v !== '');
       const signature = values.join('|');
-      if (ok) right++;
+      const wasOk = mini.lastOk[i];
+      mini.lastOk[i] = ok;
+      if (ok) { right++; if (wasOk === false) newlyRight = true; }
       else if (answered) {
         if (signature !== mini.lastAnswer[i] || mini.touched[i]) {
           mini.wrong[i] = (mini.wrong[i] || 0) + 1;
@@ -28922,7 +28927,7 @@ function handleMiniClick(event) {
     const total = mini.questions.length;
     clearTimeout(mini.feedbackTimer);
     let fb;
-    if (counted.length) fb = miniFeedback(counted, stillWrong);
+    if (counted.length || (stillWrong.length && newlyRight)) fb = miniFeedback(counted, stillWrong);
     else if (stillWrong.length) {
       const list = stillWrong.map(i => i + 1).join(' och ');
       fb = { level: 0, text: `Fråga ${list} har samma svar som förut och är fortfarande fel. Ändra svaret och rätta igen.`,
@@ -28935,8 +28940,12 @@ function handleMiniClick(event) {
       $('#bubble-lesson').innerHTML = toParagraphs(text);
       return;
     }
-    $('#mini-result').innerHTML = `<div class="scorebox"><div class="big">${right} / ${total}</div><p>${escapeHtml(fb.shown || fb.text)}</p></div>`;
-    $('#bubble-lesson').innerHTML = toParagraphs(fb.shown || fb.text);
+    // Det som visas är HTML där formlerna ritas med MathJax (LaTeX), precis som på bilderna
+    const html = fb.html || escapeHtml(fb.text);
+    $('#mini-result').innerHTML = `<div class="scorebox"><div class="big">${right} / ${total}</div><p>${html}</p></div>`;
+    $('#bubble-lesson').innerHTML = `<p>${html}</p>`;
+    typeset($('#mini-result'));
+    typeset($('#bubble-lesson'));
     // Kapten Kalkyl börjar prata en sekund efter rättningen
     const from = slideIndex;
     mini.feedbackTimer = setTimeout(() => {
@@ -28958,42 +28967,49 @@ function trackMiniFocus(event) {
   if (m) mini.touched[m[1]] = true;
 }
 
-/* Vad Kapten Kalkyl säger när något blev fel. Bland uppgifterna som räknades
-   den här gången tas den som blivit fel flest gånger först (vid lika: lägst nummer).
-     1:a felet  "Jag ser att du svarade fel på fråga 2." + formeln i generell form
-     2:a felet  "… fortfarande inte sitter …" + formeln med uppgiftens siffror (utan svaret)
-     3:e felet  "Det är nog bäst att vi repeterar det här." -> tillbaka till avsnittet
-   Texterna kommer från mallens <hjalp> (se LÄSMIG.txt). */
-function miniFeedback(counted, stillWrong) {
-  const sorted = [...counted].sort((a, b) => (mini.wrong[b] - mini.wrong[a]) || a - b);
-  const index = sorted[0];
-  const level = Math.min(3, mini.wrong[index]);
+/* Vad Kapten Kalkyl säger när något blev fel.
+   Nivån för varje uppgift är hur många gånger den har blivit fel (räknas bara med nytt svar):
+     1  formeln i generell form + kort förklaring
+     2  formeln med uppgiftens siffror insatta (utan svaret)
+     3  "Det är nog bäst att vi repeterar det här" -> tillbaka till uppgiftens avsnitt
+   Uppgiften som fick ett nytt fel tas först ("Jag ser att du svarade fel på fråga …"),
+   sedan de andra felen i frågeordning ("Du svarade också fel på fråga …"), var och en
+   med tipset för sin nivå. Texterna kommer från mallens <hjalp> (se LÄSMIG.txt). */
+function miniTip(index, level, first) {
   const q = mini.questions[index];
   const h = q.hjalp || { formel: '', kort: '', genomgang: '', sida: 1 };
   const no = index + 1;
-  const others = [...sorted.slice(1), ...stillWrong].sort((a, b) => a - b).map(i => i + 1);
-  const alsoText = others.length ? ` Fråga ${others.join(' och ')} är också fel, titta på ${others.length > 1 ? 'dem' : 'den'} sedan.` : '';
-  const alsoEn = others.length ? ` Question ${others.join(' and ')} is also wrong, have a look at ${others.length > 1 ? 'them' : 'it'} afterwards.` : '';
-  const formulaSpoken = h.formel ? `Formeln är: ${texToSpeech(h.formel)}.` : '';
-  const formulaShown = h.formel ? `Formeln är: ${texToPlain(h.formel)}.` : '';
-  let text, shown, textEn;
-  if (level === 1) {
-    text = `Jag ser att du svarade fel på fråga ${no}. ${formulaSpoken} ${h.kort} Försök igen!`;
-    shown = `Jag ser att du svarade fel på fråga ${no}. ${formulaShown} ${h.kort} Försök igen!`;
-    textEn = `I can see you got question ${no} wrong. Have a look at the formula and try again!`;
-  } else if (level === 2) {
-    const steps = h.genomgang || `${formulaSpoken} ${h.kort}`;
-    text = `Jag ser att fråga ${no} fortfarande inte sitter, så vi går igenom den tillsammans. ${steps} Räkna ut det och skriv in ditt svar.`;
-    shown = text;
-    textEn = `I can see that question ${no} still isn't right, so let's go through it together. Put the numbers from the question into the formula, work it out and try again.`;
-  } else {
-    text = 'Det är nog bäst att vi repeterar det här. Vi går tillbaka till avsnittet.';
-    shown = text;
-    textEn = 'I think we had better review this. Let\'s go back to that section.';
+  // said = uppläst text, html = det som visas (formeln som LaTeX)
+  const formula = h.formel ? { said: `Formeln är: ${texToSpeech(h.formel)}.`, html: `Formeln är: ${inlineMath(h.formel)}.` } : { said: '', html: '' };
+  const steps = h.genomgang || `${formula.said} ${h.kort}`;
+  if (level >= 2) {
+    const intro = first ? `Jag ser att fråga ${no} fortfarande inte sitter, så vi går igenom den tillsammans.`
+      : `Du svarade också fel på fråga ${no}. Den har blivit fel förut, så vi sätter in siffrorna.`;
+    return { said: `${intro} ${steps}`, html: escapeHtml(`${intro} ${steps}`) };
   }
-  const add = level < 3 ? alsoText : '';
-  return { index, level, sida: h.sida || 1, lesson: q.ch, text: (text + add).replace(/\s+/g, ' ').trim(),
-    shown: (shown + add).replace(/\s+/g, ' ').trim(), textEn: textEn + (level < 3 ? alsoEn : '') };
+  const intro = first ? `Jag ser att du svarade fel på fråga ${no}.` : `Du svarade också fel på fråga ${no}.`;
+  return { said: `${intro} ${formula.said} ${h.kort}`, html: `${escapeHtml(intro)} ${formula.html} ${escapeHtml(h.kort)}` };
+}
+
+function miniFeedback(counted, stillWrong) {
+  const clean = t => t.replace(/\s+/g, ' ').trim();
+  // Tre fel på någon uppgift: tillbaka till den uppgiftens avsnitt
+  const third = [...counted].sort((a, b) => a - b).find(i => mini.wrong[i] >= 3);
+  if (third != null) {
+    const q = mini.questions[third];
+    const text = `Det är nog bäst att vi repeterar det här. Fråga ${third + 1} har blivit fel tre gånger, så vi går tillbaka till avsnittet.`;
+    return { index: third, level: 3, sida: (q.hjalp && q.hjalp.sida) || 1, lesson: q.ch, text, html: escapeHtml(text),
+      textEn: 'I think we had better review this. Let\'s go back to that section.' };
+  }
+  const order = [...[...counted].sort((a, b) => a - b), ...[...stillWrong].sort((a, b) => a - b)];
+  const tips = order.map((i, n) => miniTip(i, mini.wrong[i] || 1, n === 0 && counted.length > 0));
+  const nos = order.map(i => i + 1).join(' och ');
+  return {
+    index: order[0], level: Math.min(2, mini.wrong[order[0]] || 1),
+    text: clean(tips.map(t => t.said).join(' ') + ' Försök igen!'),
+    html: clean(tips.map(t => t.html).join(' ') + ' Försök igen!'),
+    textEn: `Question ${nos} ${order.length > 1 ? 'are' : 'is'} still wrong. Have a look at the formula and try again!`,
+  };
 }
 
 
